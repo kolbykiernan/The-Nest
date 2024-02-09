@@ -5,7 +5,7 @@ const app = express()
 app.use('/questionnaire', require('./backend/controllers/questionnaire'))
 
 app.get('/', (req, res) => {
-    res.send('Hello world!')
+    res.send('home')
 })
 
 app.get('*', (req, res) => {
