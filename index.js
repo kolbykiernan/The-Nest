@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 
-app.use('/questionnaire', require('./controllers/questionnaire'))
+app.use('/questionnaire', require('./backend/controllers/questionnaire'))
 
 app.get('/', (req, res) => {
     res.send('Hello world!')
