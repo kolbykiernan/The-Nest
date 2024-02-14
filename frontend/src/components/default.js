@@ -13,7 +13,7 @@ function Def (html) {
             </head>
             <Navbar className="bg-body-tertiary">
                 <Container>
-                    <Navbar.Brand href="#home">Wedding App</Navbar.Brand>
+                    <Navbar.Brand href="/">Wedding App</Navbar.Brand>
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                     <Navbar.Text>
