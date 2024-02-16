@@ -1,8 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
-import HomePage from './components/HomePage'; 
-import Questionnaire from './components/questionnaire'
+import HomePage from './views/HomePage'; 
+import Header from './views/header';
+import Footer from './views/Footer';
+import Questionnaire from './views/questionnaire';
 
 
 function App() {
