@@ -34,7 +34,7 @@ function Questionnaire () {
                     </Container>
                 </Navbar>
                 <br/>
-                <CustomDateInput placeholder="What is your wedding date?"/>
+                <CustomDateInput type="text" placeholder="What is your wedding date?"/>
                 <br/>
                 <Form.Control  type="text" placeholder="What is the name of your venue?" />
                 <br/>
