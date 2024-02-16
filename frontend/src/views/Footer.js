@@ -7,9 +7,11 @@ const React = require('react')
 function Footer () {
     return(
         <div >
-            <Navbar expand="lg" className="bg-body-tertiary">
+            <Navbar style={{ backgroundColor: 'var(--primary-color)'}}>
                 <Container className='footer'>
-                    <Navbar.Brand href="#">Footer</Navbar.Brand>
+                    <Navbar.Brand className='footer-font' href="#">
+                        <h5>Footer</h5>
+                    </Navbar.Brand>
                 </Container>
             </Navbar>
         </div>

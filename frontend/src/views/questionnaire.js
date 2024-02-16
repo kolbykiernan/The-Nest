@@ -25,10 +25,10 @@ function Questionnaire () {
     return(
         <div className='questionnaire'>
             <Header />
-            <div className='questions'>
-                <Navbar className="bg-body-tertiary">
+            <div className='questions' >
+                <Navbar className="question-container" style={{ backgroundColor: 'var(--secondary-color)'}}>
                     <Container>
-                        <h1>
+                        <h1 className="question">
                             Let's start with the important day!
                         </h1>
                     </Container>
@@ -45,8 +45,8 @@ function Questionnaire () {
                 <Form.Control  type="number" placeholder="What is the target number of guests you'd have attend?" />
                 <br/>
                 <Form.Control  type="number" placeholder="How much does it cost per guest?" />
-                <br/>
-                <Button variant="primary">Next</Button>{' '}
+               
+                <Button className="button" variant="primary">Next</Button>{' '}
             </div>
                 <Footer />
         </div>
