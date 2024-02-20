@@ -2,7 +2,19 @@ import { Router } from 'express';
 
 const router = Router();
 
+//gets you tp questionnaire//
 router.get('/', (req, res) => {
     res.send('GET /questionnaire')
 })
+
+router.get('/basic-questions', (req, res) => {
+    res.send('GET /basic-questions')
+})
+
+router.post('/basic-questions', (req, res) => {
+    res.send('Post /basic-questions')
+})
+
+
+
 export { router };
