@@ -1,21 +1,40 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
+
+// import components
+
 import HomePage from './HomePage'; 
 import Questionnaire from './Questionnaire';
+import Guestlist from './guestlist';
+import Seatingchart from './seatingchart';
 
+// react routes//
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <HomePage />
+  },
+  {
+    path: '/questionnaire',
+    element: <Questionnaire />
+  },
+  {
+    path: '/guestlist',
+    element: <Guestlist />
+  },
+  {
+    path: '/seatingchart',
+    element: <Seatingchart />
+  },
+
+])
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Routes>
-          <Route exact path='/' element = {<HomePage/>} />
-          <Route exact path='/questionnaire' element = {<Questionnaire/>} />
-        </Routes>
-      </div>
-    </Router>
-  );
+    <RouterProvider router={router}/>
+  ); 
 }
 
 export default App;

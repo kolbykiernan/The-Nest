@@ -23,10 +23,10 @@ function Header () {
                     <Nav.Link href="/questionnaire">Questionnaire</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link eventKey="link-1">Guest List</Nav.Link>
+                    <Nav.Link href="/guestlist">Guest List</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link eventKey="link-2">Seating Chart</Nav.Link>
+                    <Nav.Link href="/seatingchart">Seating Chart</Nav.Link>
                 </Nav.Item>
             </Nav>
         </div>

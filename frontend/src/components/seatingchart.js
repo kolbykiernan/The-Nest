@@ -4,7 +4,7 @@ import React from 'react'
 import Header from '../default-views/header'
 import Footer from '../default-views/Footer'
 
-export default function Guestlist() {
+export default function Seatingchart() {
   return (
     <div className='questionnaire'>
             <Header />
