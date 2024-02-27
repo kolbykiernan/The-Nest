@@ -7,7 +7,7 @@ const React = require('react')
 function Header () {
     return(
         <div>
-            <Navbar style={{ backgroundColor: 'var(--primary-color)'}}>
+            <Navbar className='navbar' style={{ backgroundColor: 'var(--primary-color)'}}>
                 <Container >
                     <Navbar.Brand href="/">Wedding App</Navbar.Brand>
                     <Navbar.Toggle />
@@ -18,7 +18,7 @@ function Header () {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <Nav fill variant="tabs">
+            <Nav className='navbar-tabs' fill variant="tabs">
                 <Nav.Item>
                     <Nav.Link href="/questionnaire">Questionnaire</Nav.Link>
                 </Nav.Item>
@@ -26,7 +26,7 @@ function Header () {
                     <Nav.Link href="/guestlist">Guest List</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Nav.Link href="/seatingchart">Seating Chart</Nav.Link>
+                    <Nav.Link href="/seatingchart ">Seating Chart</Nav.Link>
                 </Nav.Item>
             </Nav>
         </div>
