@@ -73,3 +73,34 @@
     padding-right: 2.5em;
     color: black;
 }
+
+/* bridegroom */
+
+.bride-groom-form{
+    display: flex;
+    flex-direction: row;
+    margin-top: .25em;
+    margin-left:.25em;
+    margin-right:.25em;
+}
+
+.bride-groom-dropdown{
+    color: gray;
+    font-size: .75em;
+    padding-left: 2.2em;
+    padding-right: 2.2em;
+}
+
+.bride-groom-spacing{
+    padding: .25em;
+}
+
+.firstName-spacing{
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+.lastName-spacing{
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
