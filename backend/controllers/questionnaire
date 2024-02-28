@@ -7,14 +7,14 @@ router.get('/', (req, res) => {
     res.send('GET /questionnaire')
 })
 
-router.get('/basic-questions', (req, res) => {
-    res.send('GET /basic-questions')
+//submits answers to db
+router.post('/', (req, res) => {
+    res.send('Post /questionnaire')
 })
 
-router.post('/basic-questions', (req, res) => {
-    res.send('Post /basic-questions')
+router.get('/categories', (req, res) => {
+    res.send('GET /categories')
 })
-
 
 
 export { router };

@@ -36,6 +36,40 @@
 }
 
 .button{
-  
-   margin-bottom: 1.9em;
+   margin-bottom: 1.8em;
+   margin-right:1em;
+   margin-left:1em;
+}
+
+.question-label-category{
+    padding: .5em;
+    padding-left: .5em;
+    padding-right: .5em;
+    font-size: .8em;
+}
+
+.question-label-category-info{
+    font-size: .35em;
+    padding-left: 2em;
+    padding-right: 2em;
+    padding-bottom: 1em;
+}
+
+.category-form{
+    margin-top: .5em;
+    margin-left: .5em;
+    margin-right: .5em;
+}
+
+.category-input{
+    font-size: .8em;
+    padding-top:.4em;
+    padding-bottom: .4em;
+}
+.category-button{
+    margin: 1em;
+    font-size: .6em;
+    padding-left: 2.5em;
+    padding-right: 2.5em;
+    color: black;
 }
