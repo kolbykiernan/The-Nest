@@ -1,35 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
+import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
+import axios from 'axios';
+import CategoryDropdown from './CategoryDropdown';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
 
 
-const CategoryForm = () => {
+
+
+const CategoryForm = ({categories, fetchCategories}) => {
   const [categoryName, setCategoryName] = useState('');
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    // Fetch categories from the backend when the component mounts
-    fetchCategories();
-  }, []);
-
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get('/api/categories');
-      setCategories(response.data); // Assuming the response contains an array of categories
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    }
-  };
+  
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
       // Send a POST request to the backend to add the new category
-      await axios.post('/api/categories', { name: categoryName });
+      await axios.post('http://localhost:3000/api/categories', { name: categoryName });
       // Refresh the list of categories after adding a new one
       fetchCategories();
       // Clear the input field
@@ -39,34 +26,33 @@ const CategoryForm = () => {
     }
   };
 
+  
+
   return (
     <div>
       <Form onSubmit={handleFormSubmit} className='category-form'>
-        <InputGroup>
+        <div className='category-input-dropdown'>
+          <InputGroup className="parent-input-group">
             <Form.Control 
-                type="text"
-                value={categoryName}
-                onChange={(e) => setCategoryName(e.target.value)}
-                placeholder="Enter category name"
-                className='category-input'
+              type="text"
+              value={categoryName}
+              onChange={(e) => setCategoryName(e.target.value)}
+              placeholder="Enter category name"
+              className='category-input'
             />
-            <DropdownButton 
-                title=""
-                variant="outline-secondary"
-                id="input-group-dropdown-2"
-                align="end"
-            >
-                {categories.map((category) => (
-                    <Dropdown.Item key={category.id}>{category.name}</Dropdown.Item>
-                ))}
-            </DropdownButton>
-        </InputGroup>
-      <Button style={{ backgroundColor: 'var(--primary-color)'}} className="category-button" variant="secondary" type="submit">Add Category</Button>
-    </Form>
-
-     
-      
-      
+          </InputGroup>
+          <CategoryDropdown categories={categories} isDropdown={true}/>
+        </div>
+        <Button
+          style={{ backgroundColor: 'var(--primary-color)' }}
+          className="category-button"
+          variant="secondary"
+          type="submit"
+          // onClick={onClick}
+        >
+        Add Category
+        </Button>
+      </Form>
     </div>
   );
 };

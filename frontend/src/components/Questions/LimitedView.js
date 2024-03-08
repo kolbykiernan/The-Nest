@@ -20,3 +20,5 @@ const LimitedTextView = ({ text }) => {
 };
 
 export default LimitedTextView;
+
+//look into accordion view with bootstrap react downt the line//

@@ -5,18 +5,19 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 dotenv.config();
 
+import router from './controllers/api.js';
+
 const app = express()
 
 app.set('view engine', 'js')
 app.engine('js', createEngine());
 
 
-import { router as questionnaireRouter } from './controllers/questionnaire'
+
 
 app.use(cors())
 app.use(express.json())
-app.use('/questionnaire', questionnaireRouter)
-
+app.use('/api', router)
 
 
 app.get('*', (req, res) => {
