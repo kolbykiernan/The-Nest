@@ -7,7 +7,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import CategoryDropdown from './CategoryDropdown';
 
 
-const MaidOfHonor = ({ categories, selectedCategory, handleSelectChange, rowsBridesmaids, handlePlusOneSelectChangeBridesmaids, plusOneValueBridesmaids, handleRangeChangeBridesmaids, addRowBridesmaids }) => {
+const Groomsmen = ({ categories, selectedCategory, handleSelectChange, rowsGroomsmen, handlePlusOneSelectChangeGroomsmen, plusOneValueGroomsmen, handleRangeChangeGroomsmen, addRowGroomsmen }) => {
     
 
   return (
@@ -28,7 +28,7 @@ const MaidOfHonor = ({ categories, selectedCategory, handleSelectChange, rowsBri
             </tr>
           </thead>
           <tbody>
-            {rowsBridesmaids.map((row, index) => (
+            {rowsGroomsmen.map((row, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td><Form.Control type="text" /></td>
@@ -39,25 +39,25 @@ const MaidOfHonor = ({ categories, selectedCategory, handleSelectChange, rowsBri
                   </Dropdown>
                 </td>
                 <td>
-                <DropdownButton variant="outline-secondary" title={row.plusOneSelectedBridesmaids ? 'Yes' : (row.plusOneSelectedBridesmaids === false ? 'No' : 'Select One')} onSelect={(value) => handlePlusOneSelectChangeBridesmaids(index, value)}>
+                <DropdownButton variant="outline-secondary" title={row.plusOneSelectedGroomsmen ? 'Yes' : (row.plusOneSelectedGroomsmen === false ? 'No' : 'Select One')} onSelect={(value) => handlePlusOneSelectChangeGroomsmen(index, value)}>
                     <Dropdown.Item eventKey="Yes">Yes</Dropdown.Item>
                     <Dropdown.Item eventKey="No">No</Dropdown.Item>
                   </DropdownButton>
                 </td>
               
-                    <td><Form.Control type="text" disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}/></td>
-                    <td><Form.Control type="text" disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}/></td>
+                    <td><Form.Control type="text" disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}/></td>
+                    <td><Form.Control type="text" disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}/></td>
                     <td>
                       <Form.Check
                         type="checkbox"
                         label="bridesmaid"
                         className="form-margins"
-                        disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
+                        disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
                       />
                       <Form.Check
                         type="checkbox"
                         label="groomsmen"
-                        disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
+                        disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
                       />
                     </td>
                     <td>
@@ -65,11 +65,11 @@ const MaidOfHonor = ({ categories, selectedCategory, handleSelectChange, rowsBri
                       min={1} 
                       max={5} 
                       step={0.5} 
-                      disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
-                      value={plusOneValueBridesmaids[index]} // Use plusOneValue instead of rangeValue
-                      onChange={(e) => handleRangeChangeBridesmaids(index, e)} // Pass index to identify which row is being changed
+                      disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
+                      value={plusOneValueGroomsmen[index]} // Use plusOneValue instead of rangeValue
+                      onChange={(e) => handleRangeChangeGroomsmen(index, e)} // Pass index to identify which row is being changed
                       />
-                      <p>Selected Value: {plusOneValueBridesmaids[index]}</p> {/* Show the corresponding plusOneValue */}
+                      <p>Selected Value: {plusOneValueGroomsmen[index]}</p> {/* Show the corresponding plusOneValue */}
                     </td>
                 
               </tr>
@@ -77,11 +77,11 @@ const MaidOfHonor = ({ categories, selectedCategory, handleSelectChange, rowsBri
           </tbody>
         </Table>
         <div>
-          <Button className='add-row-button' onClick={addRowBridesmaids}>Add Row</Button>
+          <Button className='add-row-button' onClick={addRowGroomsmen}>Add Row</Button>
         </div>
       </Form>
     </div>
   );
 }
 
-export default MaidOfHonor;
+export default Groomsmen;

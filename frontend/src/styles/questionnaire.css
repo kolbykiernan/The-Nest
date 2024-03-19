@@ -9,10 +9,19 @@
     
 }
   
+.questionnaire-questions{
+    display: flex;
+    flex-direction: column;
+   width: 100%;
+    
+}
+
 .questions{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    
+    
+    
 }
 
 .question-container{
@@ -24,6 +33,7 @@
     padding:1em;
     padding-left: 1.5em;
     padding-right: 1.5em;
+    
 }
 
 .question-label-instructions{
@@ -45,12 +55,17 @@
 }
 
 .question-input{
-    margin: 2.5em;
+    margin-top: 3.3em;
+    margin-bottom: 3.3em;
+    margin-left: 2em;
+    margin-right: 2em;
 }
 
 .question{
     font-size: 1.8em;
     display:flex;
+    width: 100%;
+    justify-content: center;
 }
 
 .questionnaire{
@@ -69,32 +84,33 @@
     padding: .5em;
     padding-left: .5em;
     padding-right: .5em;
-    font-size: .8em;
+    font-size: 1em;
 }
 
 .question-label-category-info{
-    font-size: .35em;
+    font-size: .55em;
     padding-left: 2em;
     padding-right: 2em;
     padding-bottom: 1em;
 }
 
 .category-form{
-    margin-top: .5em;
-    margin-left: .5em;
-    margin-right: .5em;
+    margin-top: 1.5em;
+    margin-left: 6.5em;
+    margin-right: 6.5em;
 }
 
 .category-input{
     font-size: .8em;
     padding-top:.4em;
     padding-bottom: .4em;
+    
 }
 .category-button{
-    margin: 1em;
+    margin: 1.5em;
     font-size: .6em;
-    padding-left: 2.5em;
-    padding-right: 2.5em;
+    padding-left: 5.5em;
+    padding-right: 5.5em;
     color: black;
 }
 
@@ -103,20 +119,21 @@
 .bride-groom-form{
     display: flex;
     flex-direction: row;
-    margin-top: .25em;
+    justify-content: center;
+    /* margin-top: .25em;
     margin-left:.25em;
-    margin-right:.25em;
+    margin-right:.25em; */
 }
 
 .bride-groom-dropdown{
     color: gray;
     font-size: .75em;
-    padding-left: 2.2em;
-    padding-right: 2.2em;
+    padding-left: 4.2em;
+    padding-right: 4.2em;
 }
 
 .bride-groom-spacing{
-    padding: .25em;
+    padding: 1em;
 }
 
 .firstName-spacing{
@@ -130,7 +147,8 @@
 }
 
 .wedding-party-form{
-    padding:1em;
+    padding-right:1em;
+    padding-left:1em;
 }
 
 .category-input-dropdown{
@@ -148,3 +166,44 @@
     color: rgb(92, 92, 92);
     border-color: lightgray;
 }
+
+.plus-one-select{
+    padding-top:.35em;
+}
+
+tr{
+    font-size: .4em;
+    padding:0em;
+}
+
+td{
+    font-size: 1em;
+    padding-bottom: 0px;
+}
+
+td p {
+    margin: 0em;
+}
+
+.form-check{
+    margin: 0em;
+}
+
+.add-row-button{
+    font-size: .6em;
+    padding-right: 4em;
+    padding-left: 4em;
+    background-color: rgb(229, 251, 250);
+    color: black;
+    border-color: black;
+}
+
+/* .row-fluid{
+    overflow: auto;
+    
+}
+
+.row-fluid th{
+    white-space: nowrap;
+} */
+

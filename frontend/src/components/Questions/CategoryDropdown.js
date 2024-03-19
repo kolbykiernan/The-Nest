@@ -22,7 +22,7 @@ const CategoryDropdown = ({ categories, handleSelectChange, isDropdown }) => {
     );
   } else {
     return (
-      <Form.Select size="lg" onChange={handleSelectChange} className="category-select">
+      <Form.Select  onChange={handleSelectChange} className="category-select">
         <option value="">Select a category</option>
         {categories.map((category) => (
           <option key={category.id} value={category.id}>{category.name}</option>
