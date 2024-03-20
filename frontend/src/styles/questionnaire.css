@@ -2,27 +2,49 @@
     --primary-color: rgb(229, 251, 250);
     --secondary-color:#f4f4f4;
     --third-color: #FFE25Fff;
-  }
+}
+
+.navbar{
+    padding-top: 2.5em;
+    padding-bottom: 2.5em;
+}
 
 .navbar-tabs{
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
     font-size: .9em;
-    
 }
   
 .questionnaire-questions{
     display: flex;
     flex-direction: column;
-   width: 100%;
+    width: 100%;
     
 }
+
+.question-input{
+    margin-top: 3.3em;
+    margin-bottom: 3.3em;
+    margin-left: 3em;
+    margin-right: 3em;
+    
+}
+
 
 .questions{
     display: flex;
     flex-direction: column;
-    
-    
-    
+    width: 100%
 }
+
+.question{
+    font-size: 1.8em;
+    display:flex;
+    width: 100%;
+    justify-content: center;
+}
+
+
 
 .question-container{
     padding-top:1.5em;
@@ -30,7 +52,7 @@
 }
 
 .question-label {
-    padding:1em;
+    padding:2em;
     padding-left: 1.5em;
     padding-right: 1.5em;
     
@@ -54,19 +76,9 @@
     width: 100vw;
 }
 
-.question-input{
-    margin-top: 3.3em;
-    margin-bottom: 3.3em;
-    margin-left: 2em;
-    margin-right: 2em;
-}
 
-.question{
-    font-size: 1.8em;
-    display:flex;
-    width: 100%;
-    justify-content: center;
-}
+
+
 
 .questionnaire{
     display: flex;
@@ -94,10 +106,11 @@
     padding-bottom: 1em;
 }
 
+
 .category-form{
     margin-top: 1.5em;
-    margin-left: 6.5em;
-    margin-right: 6.5em;
+    margin-left: 2.5em;
+    margin-right: 2.5em;
 }
 
 .category-input{
@@ -109,8 +122,8 @@
 .category-button{
     margin: 1.5em;
     font-size: .6em;
-    padding-left: 5.5em;
-    padding-right: 5.5em;
+    padding-left: 2.5em;
+    padding-right: 2.5em;
     color: black;
 }
 
@@ -165,6 +178,19 @@
     background-color: white;
     color: rgb(92, 92, 92);
     border-color: lightgray;
+    margin-right: 8em;
+}
+
+
+
+.first-name{
+    padding-left: 4em;
+    padding-right: 4em;
+}
+
+.last-name{
+    padding-left: 4em;
+    padding-right: 4em;
 }
 
 .plus-one-select{
@@ -198,12 +224,218 @@ td p {
     border-color: black;
 }
 
-/* .row-fluid{
+.row-fluid{
     overflow: auto;
     
 }
 
 .row-fluid th{
     white-space: nowrap;
-} */
+}
 
+
+@media (min-width: 1000px) {
+    .question-input {
+      margin-top: 4.6em;
+      margin-bottom: 4.6em;
+      min-width: 800px; 
+      margin-left: auto; 
+      margin-right: auto; 
+    }
+  }
+
+@media (min-height: 800px) {
+    .question-input {
+        margin-top: 4.6em;
+        margin-bottom: 4.6em;
+    }
+    .bride-groom-form {
+        margin-top: .8em;
+        margin-bottom: .8em;
+    }
+    .category-form {
+        margin-top: 2.1em;
+        margin-bottom: 1.1em;
+    }
+  }
+
+@media (min-height: 850px) {
+    .question-input {
+        margin-top: 4.6em;
+        margin-bottom: 4.6em;
+    }
+    .bride-groom-form {
+        margin-top: 1.5em;
+        margin-bottom: 1.5em;
+    }
+    .category-form {
+        margin-top: 3.1em;
+        margin-bottom: 2.1em;
+    }
+  }
+  
+  @media (min-height: 900px) {
+    .question-input {
+        margin-top: 5.5em;
+        margin-bottom: 5.5em;
+    }
+    .bride-groom-form {
+        margin-top: 2.3em;
+        margin-bottom: 2.3em;
+    }
+     .category-form {
+        margin-top: 4em;
+        margin-bottom: 3em;
+    }
+  }
+
+  @media (min-height: 950px) {
+    .question-input {
+        margin-top: 6.5em;
+        margin-bottom: 6.5em;
+    }
+    .bride-groom-form {
+        margin-top: 3.2em;
+        margin-bottom: 3.2em;
+    }
+     .category-form {
+        margin-top: 4.8em;
+        margin-bottom: 3.8em;
+    }
+  }
+
+  @media (min-height: 1000px) {
+    .question-input {
+        margin-top: 7.3em;
+        margin-bottom: 7.3em;
+    }
+    .bride-groom-form {
+        margin-top: 4em;
+        margin-bottom: 4em;
+    }
+     .category-form {
+        margin-top: 5.8em;
+        margin-bottom: 4.8em;
+    }
+  }
+
+  @media (min-height: 1050px) {
+    .question-input {
+        margin-top: 8.1em;
+        margin-bottom: 8.1em;
+    }
+    .bride-groom-form {
+        margin-top: 4.9em;
+        margin-bottom: 4.9em;
+    }
+     .category-form {
+        margin-top: 6.7em;
+        margin-bottom: 5.7em;
+    }
+  }
+
+  @media (min-height: 1100px) {
+    .question-input {
+        margin-top: 9em;
+        margin-bottom: 9em;
+    }
+    .bride-groom-form {
+        margin-top: 5.8em;
+        margin-bottom: 5.8em;
+    }
+     .category-form {
+        margin-top: 7.7em;
+        margin-bottom: 6.7em;
+    }
+  }
+
+  @media (min-height: 1150px) {
+    .question-input {
+        margin-top: 9.8em;
+        margin-bottom: 9.8em;
+    }
+    .bride-groom-form {
+        margin-top: 6.4em;
+        margin-bottom: 6.4em;
+    }
+     .category-form {
+        margin-top: 7.5em;
+        margin-bottom: 6.5em;
+    }
+  }
+
+  @media (min-height: 1200px) {
+    .question-input {
+        margin-top: 10.6em;
+        margin-bottom: 10.6em;
+    }
+    .bride-groom-form {
+        margin-top: 7.4em;
+        margin-bottom: 7.4em;
+    }
+     .category-form {
+        margin-top: 8.3em;
+        margin-bottom: 7.3em;
+    }
+  }
+
+  @media (min-height: 1250px) {
+    .question-input {
+        margin-top: 11.4em;
+        margin-bottom: 11.4em;
+    }
+    .bride-groom-form {
+        margin-top: 8.2em;
+        margin-bottom: 8.2em;
+    }
+     .category-form {
+        margin-top: 9.1em;
+        margin-bottom: 8.1em;
+    }
+  }
+
+  @media (min-height: 1300px) {
+    .question-input {
+        margin-top: 12.2em;
+        margin-bottom: 12.2em;
+    }
+    .bride-groom-form {
+        margin-top: 9em;
+        margin-bottom: 9em;
+    }
+     .category-form {
+        margin-top: 10em;
+        margin-bottom: 9em;
+    }
+  }
+
+  @media (min-height: 1350px) {
+    .question-input {
+        margin-top: 13em;
+        margin-bottom: 13em;
+    }
+    .bride-groom-form {
+        margin-top: 9.8em;
+        margin-bottom: 9.8em;
+    }
+     .category-form {
+        margin-top: 11.8em;
+        margin-bottom: 10.8em;
+    }
+  }
+  @media (min-height: 1400px) {
+    .question-input {
+        margin-top: 13em;
+        margin-bottom: 13em;
+    }
+    .bride-groom-form {
+        margin-top: 10.6em;
+        margin-bottom: 10.6em;
+    }
+     .category-form {
+        margin-top: 11.8em;
+        margin-bottom: 10.8em;
+    }
+  }
+
+  

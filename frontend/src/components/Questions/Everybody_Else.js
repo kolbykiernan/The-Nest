@@ -8,12 +8,12 @@ import CategoryDropdown from './CategoryDropdown';
 
 const EverybodyElse = ({ categories, selectedCategory, handleSelectChange }) => {
 
-  const [rows, setRows] = useState(Array.from({ length: 5 }, () => ({ plusOneSelected: '', addOnSelected: '', selectedAddOns: 0  })));
+  const [rows, setRows] = useState(Array.from({ length: 10 }, () => ({ plusOneSelected: '', addOnSelected: '', selectedAddOns: 0  })));
   const [selectedOption, setSelectedOption] = useState(Array.from({ length: rows.length }, () => null));
-  const [guestValue, setGuestValue] = useState(Array.from({ length: 5 }, () => 1));
-  const [plusOneValue, setPlusOneValue] = useState(Array.from({ length: 5 }, () => 1));
-  const [addOnValue, setAddOnValue] = useState(Array.from({ length: 5 }, () => 1));
-  const [extraAddOnValue, setExtraAddOnValue] = useState(Array.from({ length: 5 }, () => 1));
+  const [guestValue, setGuestValue] = useState(Array.from({ length: 10 }, () => 1));
+  const [plusOneValue, setPlusOneValue] = useState(Array.from({ length: 10 }, () => 1));
+  const [addOnValue, setAddOnValue] = useState(Array.from({ length: 10 }, () => 1));
+  const [extraAddOnValue, setExtraAddOnValue] = useState(Array.from({ length: 10 }, () => 1));
   const [plusOneSelected, setPlusOneSelected] = useState('');
   const [addOnSelected, setAddOnSelected] = useState('');
   const [extraAddOnSelected, setExtraAddOnSelected] = useState('');
@@ -102,24 +102,24 @@ const EverybodyElse = ({ categories, selectedCategory, handleSelectChange }) => 
   return (
     <div className='wedding-party-form'  >
       <Form className="row-fluid" >
-        <Table responsive="sm" className='table'>
+        <Table  className='table'>
           <thead >
             <tr >
               <th>#</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Category</th>
-              <th>Who do you know them through?</th>
-              <th>How important is it that this guest comes?</th>
+              <th>Bride / Groom / Mutual?</th>
+              <th>How important is it that they come?</th>
               <th>Plus One / Significant Other?</th>
               <th>Plus One First Name</th>
               <th>Plus One Last Name</th>
-              <th>How important is it that the plus-one comes?</th>
+              <th>How important is it that they come?</th>
               <th>Other guests such as kids?</th>
               <th>Add-On First Name</th>
               <th>Add-On Last Name</th>
-              <th>How important is it that this add-on comes?</th>
-              <th>Are there any other guests you'd like to add-on to this guest?</th>
+              <th>How important is it that they come?</th>
+              <th>Any others?</th>
               <th>How many?</th>
             </tr>
           </thead>
@@ -127,10 +127,10 @@ const EverybodyElse = ({ categories, selectedCategory, handleSelectChange }) => 
             {rows.map((row, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td><Form.Control type="text" /></td>
-                <td><Form.Control type="text" /></td>
+                <td><Form.Control type="text" className='first-name' /></td>
+                <td><Form.Control type="text" className='last-name'/></td>
                 <td>
-                  <Dropdown>
+                  <Dropdown className='dropdown'>
                     <CategoryDropdown categories={categories} value={selectedCategory} onChange={handleSelectChange} isDropdown={false} className="category-select" />
                   </Dropdown>
                 </td>

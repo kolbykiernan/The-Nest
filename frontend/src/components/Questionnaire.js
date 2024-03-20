@@ -15,7 +15,15 @@ import '../styles/questionnaire.css';
 
 const Questionnaire = () => {
 
-    const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(() => {
+    const savedPage = localStorage.getItem('currentPage');
+    return savedPage ? parseInt(savedPage) : 1;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('currentPage', currentPage);
+  }, [currentPage]);
+
     const [answers, setAnswers] = useState({});
     const [questions] = useState([
       { id: 1, text: "What is your wedding date?", type: "date"},
@@ -73,8 +81,8 @@ const Questionnaire = () => {
         }));
       };
 
-    const [rowsBridesmaids, setRowsBridesmaids] = useState(Array.from({ length: 5 }, () => ({plusOneSelectedBridesmaids: ''})));
-    const [plusOneValueBridesmaids, setPlusOneValueBridesmaids] = useState(Array.from({ length: 5 }, () => 1));
+    const [rowsBridesmaids, setRowsBridesmaids] = useState(Array.from({ length: 10 }, () => ({plusOneSelectedBridesmaids: ''})));
+    const [plusOneValueBridesmaids, setPlusOneValueBridesmaids] = useState(Array.from({ length: 10 }, () => 1));
     const [plusOneSelectedBridesmaids, setPlusOneSelectedBridesmaids] = useState('');
    
 
@@ -98,8 +106,8 @@ const Questionnaire = () => {
       setPlusOneValueBridesmaids(prevValuesBridesmaids => [...prevValuesBridesmaids, 1]);
     };
 
-    const [rowsGroomsmen, setRowsGroomsmen] = useState(Array.from({ length: 5 }, () => ({plusOneSelectedGroomsmen: ''})));
-    const [plusOneValueGroomsmen, setPlusOneValueGroomsmen] = useState(Array.from({ length: 5 }, () => 1));
+    const [rowsGroomsmen, setRowsGroomsmen] = useState(Array.from({ length: 10 }, () => ({plusOneSelectedGroomsmen: ''})));
+    const [plusOneValueGroomsmen, setPlusOneValueGroomsmen] = useState(Array.from({ length: 10 }, () => 1));
     const [plusOneSelectedGroomsmen, setPlusOneSelectedGroomsmen] = useState('');
    
 
@@ -253,11 +261,6 @@ const Questionnaire = () => {
                 selectedCategory={selectedCategory} 
                 handleSelectChange={handleSelectChange}
                 categories={categories} 
-                // rowsEverybodyElse={rowsEverybodyElse}
-                // addRowEverybodyElse={addRowEverybodyElse}
-                // handlePlusOneSelectChangeEverybodyElse={handlePlusOneSelectChangeEverybodyElse}
-                // plusOneValueEverybodyElse={plusOneValueEverybodyElse}
-                // handleRangeChangeEverybodyElse={handleRangeChangeEverybodyElse}
                 className='question-input' 
                 type="text" 
                 value={answer} 
@@ -271,27 +274,28 @@ const Questionnaire = () => {
         }
       };
     
-        return(
-            <div className='questionnaire'>
-                <Header />
-                    <div className='questions'>
-                        <div className='question'>
-                          {renderQuestion(questions[currentPage])}
-                        </div>
-                        {currentPage < questions.length - 1 && (
-                            <div>
-                              <Button className="button" variant="primary" onClick={handlePrev}>Prev</Button>{' '}
-                              <Button className="button" variant="primary" onClick={handleNext}>Next</Button>{' '}
-                            </div>
-                        )}
-                        {currentPage === questions.length - 1 && (
-                              <Button className="button" variant="primary" onClick={() => console.log(answers)}>Submit</Button>
-                        )}
-                             
-                    </div>
-                <Footer />
+  return(
+    <div className='questionnaire'>
+        <Header />
+            <div className='questions'>
+              <div className='question'>
+                {renderQuestion(questions[currentPage])}
+              </div>
+              <div>
+                {currentPage > 0 && (
+                  <Button className="button" variant="primary" onClick={handlePrev}>Prev</Button>
+                )}
+                {currentPage < questions.length - 1 && (
+                  <Button className="button" variant="primary" onClick={handleNext}>Next</Button>
+                )}
+                {currentPage === questions.length - 1 && (
+                  <Button className="button" variant="primary" onClick={() => console.log(answers)}>Submit</Button>
+                )} 
+              </div>     
             </div>
-        )
+        <Footer />
+    </div>
+    )
   }
 
 export default Questionnaire;
