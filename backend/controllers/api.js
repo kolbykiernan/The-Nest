@@ -2,16 +2,32 @@
 import express from 'express';
 const router = express.Router();
 import Category from '../models/Category.js';
+import WeddingData from '../models/WeddingData.js';
 
-//gets you tp questionnaire//
-router.get('/', (req, res) => {
-  res.send('GET /questionnaire')
-})
+router.post('/', async (req, res) => {
+  try {
+    const { id, date, venue, capacity, invites, attendance, cost, brideFirstName, brideLastName, brideSelection, groomFirstName, groomLastName, groomSelection } = req.body;
 
-//submits answers to db
-router.post('/', (req, res) => {
-  res.send('Post /questionnaire')
-})
+    const weddingData = await WeddingData.create({ id, date, venue, capacity, invites, attendance, cost, brideFirstName, brideLastName, brideSelection: brideSelection, groomFirstName, groomLastName, groomSelection: groomSelection });
+
+    res.status(201).json(weddingData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Retrieve all records
+router.get('/', async (req, res) => {
+  try {
+    const weddingData = await WeddingData.findAll();
+
+    res.status(200).json(weddingData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
   
   // POST route to add a new category
@@ -38,4 +54,5 @@ router.get('/categories', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 export default router;

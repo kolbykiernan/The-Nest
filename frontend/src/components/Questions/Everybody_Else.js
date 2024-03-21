@@ -102,7 +102,7 @@ const EverybodyElse = ({ categories, selectedCategory, handleSelectChange }) => 
   return (
     <div className='wedding-party-form'  >
       <Form className="row-fluid" >
-        <Table  className='table'>
+        <Table  >
           <thead >
             <tr >
               <th>#</th>

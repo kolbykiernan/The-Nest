@@ -8,6 +8,7 @@ import Groomsmen from './Questions/Groomsmen';
 import Button from 'react-bootstrap/Button';
 import Dropdown from 'react-bootstrap/Dropdown';
 import EverybodyElse from './Questions/Everybody_Else';
+import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 
 import '../styles/questionnaire.css';
@@ -63,17 +64,46 @@ const Questionnaire = () => {
       }
     };
 
+    const handlePrev = () => {
+      const nextIndex = currentPage - 1;
+      setCurrentPage(nextIndex);
+    };
+
     const handleNext = () => {
+      if (questions[currentPage].id === 7) {
+        submitWeddingData();
+      }
         const nextIndex = currentPage + 1;
         setCurrentPage(nextIndex);
-      };
+    };
 
-      const handlePrev = () => {
-        const nextIndex = currentPage - 1;
-        setCurrentPage(nextIndex);
-      };
+      const submitWeddingData = async () => {
+        console.log(answers)
+        try {
+          const formData = {
+            date: answers[1],
+            venue: answers[2],
+            capacity: answers[3],
+            invites: answers[4],
+            attendance: answers[5],
+            cost: answers[6],
+            brideFirstName: answers['brideFirstName'],
+            brideLastName: answers['brideLastName'], 
+            brideSelection: answers['brideSelection'], 
+            groomFirstName: answers['groomFirstName'], 
+            groomLastName: answers['groomLastName'], 
+            groomSelection: answers['groomSelection']
+          };
+      
+          const response = await axios.post('http://localhost:3000/api/', formData);
+          console.log('Form submitted successfully:', response.data);
+          // Display a success message or perform any other actions upon successful form submission
+        } catch (error) {
+          console.error('Error submitting form:', error);
+          // Display an error message or perform any other actions upon form submission failure
+        }
+      }
 
-    
       const handleAnswer = (questionId, answer) => {
         setAnswers(prevAnswers => ({
           ...prevAnswers,
@@ -159,28 +189,63 @@ const Questionnaire = () => {
           case "date":
             return (
               <div className='questionnaire-questions'>
-                <label className='question-label' style={{ backgroundColor: 'var(--secondary-color)'}}>{question.text}</label>
-                <input className='question-input' type="date" value={answer} onChange={(e) => handleAnswer(question.id, e.target.value)} required/>
+                <label 
+                  className='question-label' 
+                  style={{ backgroundColor: 'var(--secondary-color)'}}
+                >
+                  {question.text}
+                </label>
+                <input 
+                  className='question-input' 
+                  type="date" 
+                  value={answer} 
+                  onChange={(e) => handleAnswer(question.id, e.target.value)} 
+                  required/>
               </div>
             );
           case "text":
             return (
               <div className='questionnaire-questions'>
-                <label className='question-label' style={{ backgroundColor: 'var(--secondary-color)'}}>{question.text}</label>
-                <input className='question-input' type="text" value={answer} onChange={(e) => handleAnswer(question.id, e.target.value)} required/>
+                <label 
+                  className='question-label' 
+                  style={{ backgroundColor: 'var(--secondary-color)'}}
+                >
+                  {question.text}
+                </label>
+                <input 
+                  className='question-input' 
+                  type="text" value={answer} 
+                  onChange={(e) => handleAnswer(question.id, e.target.value)}
+                  required/>
               </div>
             );
           case "number":
             return (
               <div className='questionnaire-questions'>
-                <label className='question-label' style={{ backgroundColor: 'var(--secondary-color)'}}>{question.text}</label>
-                <input className='question-input' type="number" value={answer} onChange={(e) => handleAnswer(question.id, parseInt(e.target.value))} required/>
+                <label 
+                  className='question-label' 
+                  style={{ backgroundColor: 'var(--secondary-color)'}}
+                >
+                  {question.text}
+                </label>
+                <input 
+                  className='question-input' 
+                  type="number" 
+                  value={answer} 
+                  onChange={(e) => handleAnswer(question.id, parseInt(e.target.value))} 
+                  
+                  required/>
               </div>
             );
           case "categoryForm":
             return (
               <div className='questionnaire-questions' key={question.id}>
-                <label className='question-label-category' style={{ backgroundColor: 'var(--secondary-color)'}}>{question.text}</label>
+                <label 
+                  className='question-label-category' 
+                  style={{ backgroundColor: 'var(--secondary-color)'}}
+                >
+                  {question.text}
+                </label>
                 <LimitedTextView 
                     text="It's best if you are together for this portion! Think of how you both know all of the people that will come to your wedding. The average person has between 4 - 6 categories that the majorioty of their guests can fall into. Maybe they're unique to one of you or maybe they are mutual. For example: Let's say you and your partner both want to invite friends from high school, but you didn't go to the same high school. You only need to fill that category out once because we will be assigning which partner they originated from or if they are mutual later. Take a little time to consider these as this will influence your seating chart! There may still be a few that don't fit into any category. For those, you can leave the category blank, or create 'Other'."
                 />
@@ -191,6 +256,7 @@ const Questionnaire = () => {
                   type="text" 
                   value={answer} 
                   onChange={(e) => handleAnswer(question.id, e.target.value)} 
+                  
                   required 
                 />
               </div>
@@ -198,8 +264,46 @@ const Questionnaire = () => {
           case "brideGroom":
             return (
               <div className='questionnaire-questions'>
-                <label className='question-label' style={{ backgroundColor: 'var(--secondary-color)'}}>{question.text}</label>
+                <label 
+                  className='question-label' 
+                  style={{ backgroundColor: 'var(--secondary-color)'}}
+                >
+                  {question.text}
+                </label>
                 <BrideGroom 
+                  className='question-input' 
+                  type="text" 
+                  value={answer} 
+                  onChange={(e) => handleAnswer(question.id, e.target.value)} 
+                  handleAnswer={handleAnswer}
+                  required
+                />
+              </div>
+            );
+          case "maidOfHonor":
+            return (
+              <div className='question-banner'>
+                <label 
+                  className='question-label-wedding-party' 
+                  style={{ backgroundColor: 'var(--secondary-color)'}}
+                >
+                  {question.text}
+                </label>
+                <label
+                  className='question-label-instructions' 
+                  style={{ backgroundColor: 'var(--secondary-color)'}}
+                  >
+                    For this section, let's just focus on the wedding party and their plus-one's. If there are other guests that you'd like to add along with these guests, such as kids, we'll add them later! If you want to grant a plus-one to someone and don't know who it will be, just leave the name fields blank, but still fill out the rest.
+                </label>
+                <MaidOfHonor 
+                  selectedCategory={selectedCategory} 
+                  handleSelectChange={handleSelectChange}
+                  categories={categories} 
+                  rowsBridesmaids={rowsBridesmaids}
+                  addRowBridesmaids={addRowBridesmaids}
+                  handlePlusOneSelectChangeBridesmaids={handlePlusOneSelectChangeBridesmaids}
+                  plusOneValueBridesmaids={plusOneValueBridesmaids}
+                  handleRangeChangeBridesmaids={handleRangeChangeBridesmaids}
                   className='question-input' 
                   type="text" 
                   value={answer} 
@@ -208,64 +312,62 @@ const Questionnaire = () => {
                 />
               </div>
             );
-          case "maidOfHonor":
-            return (
-              <div className='question-banner'>
-                <label className='question-label-wedding-party' style={{ backgroundColor: 'var(--secondary-color)'}}>{question.text}</label>
-                <label className='question-label-instructions' style={{ backgroundColor: 'var(--secondary-color)'}}>For this section, let's just focus on the wedding party and their plus-one's. If there are other guests that you'd like to add along with these guests, such as kids, we'll add them later! If you want to grant a plus-one to someone and don't know who it will be, just leave the name fields blank, but still fill out the rest.</label>
-                <MaidOfHonor 
-                selectedCategory={selectedCategory} 
-                handleSelectChange={handleSelectChange}
-                categories={categories} 
-                rowsBridesmaids={rowsBridesmaids}
-                addRowBridesmaids={addRowBridesmaids}
-                handlePlusOneSelectChangeBridesmaids={handlePlusOneSelectChangeBridesmaids}
-                plusOneValueBridesmaids={plusOneValueBridesmaids}
-                handleRangeChangeBridesmaids={handleRangeChangeBridesmaids}
-                className='question-input' 
-                type="text" 
-                value={answer} 
-                onChange={(e) => handleAnswer(question.id, e.target.value)} 
-                required
-                />
-              </div>
-            );
             case "Groomsmen":
             return (
               <div className='question-banner'>
-                <label className='question-label-wedding-party' style={{ backgroundColor: 'var(--secondary-color)'}}>{question.text}</label>
-                <label className='question-label-instructions' style={{ backgroundColor: 'var(--secondary-color)'}}>For this section, let's just focus on the wedding party and their plus-one's. If there are other guests that you'd like to add along with these guests, such as kids, we'll add them later! If you want to grant a plus-one to someone and don't know who it will be, just leave the name fields blank, but still fill out the rest.</label>
+                <label 
+                  className='question-label-wedding-party' 
+                  style={{ backgroundColor: 'var(--secondary-color)'}}
+                >
+                  {question.text}
+                </label>
+                <label 
+                  className='question-label-instructions' 
+                  style={{ backgroundColor: 'var(--secondary-color)'}}
+                >
+                  For this section, let's just focus on the wedding party and their plus-one's. If there are other guests that you'd like to add along with these guests, such as kids, we'll add them later! If you want to grant a plus-one to someone and don't know who it will be, just leave the name fields blank, but still fill out the rest.
+                </label>
                 <Groomsmen 
-                selectedCategory={selectedCategory} 
-                handleSelectChange={handleSelectChange}
-                categories={categories} 
-                rowsGroomsmen={rowsGroomsmen}
-                addRowGroomsmen={addRowGroomsmen}
-                handlePlusOneSelectChangeGroomsmen={handlePlusOneSelectChangeGroomsmen}
-                plusOneValueGroomsmen={plusOneValueGroomsmen}
-                handleRangeChangeGroomsmen={handleRangeChangeGroomsmen}
-                className='question-input' 
-                type="text" 
-                value={answer} 
-                onChange={(e) => handleAnswer(question.id, e.target.value)} 
-                required
+                  selectedCategory={selectedCategory} 
+                  handleSelectChange={handleSelectChange}
+                  categories={categories} 
+                  rowsGroomsmen={rowsGroomsmen}
+                  addRowGroomsmen={addRowGroomsmen}
+                  handlePlusOneSelectChangeGroomsmen={handlePlusOneSelectChangeGroomsmen}
+                  plusOneValueGroomsmen={plusOneValueGroomsmen}
+                  handleRangeChangeGroomsmen={handleRangeChangeGroomsmen}
+                  className='question-input' 
+                  type="text" 
+                  value={answer} 
+                  onChange={(e) => handleAnswer(question.id, e.target.value)} 
+                  required
                 />
               </div>
             );
           case "Everybody Else":
             return (
               <div className='question-banner'>
-                <label className='question-label-wedding-party' style={{ backgroundColor: 'var(--secondary-color)'}}>{question.text}</label>
-                <label className='question-label-instructions' style={{ backgroundColor: 'var(--secondary-color)'}}>Now let's add everybody else! A best practice could be to go down your 'Category List', add and submit the corresponding guests, then start with the next category. Every time you submit guests, they should now appear in your guest list. Don't worry if you forget a few. We can always return to the questionnaire or add them in Guest List.  </label>
+                <label 
+                  className='question-label-wedding-party' 
+                  style={{ backgroundColor: 'var(--secondary-color)'}}
+                >
+                  {question.text}
+                </label>
+                <label 
+                  className='question-label-instructions' 
+                  style={{ backgroundColor: 'var(--secondary-color)'}}
+                >
+                  Now let's add everybody else! A best practice could be to go down your 'Category List', add and submit the corresponding guests, then start with the next category. Every time you submit guests, they should now appear in your guest list. Don't worry if you forget a few. We can always return to the questionnaire or add them in Guest List. 
+                </label>
                 <EverybodyElse
-                selectedCategory={selectedCategory} 
-                handleSelectChange={handleSelectChange}
-                categories={categories} 
-                className='question-input' 
-                type="text" 
-                value={answer} 
-                onChange={(e) => handleAnswer(question.id, e.target.value)} 
-                required
+                  selectedCategory={selectedCategory} 
+                  handleSelectChange={handleSelectChange}
+                  categories={categories} 
+                  className='question-input' 
+                  type="text" 
+                  value={answer} 
+                  onChange={(e) => handleAnswer(question.id, e.target.value)} 
+                  required
                 />
               </div>
             );
@@ -277,7 +379,7 @@ const Questionnaire = () => {
   return(
     <div className='questionnaire'>
         <Header />
-            <div className='questions'>
+            <Form className='questions'>
               <div className='question'>
                 {renderQuestion(questions[currentPage])}
               </div>
@@ -292,7 +394,7 @@ const Questionnaire = () => {
                   <Button className="button" variant="primary" onClick={() => console.log(answers)}>Submit</Button>
                 )} 
               </div>     
-            </div>
+            </Form>
         <Footer />
     </div>
     )

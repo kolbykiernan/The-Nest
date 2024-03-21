@@ -242,6 +242,12 @@ td p {
       margin-left: auto; 
       margin-right: auto; 
     }
+
+    .category-input-dropdown{
+      max-width: 800px; 
+      margin-left: auto; 
+      margin-right: auto; 
+    }
   }
 
 @media (min-height: 800px) {
