@@ -4,7 +4,12 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 
 
-const CategoryDropdown = ({ categories, handleSelectChange, isDropdown }) => {
+const CategoryDropdown = ({ categories, isDropdown, onChange, selectedCategories, index }) => {
+
+  const handleSelectionChange = (e) => {
+    const selectedValue = e.target.value;
+    onChange(selectedValue, index, 'selectedCategory');
+  }
 
   if (isDropdown) {
     return (
@@ -22,11 +27,15 @@ const CategoryDropdown = ({ categories, handleSelectChange, isDropdown }) => {
     );
   } else {
     return (
-      <Form.Select  onChange={handleSelectChange} className="category-select">
+      <Form.Select  
+        className="category-select"
+        value={selectedCategories[index] || ""}
+        onChange={(e) => handleSelectionChange(e)}  
+      >
         <option value="">Select a category</option>
-        {categories.map((category) => (
-          <option key={category.id} value={category.id}>{category.name}</option>
-        ))}
+          {categories.map((category) => (
+        <option key={category.id} value={category.name}>{category.name}</option>
+          ))}
       </Form.Select>
     );
   }

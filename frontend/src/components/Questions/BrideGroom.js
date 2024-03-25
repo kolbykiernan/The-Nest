@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 export default function BrideGroom({ handleAnswer }) {
     const [brideSelection, setBrideSelection] = useState('Bride');
     const [groomSelection, setGroomSelection] = useState('Groom');
+    const [brideFirstName, setBrideFirstName] = useState('');
+    const [brideLastName, setBrideLastName] = useState('');
+    const [groomFirstName, setGroomFirstName] = useState('');
+    const [groomLastName, setGroomLastName] = useState('');
+
+    useEffect(() => {
+        handleSelection(brideSelection, true);
+        handleSelection(groomSelection, false);
+    }, []);
 
     const handleSelection = (value, isBride) => {
         if (isBride) {
@@ -15,11 +25,6 @@ export default function BrideGroom({ handleAnswer }) {
             handleAnswer('groomSelection', value);
         }
     };
-
-    const [brideFirstName, setBrideFirstName] = useState('');
-    const [brideLastName, setBrideLastName] = useState('');
-    const [groomFirstName, setGroomFirstName] = useState('');
-    const [groomLastName, setGroomLastName] = useState('');
 
     const handleFirstNameChange = (value, isBride) => {
         if (isBride) {

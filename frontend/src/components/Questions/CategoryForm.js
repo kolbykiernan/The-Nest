@@ -48,7 +48,7 @@ const CategoryForm = ({categories, fetchCategories}) => {
           className="category-button"
           variant="secondary"
           type="submit"
-          // onClick={onClick}
+        
         >
         Add Category
         </Button>

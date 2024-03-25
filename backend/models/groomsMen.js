@@ -1,11 +1,50 @@
-const mongoose = require('mongoose')
+import { Sequelize, DataTypes } from 'sequelize';
 
-const groomsMenSchema = new mongoose.Schema({
-    firstName: {type: String, required: true},
-    lastName: {type: String, required: true},
-    origin: {type: String, required: true},
-    bestMan: {type: Boolean, required: true},
-    plusOne: {type: Boolean, required: true},
+const sequelize = new Sequelize('postgres://postgres:P3aceonurt%23@localhost:5432/wedding_app');
+
+const Groomsmen = sequelize.define('Groomsmen', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    selectedCategory: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    plusOneSelectedGroomsmen: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    plusOneFirstName: {
+        type: DataTypes.STRING,
+    },
+    plusOneLastName: {
+        type: DataTypes.STRING,
+    },
+    isAlsoInWeddingParty: {
+        type: DataTypes.STRING,
+    },
+    plusOneValueGroomsmen: {
+        type: DataTypes.DECIMAL,
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+    }
 })
 
-module.exports = mongoose.model('Groomsmen', groomsMenSchema)
+export default Groomsmen;

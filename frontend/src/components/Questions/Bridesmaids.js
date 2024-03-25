@@ -8,16 +8,16 @@ import CategoryDropdown from './CategoryDropdown';
 import axios from 'axios';
 
 
-const Groomsmen = ({ categories, handleAnswer }) => {
+const Bridesmaids = ({ categories, handleAnswer }) => {
     
-  const [rowsGroomsmen, setRowsGroomsmen] = useState(Array.from({ length: 10 }, () => ({
+  const [rowsBridesmaids, setRowsBridesmaids] = useState(Array.from({ length: 10 }, () => ({
     firstName: '',
     lastName: '',
-    plusOneSelectedGroomsmen: '',
+    plusOneSelectedBridesmaids: '',
     plusOneFirstName: '',
     plusOneLastName: '',
     selectedRole: '',
-    plusOneValueGroomsmen: 1,
+    plusOneValueBridesmaids: 1,
 })));
 const [selectedCategories, setSelectedCategories] = useState(Array.from({ length: 10 }, () => ''));
 
@@ -31,7 +31,7 @@ const selectCategory = (value, index, categoryType) => {
 }
 
   const handleFirstNameChange = (value, index, nameType) => {
-    setRowsGroomsmen(prevRows => {
+    setRowsBridesmaids(prevRows => {
       const updatedRows = [...prevRows];
       updatedRows[index] = { ...updatedRows[index], [nameType]: value };
       return updatedRows;
@@ -40,7 +40,7 @@ const selectCategory = (value, index, categoryType) => {
   };
 
   const handleLastNameChange = (value, index, nameType) => {
-    setRowsGroomsmen(prevRows => {
+    setRowsBridesmaids(prevRows => {
       const updatedRows = [...prevRows];
       updatedRows[index] = { ...updatedRows[index], [nameType]: value };
       return updatedRows;
@@ -48,18 +48,18 @@ const selectCategory = (value, index, categoryType) => {
     handleAnswer('lastName', value, index, nameType);
   };
 
-  const handlePlusOneSelectChangeGroomsmen = (index, value) => {
-    // setPlusOneSelectedGroomsmen(value);
-    setRowsGroomsmen(prevRowsGroomsmen => {
-      const updatedRowsGroomsmen = [...prevRowsGroomsmen];
-      updatedRowsGroomsmen[index] = { ...updatedRowsGroomsmen[index], plusOneSelectedGroomsmen: value === 'Yes' };
-      return updatedRowsGroomsmen;
+  const handlePlusOneSelectChangeBridesmaids = (index, value) => {
+    // setPlusOneSelectedBridesmaids(value);
+    setRowsBridesmaids(prevRowsBridesmaids => {
+      const updatedRowsBridesmaids = [...prevRowsBridesmaids];
+      updatedRowsBridesmaids[index] = { ...updatedRowsBridesmaids[index], plusOneSelectedBridesmaids: value === 'Yes' };
+      return updatedRowsBridesmaids;
     });
-    handleAnswer('plusOneSelectedGroomsmen', value, index)
+    handleAnswer('plusOneSelectedBridesmaids', value, index)
   };
 
   const handlePlusOneFirstNameChange = (value, index, nameType) => {
-    setRowsGroomsmen(prevRows => {
+    setRowsBridesmaids(prevRows => {
       const updatedRows = [...prevRows];
       updatedRows[index] = { ...updatedRows[index], [nameType]: value };
       return updatedRows;
@@ -68,7 +68,7 @@ const selectCategory = (value, index, categoryType) => {
   };
 
   const handlePlusOneLastNameChange = (value, index, nameType) => {
-    setRowsGroomsmen(prevRows => {
+    setRowsBridesmaids(prevRows => {
       const updatedRows = [...prevRows];
       updatedRows[index] = { ...updatedRows[index], [nameType]: value };
       return updatedRows;
@@ -77,7 +77,7 @@ const selectCategory = (value, index, categoryType) => {
   };
 
   const isAlsoInWeddingParty = (value, role, index) => {
-    setRowsGroomsmen(prevRows => {
+    setRowsBridesmaids(prevRows => {
       const updatedRows = [...prevRows];
       updatedRows[index] = { ...updatedRows[index], selectedRole: role };
       return updatedRows;
@@ -86,40 +86,40 @@ const selectCategory = (value, index, categoryType) => {
   };
 
   const handlePlusOneValueChange = (value, index) => {
-    setRowsGroomsmen(prevRows => {
+    setRowsBridesmaids(prevRows => {
       const updatedRows = [...prevRows];
       updatedRows[index] = {
         ...updatedRows[index],
-        plusOneValueGroomsmen: parseFloat(value)
+        plusOneValueBridesmaids: parseFloat(value)
       };
       return updatedRows;
     });
   };
 
-  const addRowGroomsmen = () => {
-    setRowsGroomsmen(prevRowsGroomsmen => {
-      const newRow = { plusOneSelectedGroomsmen: '' };
-      return [...prevRowsGroomsmen, newRow];
+  const addRowBridesmaids = () => {
+    setRowsBridesmaids(prevRowsBridesmaids => {
+      const newRow = { plusOneSelectedBridesmaids: '' };
+      return [...prevRowsBridesmaids, newRow];
     });
   };
 
-const submitGroomsmen = async () => {
+const submitBridesmaids = async () => {
   try {
   
-    for (let i = 0; i < rowsGroomsmen.length; i++) {
-      if (rowsGroomsmen[i].firstName || rowsGroomsmen[i].lastName) {
+    for (let i = 0; i < rowsBridesmaids.length; i++) {
+      if (rowsBridesmaids[i].firstName || rowsBridesmaids[i].lastName) {
         const formData = {
-          firstName: rowsGroomsmen[i].firstName,
-          lastName: rowsGroomsmen[i].lastName,
+          firstName: rowsBridesmaids[i].firstName,
+          lastName: rowsBridesmaids[i].lastName,
           selectedCategory: selectedCategories[i],
-          plusOneSelectedGroomsmen: rowsGroomsmen[i].plusOneSelectedGroomsmen,
-          plusOneFirstName: rowsGroomsmen[i].plusOneFirstName,
-          plusOneLastName: rowsGroomsmen[i].plusOneLastName,
-          isAlsoInWeddingParty: rowsGroomsmen[i].selectedRole,
-          plusOneValueGroomsmen: rowsGroomsmen[i].plusOneValueGroomsmen
+          plusOneSelectedBridesmaids: rowsBridesmaids[i].plusOneSelectedBridesmaids,
+          plusOneFirstName: rowsBridesmaids[i].plusOneFirstName,
+          plusOneLastName: rowsBridesmaids[i].plusOneLastName,
+          isAlsoInWeddingParty: rowsBridesmaids[i].selectedRole,
+          plusOneValueBridesmaids: rowsBridesmaids[i].plusOneValueBridesmaids
         };
 
-        const response = await axios.post('http://localhost:3000/api/groomsmen', formData);
+        const response = await axios.post('http://localhost:3000/api/bridesmaids', formData);
         console.log('Form submitted successfully for row', i+1, ':', response.data);
       }
     }
@@ -146,7 +146,7 @@ const submitGroomsmen = async () => {
             </tr>
           </thead>
           <tbody>
-            {rowsGroomsmen.map((row, index) => (
+            {rowsBridesmaids.map((row, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>
@@ -178,8 +178,8 @@ const submitGroomsmen = async () => {
                 <td>
                   <DropdownButton 
                     variant="outline-secondary" 
-                    title={row.plusOneSelectedGroomsmen ? 'Yes' : (row.plusOneSelectedGroomsmen === false ? 'No' : 'Select One')}
-                    onSelect={(value) => handlePlusOneSelectChangeGroomsmen(index, value)}
+                    title={row.plusOneSelectedBridesmaids ? 'Yes' : (row.plusOneSelectedBridesmaids === false ? 'No' : 'Select One')}
+                    onSelect={(value) => handlePlusOneSelectChangeBridesmaids(index, value)}
                   >
                     <Dropdown.Item 
                       eventKey="Yes"
@@ -194,7 +194,7 @@ const submitGroomsmen = async () => {
                 <td>
                   <Form.Control 
                     type="text" 
-                    disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
+                    disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
                     value={row.plusOneFirstName} 
                     onChange={(e) => handlePlusOneFirstNameChange(e.target.value, index, 'plusOneFirstName')}
                   />
@@ -202,7 +202,7 @@ const submitGroomsmen = async () => {
                 <td>
                   <Form.Control 
                     type="text" 
-                    disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
+                    disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
                     value={row.plusOneLastName} 
                     onChange={(e) => handlePlusOneLastNameChange(e.target.value, index, 'plusOneLastName')}
                   />
@@ -212,14 +212,14 @@ const submitGroomsmen = async () => {
                     type="checkbox"
                     label="bridesmaid"
                     className="form-margins"
-                    disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
+                    disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
                     value="bridesmaid"
                     onChange={() => isAlsoInWeddingParty('bridesmaid', 'bridesmaid', index)}
                 />
                 <Form.Check
                     type="checkbox"
                     label="groomsmen"
-                    disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
+                    disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
                     value="groomsmen"
                     onChange={() => isAlsoInWeddingParty('groomsmen', 'groomsmen', index)}
                 />
@@ -229,23 +229,23 @@ const submitGroomsmen = async () => {
                     min={1} 
                     max={5} 
                     step={0.5} 
-                    disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
-                    value={row.plusOneValueGroomsmen} 
+                    disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
+                    value={row.plusOneValueBridesmaids} 
                     onChange={(e) => handlePlusOneValueChange(e.target.value, index)}
                   />
-                  <p>Selected Value: {row.plusOneValueGroomsmen}</p>
+                  <p>Selected Value: {row.plusOneValueBridesmaids}</p>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
         <div>
-          <Button className='add-row-button' onClick={addRowGroomsmen}>Add Row</Button>
-          <Button className='add-row-button' onClick={submitGroomsmen}>Submit Groomsmen</Button>
+          <Button className='add-row-button' onClick={addRowBridesmaids}>Add Row</Button>
+          <Button className='add-row-button' onClick={submitBridesmaids}>Submit Bridesmaids</Button>
         </div>
       </Form>
     </div>
   );
 }
 
-export default Groomsmen;
+export default Bridesmaids;
