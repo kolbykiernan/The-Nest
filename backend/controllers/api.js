@@ -5,6 +5,7 @@ import Category from '../models/Category.js';
 import WeddingData from '../models/WeddingData.js';
 import Bridesmaids from '../models/bridesMaids.js';
 import Groomsmen from '../models/groomsMen.js';
+import EverybodyElse from '../models/EverybodyElse.js';
 
 router.post('/', async (req, res) => {
   try {
@@ -121,5 +122,44 @@ router.get('/categories', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
   });
+
+     // GET route to retrieve everyone else
+     router.get('/everybodyelse', async (req, res) => {
+      try {
+          const everybodyElse = await EverybodyElse.findAll();
+          res.json(everybodyElse);
+      } catch (error) {
+          console.error('Error fetching everybodyElse:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      }
+    });
+    
+    // POST route to create a new guest
+    router.post('/everybodyelse', async (req, res) => {
+      const { firstName, lastName, selectedCategory, brideGroomOrMutual, guestValue, plusOneSelected, plusOneFirstName, plusOneLastName, plusOneValue, otherGuests, addOnFirstName, addOnLastName, addOnValue, moreGuests, howMany } = req.body;
+      try {
+          const newGuest = await EverybodyElse.create({
+              firstName,
+              lastName,
+              selectedCategory,
+              brideGroomOrMutual,
+              guestValue,
+              plusOneSelected,
+              plusOneFirstName,
+              plusOneLastName,
+              plusOneValue,
+              otherGuests,
+              addOnFirstName,
+              addOnLastName,
+              addOnValue,
+              moreGuests,
+              howMany
+          });
+          res.status(201).json(newGuest);
+      } catch (error) {
+          console.error('Error creating guest:', error);
+          res.status(500).json({ error: 'Internal Server Error' });
+      }
+    });
 
 export default router;

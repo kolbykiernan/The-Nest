@@ -13,7 +13,7 @@ const Bridesmaids = ({ categories, handleAnswer }) => {
   const [rowsBridesmaids, setRowsBridesmaids] = useState(Array.from({ length: 10 }, () => ({
     firstName: '',
     lastName: '',
-    plusOneSelectedBridesmaids: '',
+    plusOneSelectedBridesmaids: false,
     plusOneFirstName: '',
     plusOneLastName: '',
     selectedRole: '',
@@ -49,7 +49,6 @@ const selectCategory = (value, index, categoryType) => {
   };
 
   const handlePlusOneSelectChangeBridesmaids = (index, value) => {
-    // setPlusOneSelectedBridesmaids(value);
     setRowsBridesmaids(prevRowsBridesmaids => {
       const updatedRowsBridesmaids = [...prevRowsBridesmaids];
       updatedRowsBridesmaids[index] = { ...updatedRowsBridesmaids[index], plusOneSelectedBridesmaids: value === 'Yes' };

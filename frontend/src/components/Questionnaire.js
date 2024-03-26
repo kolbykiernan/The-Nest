@@ -298,6 +298,7 @@ const Questionnaire = () => {
               type="text" 
               value={answer} 
               onChange={(e) => handleAnswer(question.id, e.target.value)} 
+              handleAnswer={handleAnswer}
               required
             />
           </div>
