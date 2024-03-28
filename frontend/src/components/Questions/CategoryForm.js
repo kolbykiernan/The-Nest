@@ -13,7 +13,7 @@ const CategoryForm = ({categories, fetchCategories}) => {
   
 
   const handleFormSubmit = async (e) => {
-    e.preventDefault();
+
     try {
       // Send a POST request to the backend to add the new category
       await axios.post('http://localhost:3000/api/categories', { name: categoryName });
@@ -30,7 +30,7 @@ const CategoryForm = ({categories, fetchCategories}) => {
 
   return (
     <div>
-      <Form onSubmit={handleFormSubmit} className='category-form'>
+      <div className='category-form'>
         <div className='category-input-dropdown'>
           <InputGroup className="parent-input-group">
             <Form.Control 
@@ -48,11 +48,11 @@ const CategoryForm = ({categories, fetchCategories}) => {
           className="category-button"
           variant="secondary"
           type="submit"
-        
+          onClick={handleFormSubmit}
         >
         Add Category
         </Button>
-      </Form>
+      </div>
     </div>
   );
 };

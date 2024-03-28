@@ -1,135 +1,137 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import CategoryDropdown from './CategoryDropdown';
-import axios from 'axios';
 
 
-const Bridesmaids = ({ categories, handleAnswer }) => {
-    
-  const [rowsBridesmaids, setRowsBridesmaids] = useState(Array.from({ length: 10 }, () => ({
-    firstName: '',
-    lastName: '',
-    plusOneSelectedBridesmaids: false,
-    plusOneFirstName: '',
-    plusOneLastName: '',
-    selectedRole: '',
-    plusOneValueBridesmaids: 1,
-})));
-const [selectedCategories, setSelectedCategories] = useState(Array.from({ length: 10 }, () => ''));
+
+const Bridesmaids = ({ categories, handleAnswer, onBridesmaidsDataUpdate }) => {
+  const [bridesmaidsData, setBridesmaidsData] = useState(() => {
+    // Initialize bridesmaidsData from localStorage or with default values
+    const storedData = localStorage.getItem('bridesmaidsData');
+    return storedData ? JSON.parse(storedData) : Array.from({ length: 10 }, (_, index) => ({
+        id: index, // Unique identifier for each row
+        firstName: '',
+        lastName: '',
+        selectedCategory: '',
+        plusOneSelectedBridesmaids: '',
+        plusOneFirstName: '',
+        plusOneLastName: '',
+        selectedRole: '',
+        plusOneValueBridesmaids: 1,
+    }));
+});
+
+const [selectedCategories, setSelectedCategories] = useState(() => {
+  const storedCategories = localStorage.getItem('bridesmaidsSelectedCategories');
+  return storedCategories ? JSON.parse(storedCategories) : Array.from({ length: 10 }, () => '');
+});
 
 const selectCategory = (value, index, categoryType) => {
   setSelectedCategories(prevCategories => {
-    const updatedCategories = [...prevCategories];
-    updatedCategories[index] = value;
-    return updatedCategories;
+      const updatedCategories = [...prevCategories];
+      updatedCategories[index] = value;
+      return updatedCategories;
   });
   handleAnswer(categoryType, value, index);
+  setBridesmaidsData(prevData => {
+      const newData = [...prevData];
+      newData[index] = { ...newData[index], selectedCategory: value };
+      return newData;
+  });
 }
 
-  const handleFirstNameChange = (value, index, nameType) => {
-    setRowsBridesmaids(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = { ...updatedRows[index], [nameType]: value };
-      return updatedRows;
-    });
-    handleAnswer('firstName', value, index, nameType);
-  };
+useEffect(() => {
+  localStorage.setItem('bridesmaidsData', JSON.stringify(bridesmaidsData));
+  
+  onBridesmaidsDataUpdate(bridesmaidsData);
+}, [bridesmaidsData, onBridesmaidsDataUpdate]);
 
-  const handleLastNameChange = (value, index, nameType) => {
-    setRowsBridesmaids(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = { ...updatedRows[index], [nameType]: value };
-      return updatedRows;
-    });
-    handleAnswer('lastName', value, index, nameType);
-  };
+useEffect(() => {
+  localStorage.setItem('bridesmaidsSelectedCategories', JSON.stringify(selectedCategories));
+}, [selectedCategories]);
 
-  const handlePlusOneSelectChangeBridesmaids = (index, value) => {
-    setRowsBridesmaids(prevRowsBridesmaids => {
-      const updatedRowsBridesmaids = [...prevRowsBridesmaids];
-      updatedRowsBridesmaids[index] = { ...updatedRowsBridesmaids[index], plusOneSelectedBridesmaids: value === 'Yes' };
-      return updatedRowsBridesmaids;
-    });
-    handleAnswer('plusOneSelectedBridesmaids', value, index)
-  };
 
-  const handlePlusOneFirstNameChange = (value, index, nameType) => {
-    setRowsBridesmaids(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = { ...updatedRows[index], [nameType]: value };
-      return updatedRows;
-    });
-    handleAnswer('plusOneFirstName', value, index, nameType);
-  };
+const handleFirstNameChange = (value, id) => {
+  const updatedBridesmaidsData = bridesmaidsData.map(row =>
+    row.id === id ? { ...row, firstName: value } : row
+  );
+  setBridesmaidsData(updatedBridesmaidsData);
+  handleAnswer(id, { firstName: value });
+};
 
-  const handlePlusOneLastNameChange = (value, index, nameType) => {
-    setRowsBridesmaids(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = { ...updatedRows[index], [nameType]: value };
-      return updatedRows;
-    });
-    handleAnswer('plusOneLastName', value, index, nameType);
-  };
+const handleLastNameChange = (value, id) => {
+  const updatedBridesmaidsData = bridesmaidsData.map(row =>
+    row.id === id ? { ...row, lastName: value } : row
+  );
+  setBridesmaidsData(updatedBridesmaidsData);
+  handleAnswer(id, { lastName: value });
+};
 
-  const isAlsoInWeddingParty = (value, role, index) => {
-    setRowsBridesmaids(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = { ...updatedRows[index], selectedRole: role };
-      return updatedRows;
-    });
-    handleAnswer('alsoInWeddingParty', value);
-  };
+const handlePlusOneSelectChangeBridesmaids = (id, value) => {
+  const updatedBridesmaidsData = bridesmaidsData.map(row =>
+    row.id === id ? { ...row, plusOneSelectedBridesmaids: value === 'Yes' } : row
+  );
+  setBridesmaidsData(updatedBridesmaidsData);
+  handleAnswer(id, { plusOneSelectedBridesmaids: value === 'Yes' });
+};
 
-  const handlePlusOneValueChange = (value, index) => {
-    setRowsBridesmaids(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = {
-        ...updatedRows[index],
-        plusOneValueBridesmaids: parseFloat(value)
-      };
-      return updatedRows;
-    });
-  };
+const handlePlusOneFirstNameChange = (value, id) => {
+  const updatedBridesmaidsData = bridesmaidsData.map(row =>
+    row.id === id ? { ...row, plusOneFirstName: value } : row
+  );
+  setBridesmaidsData(updatedBridesmaidsData);
+  handleAnswer(id, { plusOneFirstName: value });
+};
+
+const handlePlusOneLastNameChange = (value, id) => {
+  const updatedBridesmaidsData = bridesmaidsData.map(row =>
+    row.id === id ? { ...row, plusOneLastName: value } : row
+  );
+  setBridesmaidsData(updatedBridesmaidsData);
+  handleAnswer(id, { plusOneLastName: value });
+};
+
+const isAlsoInWeddingParty = (value, id) => {
+  const updatedBridesmaidsData = bridesmaidsData.map(row =>
+    row.id === id ? { ...row, selectedRole: value } : row
+  );
+  setBridesmaidsData(updatedBridesmaidsData);
+  handleAnswer(id, { selectedRole: value });
+};
+
+const handlePlusOneValueChange = (value, id) => {
+  const updatedBridesmaidsData = bridesmaidsData.map(row =>
+    row.id === id ? { ...row, plusOneValueBridesmaids: value } : row
+  );
+  setBridesmaidsData(updatedBridesmaidsData);
+  handleAnswer(id, { plusOneValueBridesmaids: value });
+};
+
 
   const addRowBridesmaids = () => {
-    setRowsBridesmaids(prevRowsBridesmaids => {
-      const newRow = { plusOneSelectedBridesmaids: '' };
-      return [...prevRowsBridesmaids, newRow];
-    });
-  };
-
-const submitBridesmaids = async () => {
-  try {
+    const newRow = {
+      id: bridesmaidsData.length + 1, // Generate a unique ID for the new row
+      firstName: '',
+      lastName: '',
+      selectedCategory: '',
+      plusOneSelectedBridesmaids: '',
+      plusOneFirstName: '',
+      plusOneLastName: '',
+      selectedRole: '',
+      plusOneValueBridesmaids: 1,
+    };
   
-    for (let i = 0; i < rowsBridesmaids.length; i++) {
-      if (rowsBridesmaids[i].firstName || rowsBridesmaids[i].lastName) {
-        const formData = {
-          firstName: rowsBridesmaids[i].firstName,
-          lastName: rowsBridesmaids[i].lastName,
-          selectedCategory: selectedCategories[i],
-          plusOneSelectedBridesmaids: rowsBridesmaids[i].plusOneSelectedBridesmaids,
-          plusOneFirstName: rowsBridesmaids[i].plusOneFirstName,
-          plusOneLastName: rowsBridesmaids[i].plusOneLastName,
-          isAlsoInWeddingParty: rowsBridesmaids[i].selectedRole,
-          plusOneValueBridesmaids: rowsBridesmaids[i].plusOneValueBridesmaids
-        };
-
-        const response = await axios.post('http://localhost:3000/api/bridesmaids', formData);
-        console.log('Form submitted successfully for row', i+1, ':', response.data);
-      }
-    }
-  } catch (error) {
-    console.error('Error submitting form:', error);
-  }
-};
+    const updatedBridesmaidsData = [...bridesmaidsData, newRow];
+    setBridesmaidsData(updatedBridesmaidsData);
+  };
 
   return (
     <div className='wedding-party-form'>
-      <Form>
+      <div>
         <Table responsive="sm">
           <thead className='table-head'>
             <tr>
@@ -145,21 +147,21 @@ const submitBridesmaids = async () => {
             </tr>
           </thead>
           <tbody>
-            {rowsBridesmaids.map((row, index) => (
+            {bridesmaidsData.map((row, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>
                     <Form.Control 
                       type="text" 
                       value={row.firstName} 
-                      onChange={(e) => handleFirstNameChange(e.target.value, index, 'firstName')}
+                      onChange={(e) => handleFirstNameChange(e.target.value, row.id)}
                     />
                 </td>
                 <td>
                     <Form.Control 
                       type="text" 
                       value={row.lastName} 
-                      onChange={(e) => handleLastNameChange(e.target.value, index, 'lastName')}
+                      onChange={(e) => handleLastNameChange(e.target.value, row.id)}
                     />
                 </td>
                 <td>
@@ -168,7 +170,7 @@ const submitBridesmaids = async () => {
                       index={index}
                       categories={categories} 
                       selectedCategories={selectedCategories} 
-                      onChange={(value) => selectCategory(value, index, 'selectedCategory')}
+                      onChange={(value) => selectCategory(value, row.id)}
                       isDropdown={false} 
                       className="category-select" 
                     />
@@ -178,7 +180,7 @@ const submitBridesmaids = async () => {
                   <DropdownButton 
                     variant="outline-secondary" 
                     title={row.plusOneSelectedBridesmaids ? 'Yes' : (row.plusOneSelectedBridesmaids === false ? 'No' : 'Select One')}
-                    onSelect={(value) => handlePlusOneSelectChangeBridesmaids(index, value)}
+                    onSelect={(value) => handlePlusOneSelectChangeBridesmaids(row.id, value)}
                   >
                     <Dropdown.Item 
                       eventKey="Yes"
@@ -195,7 +197,7 @@ const submitBridesmaids = async () => {
                     type="text" 
                     disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
                     value={row.plusOneFirstName} 
-                    onChange={(e) => handlePlusOneFirstNameChange(e.target.value, index, 'plusOneFirstName')}
+                    onChange={(e) => handlePlusOneFirstNameChange(e.target.value, row.id)}
                   />
                 </td>
                 <td>
@@ -203,7 +205,7 @@ const submitBridesmaids = async () => {
                     type="text" 
                     disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
                     value={row.plusOneLastName} 
-                    onChange={(e) => handlePlusOneLastNameChange(e.target.value, index, 'plusOneLastName')}
+                    onChange={(e) => handlePlusOneLastNameChange(e.target.value, row.id)}
                   />
                 </td>
                 <td>
@@ -213,14 +215,14 @@ const submitBridesmaids = async () => {
                     className="form-margins"
                     disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
                     value="bridesmaid"
-                    onChange={() => isAlsoInWeddingParty('bridesmaid', 'bridesmaid', index)}
+                    onChange={() => isAlsoInWeddingParty('bridesmaid', 'bridesmaid', row.id)}
                 />
                 <Form.Check
                     type="checkbox"
                     label="groomsmen"
                     disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
                     value="groomsmen"
-                    onChange={() => isAlsoInWeddingParty('groomsmen', 'groomsmen', index)}
+                    onChange={() => isAlsoInWeddingParty('groomsmen', 'groomsmen', row.id)}
                 />
                 </td>
                 <td>
@@ -230,7 +232,7 @@ const submitBridesmaids = async () => {
                     step={0.5} 
                     disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
                     value={row.plusOneValueBridesmaids} 
-                    onChange={(e) => handlePlusOneValueChange(e.target.value, index)}
+                    onChange={(e) => handlePlusOneValueChange(e.target.value, row.id)}
                   />
                   <p>Selected Value: {row.plusOneValueBridesmaids}</p>
                 </td>
@@ -240,9 +242,9 @@ const submitBridesmaids = async () => {
         </Table>
         <div>
           <Button className='add-row-button' onClick={addRowBridesmaids}>Add Row</Button>
-          <Button className='add-row-button' onClick={submitBridesmaids}>Submit Bridesmaids</Button>
+          {/* <Button className='add-row-button' onClick={submitBridesmaids}>Submit Bridesmaids</Button> */}
         </div>
-      </Form>
+      </div>
     </div>
   );
 }

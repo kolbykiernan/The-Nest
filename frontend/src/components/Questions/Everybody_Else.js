@@ -1,177 +1,179 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import CategoryDropdown from './CategoryDropdown';
-import axios from 'axios';
 
 
-const EverybodyElse = ({ categories, handleAnswer }) => {
-    
-  const [rowsEverybodyElse, setRowsEverybodyElse] = useState(Array.from({ length: 10 }, () => ({
-    firstName: '',
-    lastName: '',
-    brideGroomOrMutual: '',
-    guestValue: 1,
-    plusOneSelected: false,
-    plusOneFirstName: '',
-    plusOneLastName: '',
-    plusOneValue: 1,
-    otherGuests: false,
-    addOnFirstName: '',
-    addOnLastName: '',
-    addOnValue: 1,
-    moreGuests: false,
-    howMany: null,
-})));
+const EverybodyElse = ({ categories, handleAnswer, onEverybodyElseDataUpdate }) => {   
+  const [everybodyElseData, setEverybodyElseData] = useState(() => {
+    // Initialize everybodyElseData from localStorage or with default values
+    const storedData = localStorage.getItem('everybodyElseData');
+    return storedData ? JSON.parse(storedData) : Array.from({ length: 10 }, (_, index) => ({
+      id: index, // Unique identifier for each row
+      firstName: '',
+      lastName: '',
+      selectedCategory: '',
+      brideGroomOrMutual: '',
+      guestValue: 1,
+      plusOneSelected: '',
+      plusOneFirstName: '',
+      plusOneLastName: '',
+      plusOneValue: 1,
+      otherGuests: '',
+      addOnFirstName: '',
+      addOnLastName: '',
+      addOnValue: 1,
+      moreGuests: '',
+      howMany: null,
+    }))
+});
 
-
-  const handleFirstNameChange = (value, index, nameType) => {
-    setRowsEverybodyElse(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = { ...updatedRows[index], [nameType]: value };
-      return updatedRows;
-    });
-    handleAnswer('firstName', value, index, nameType);
-  };
-
-  const handleLastNameChange = (value, index, nameType) => {
-    setRowsEverybodyElse(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = { ...updatedRows[index], [nameType]: value };
-      return updatedRows;
-    });
-    handleAnswer('lastName', value, index, nameType);
-  };
-
-  const [selectedCategories, setSelectedCategories] = useState(Array.from({ length: 10 }, () => ''));
-
-  const selectCategory = (value, index, categoryType) => {
-    setSelectedCategories(prevCategories => {
+const [selectedCategories, setSelectedCategories] = useState(() => {
+  const storedCategories = localStorage.getItem('everybodyElseSelectedCategories');
+  return storedCategories ? JSON.parse(storedCategories) : Array.from({ length: 10 }, () => '');
+});
+const selectCategory = (value, index, categoryType) => {
+  setSelectedCategories(prevCategories => {
       const updatedCategories = [...prevCategories];
       updatedCategories[index] = value;
       return updatedCategories;
-    });
-    handleAnswer(categoryType, value, index);
-  }
+  });
+  handleAnswer(categoryType, value, index);
+  setEverybodyElseData(prevData => {
+      const newData = [...prevData];
+      newData[index] = { ...newData[index], selectedCategory: value };
+      return newData;
+  });
+}
 
-  const selectBrideGroomOrMutual = (index, eventKey) => {
-    setRowsEverybodyElse(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = {
-        ...updatedRows[index],
-        brideGroomOrMutual: eventKey
-      };
-      return updatedRows;
-    });
-  };
+    // Save everybodyElseData to localStorage whenever it changes
+    useEffect(() => {
+      localStorage.setItem('everybodyElseData', JSON.stringify(everybodyElseData));
+      onEverybodyElseDataUpdate(everybodyElseData);
+    }, [everybodyElseData, onEverybodyElseDataUpdate]);
 
-  const handleGuestValueChange = (index, event) => {
-    const value = event.target.value;
-    setRowsEverybodyElse(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = {
-        ...updatedRows[index],
-        guestValue: parseFloat(value)
-      };
-      return updatedRows;
-    });
-  };
+    useEffect(() => {
+      localStorage.setItem('everybodyElseSelectedCategories', JSON.stringify(selectedCategories));
+    }, [selectedCategories]);
+  
 
-  const handlePlusOneSelectChange = (index, value) => {
-    setRowsEverybodyElse(prevRowsEverybodyElse => {
-      const updatedRowsEverybodyElse = [...prevRowsEverybodyElse];
-      updatedRowsEverybodyElse[index] = { ...updatedRowsEverybodyElse[index], plusOneSelected: value === 'Yes' };
-      return updatedRowsEverybodyElse;
-    });
-    handleAnswer('plusOneSelected', value, index)
-  };
 
-  const handlePlusOneFirstNameChange = (value, index, nameType) => {
-    setRowsEverybodyElse(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = { ...updatedRows[index], [nameType]: value };
-      return updatedRows;
-    });
-    handleAnswer('plusOneFirstName', value, index, nameType);
-  };
-
-  const handlePlusOneLastNameChange = (value, index, nameType) => {
-    setRowsEverybodyElse(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = { ...updatedRows[index], [nameType]: value };
-      return updatedRows;
-    });
-    handleAnswer('plusOneLastName', value, index, nameType);
-  };
-
-  const handlePlusOneValueChange = (index, event) => {
-    const value = event.target.value;
-    setRowsEverybodyElse(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = {
-        ...updatedRows[index],
-        plusOneValue: parseFloat(value)
-      };
-      return updatedRows;
-    });
-  };
-
-  const handleAddOnSelectChange = (index, value) => {
-    setRowsEverybodyElse(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = { ...updatedRows[index], addOnSelected: value === 'Yes' };
-      return updatedRows;
-    });
-  };
-
-  const handleAddOnFirstNameChange = (value, index, nameType) => {
-    setRowsEverybodyElse(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = { ...updatedRows[index], [nameType]: value };
-      return updatedRows;
-    });
-    handleAnswer('addOnFirstName', value, index, nameType);
-  };
-
-  const handleAddOnLastNameChange = (value, index, nameType) => {
-    setRowsEverybodyElse(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = { ...updatedRows[index], [nameType]: value };
-      return updatedRows;
-    });
-    handleAnswer('addOnLastName', value, index, nameType);
-  };
-
-  const handleAddOnValueChange = (index, event) => {
-    const value = event.target.value;
-    setRowsEverybodyElse(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = {
-        ...updatedRows[index],
-        addOnValue: parseFloat(value)
-      };
-      return updatedRows;
-    });
-  };
-
-  const handleExtraAddOnSelectChange = (index, value) => {
-    setRowsEverybodyElse(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index] = { ...updatedRows[index], extraAddOnSelected: value === 'Yes' };
-      return updatedRows;
-    });
-  };
-
-  const handleSelectedNumber = (index, eventKey) => {
-    setRowsEverybodyElse(prevRows => {
-      const updatedRows = [...prevRows];
-      updatedRows[index].howMany = eventKey;
-      return updatedRows;
-    });
-  };
+    const handleFirstNameChange = (value, id) => {
+      const updatedEverybodyElseData = everybodyElseData.map(row =>
+        row.id === id ? { ...row, firstName: value } : row
+      );
+      setEverybodyElseData(updatedEverybodyElseData);
+      handleAnswer(id, { firstName: value });
+    };
+    
+    const handleLastNameChange = (value, id) => {
+      const updatedEverybodyElseData = everybodyElseData.map(row =>
+        row.id === id ? { ...row, lastName: value } : row
+      );
+      setEverybodyElseData(updatedEverybodyElseData);
+      handleAnswer(id, { lastName: value });
+    };
+    
+    const selectBrideGroomOrMutual = (value, id) => {
+      const updatedEverybodyElseData = everybodyElseData.map(row =>
+        row.id === id ? { ...row, brideGroomOrMutual: value } : row
+      );
+      setEverybodyElseData(updatedEverybodyElseData);
+      handleAnswer(id, { brideGroomOrMutual: value });
+    };
+    
+    const handleGuestValueChange = (value, id) => {
+      const updatedEverybodyElseData = everybodyElseData.map(row =>
+        row.id === id ? { ...row, guestValue: value } : row
+      );
+      setEverybodyElseData(updatedEverybodyElseData);
+      handleAnswer(id, { guestValue: value });
+    };
+    
+    const handlePlusOneSelectChange = (id, value) => {
+      const updatedEverybodyElseData = everybodyElseData.map(row =>
+        row.id === id ? { ...row, plusOneSelected: value === 'Yes' } : row
+      );
+      setEverybodyElseData(updatedEverybodyElseData);
+      handleAnswer(id, { plusOneSelected: value === 'Yes' });
+    };
+    
+    const handlePlusOneFirstNameChange = (value, id) => {
+      const updatedEverybodyElseData = everybodyElseData.map(row =>
+        row.id === id ? { ...row, plusOneFirstName: value } : row
+      );
+      setEverybodyElseData(updatedEverybodyElseData);
+      handleAnswer(id, { plusOneFirstName: value });
+    };
+    
+    const handlePlusOneLastNameChange = (value, id) => {
+      const updatedEverybodyElseData = everybodyElseData.map(row =>
+        row.id === id ? { ...row, plusOneLastName: value } : row
+      );
+      setEverybodyElseData(updatedEverybodyElseData);
+      handleAnswer(id, { plusOneLastName: value });
+    };
+    
+    const handlePlusOneValueChange = (value, id) => {
+      const updatedEverybodyElseData = everybodyElseData.map(row =>
+        row.id === id ? { ...row, plusOneValue: value } : row
+      );
+      setEverybodyElseData(updatedEverybodyElseData);
+      handleAnswer(id, { plusOneValue: value });
+    };
+    
+    const handleOtherGuests = (id, value) => {
+      const updatedEverybodyElseData = everybodyElseData.map(row =>
+        row.id === id ? { ...row, otherGuests: value === 'Yes' } : row
+      );
+      setEverybodyElseData(updatedEverybodyElseData);
+      handleAnswer(id, { otherGuests: value === 'Yes' });
+    };
+    
+    const handleAddOnFirstNameChange = (value, id) => {
+      const updatedEverybodyElseData = everybodyElseData.map(row =>
+        row.id === id ? { ...row, addOnFirstName: value } : row
+      );
+      setEverybodyElseData(updatedEverybodyElseData);
+      handleAnswer(id, { addOnFirstName: value });
+    };
+    
+    const handleAddOnLastNameChange = (value, id) => {
+      const updatedEverybodyElseData = everybodyElseData.map(row =>
+        row.id === id ? { ...row, AddOnLastName: value } : row
+      );
+      setEverybodyElseData(updatedEverybodyElseData);
+      handleAnswer(id, { AddOnLastName: value });
+    };
+    
+    const handleAddOnValueChange = (value, id) => {
+      const updatedEverybodyElseData = everybodyElseData.map(row =>
+        row.id === id ? { ...row, addOnValue: value } : row
+      );
+      setEverybodyElseData(updatedEverybodyElseData);
+      handleAnswer(id, { addOnValue: value });
+    };
+    
+    const handleMoreGuestsChange = (id, value) => {
+      const updatedEverybodyElseData = everybodyElseData.map(row =>
+        row.id === id ? { ...row, moreGuests: value === 'Yes' } : row
+      );
+      setEverybodyElseData(updatedEverybodyElseData);
+      handleAnswer(id, { moreGuests: value === 'Yes' });
+    };
+    
+    const handleSelectedNumber = (id, value) => {
+      const selectedValue = parseInt(value);
+      const updatedEverybodyElseData = everybodyElseData.map(row =>
+        row.id === id ? { ...row, howMany: selectedValue } : row
+      );
+      setEverybodyElseData(updatedEverybodyElseData);
+      handleAnswer(id, { howMany: selectedValue });
+    };
+    
 
   const generateDropdownOptions = () => {
     const options = [];
@@ -182,51 +184,33 @@ const EverybodyElse = ({ categories, handleAnswer }) => {
   };
 
   const addRowEverybodyElse = () => {
-    setRowsEverybodyElse(prevRowsEverybodyElse => {
-      const newRow = { plusOneSelected: '' };
-      return [...prevRowsEverybodyElse, newRow];
-    });
+    const newRow = {
+      id: everybodyElseData.length + 1, // Generate a unique ID for the new row
+      firstName: '',
+      lastName: '',
+      selectedCategory: '',
+      brideGroomOrMutual: '',
+      guestValue: 1,
+      plusOneSelected: '',
+      plusOneFirstName: '',
+      plusOneLastName: '',
+      plusOneValue: 1,
+      otherGuests: '',
+      addOnFirstName: '',
+      addOnLastName: '',
+      addOnValue: 1,
+      moreGuests: '',
+      howMany: null,
+      };
+
+    const updatedEverybodyElseData = [...everybodyElseData, newRow];
+    setEverybodyElseData(updatedEverybodyElseData);
   };
 
-const submitEverybodyElse = async () => {
-  
-  try {
-      for (let i = 0; i < rowsEverybodyElse.length; i++) {
-        const row = rowsEverybodyElse[i];
-        if (row.firstName || row.lastName) {
-
-          const addOnValue = isNaN(row.addOnValue) ? 0 : parseFloat(row.addOnValue);
-
-          const formData = {
-            firstName: row.firstName,
-            lastName: row.lastName,
-            selectedCategory: selectedCategories[i],
-            brideGroomOrMutual: row.brideGroomOrMutual,
-            guestValue: row.guestValue,
-            plusOneSelected: row.plusOneSelected,
-            plusOneFirstName: row.plusOneFirstName,
-            plusOneLastName: row.plusOneLastName,
-            plusOneValue: row.plusOneValue,
-            otherGuests: row.otherGuests,
-            addOnFirstName: row.addOnFirstName,
-            addOnLastName: row.addOnLastName,
-            addOnValue: addOnValue, 
-            moreGuests: row.moreGuests,
-            howMany: row.howMany,
-          };
-
-          const response = await axios.post('http://localhost:3000/api/everybodyelse', formData);
-          console.log('Form submitted successfully for row', i+1, ':', response.data);
-        }
-      }
-  } catch (error) {
-    console.error('Error submitting form:', error);
-  }
-};
 
   return (
     <div className='wedding-party-form'>
-      <Form className="row-fluid">
+      <div className="row-fluid">
         <Table responsive="sm">
           <thead className='table-head'>
             <tr>
@@ -249,21 +233,21 @@ const submitEverybodyElse = async () => {
             </tr>
           </thead>
           <tbody>
-            {rowsEverybodyElse.map((row, index) => (
+            {everybodyElseData.map((row, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>
                     <Form.Control 
                       type="text" 
                       value={row.firstName} 
-                      onChange={(e) => handleFirstNameChange(e.target.value, index, 'firstName')}
+                      onChange={(e) => handleFirstNameChange(e.target.value, row.id)}
                     />
                 </td>
                 <td>
                     <Form.Control 
                       type="text" 
                       value={row.lastName} 
-                      onChange={(e) => handleLastNameChange(e.target.value, index, 'lastName')}
+                      onChange={(e) => handleLastNameChange(e.target.value, row.id)}
                     />
                 </td>
                 <td>
@@ -272,7 +256,7 @@ const submitEverybodyElse = async () => {
                       index={index}
                       categories={categories} 
                       selectedCategories={selectedCategories} 
-                      onChange={(value) => selectCategory(value, index, 'selectedCategory')}
+                      onChange={(value) => selectCategory(value, row.id)}
                       isDropdown={false} 
                       className="category-select" 
                     />
@@ -281,8 +265,8 @@ const submitEverybodyElse = async () => {
                 <td>
                   <DropdownButton
                     variant="outline-secondary"
-                    title={row.brideGroomOrMutual ? row.brideGroomOrMutual : 'Select One'}
-                    onSelect={(eventKey) => selectBrideGroomOrMutual(index, eventKey)}
+                    title={row.brideGroomOrMutual || 'Select One'}
+                    onSelect={(value) => selectBrideGroomOrMutual(value, row.id)}
                   >
                     <Dropdown.Item 
                       eventKey="Bride"
@@ -304,7 +288,7 @@ const submitEverybodyElse = async () => {
                     max={5}
                     step={0.5}
                     value={row.guestValue} 
-                    onChange={(e) => handleGuestValueChange(index, e)} 
+                    onChange={(e) => handleGuestValueChange(e.target.value, row.id)} 
                   />
                   <p>Selected Value: {row.guestValue}</p> 
                 </td>
@@ -312,7 +296,7 @@ const submitEverybodyElse = async () => {
                   <DropdownButton 
                     variant="outline-secondary" 
                     title={row.plusOneSelected ? 'Yes' : (row.plusOneSelected === false ? 'No' : 'Select One')}
-                    onSelect={(value) => handlePlusOneSelectChange(index, value)}
+                    onSelect={(value) => handlePlusOneSelectChange(row.id, value)}
                   >
                     <Dropdown.Item 
                       eventKey="Yes"
@@ -329,7 +313,7 @@ const submitEverybodyElse = async () => {
                     type="text" 
                     disabled={!row.plusOneSelected || row.plusOneSelected === 'No'}
                     value={row.plusOneFirstName} 
-                    onChange={(e) => handlePlusOneFirstNameChange(e.target.value, index, 'plusOneFirstName')}
+                    onChange={(e) => handlePlusOneFirstNameChange(e.target.value, row.id)}
                   />
                 </td>
                 <td>
@@ -337,7 +321,7 @@ const submitEverybodyElse = async () => {
                     type="text" 
                     disabled={!row.plusOneSelected || row.plusOneSelected === 'No'}
                     value={row.plusOneLastName} 
-                    onChange={(e) => handlePlusOneLastNameChange(e.target.value, index, 'plusOneLastName')}
+                    onChange={(e) => handlePlusOneLastNameChange(e.target.value, row.id)}
                   />
                 </td>
                 <td>
@@ -347,15 +331,15 @@ const submitEverybodyElse = async () => {
                     step={0.5}
                     disabled={!row.plusOneSelected || row.plusOneSelected === 'No'}
                     value={row.plusOneValue} 
-                    onChange={(e) => handlePlusOneValueChange(index, e)} 
+                    onChange={(e) => handlePlusOneValueChange(e.target.value, row.id)} 
                   />
                   <p>Selected Value: {row.plusOneValue}</p> 
                 </td>
                 <td>
                   <DropdownButton 
                     variant="outline-secondary" 
-                    title={row.addOnSelected ? 'Yes' : (row.addOnSelected === false ? 'No' : 'Select One')} 
-                    onSelect={(value) => handleAddOnSelectChange(index, value)}
+                    title={row.otherGuests ? 'Yes' : (row.otherGuests === false ? 'No' : 'Select One')} 
+                    onSelect={(value) => handleOtherGuests(row.id, value)}
                   >
                     <Dropdown.Item 
                       eventKey="Yes"
@@ -370,17 +354,17 @@ const submitEverybodyElse = async () => {
                 <td>
                   <Form.Control 
                     type="text" 
-                    disabled={!row.addOnSelected || row.addOnSelected === 'No'}
+                    disabled={!row.otherGuests || row.otherGuests === 'No'}
                     value={row.addOnFirstName} 
-                    onChange={(e) => handleAddOnFirstNameChange(e.target.value, index, 'addOnFirstName')}
+                    onChange={(e) => handleAddOnFirstNameChange(e.target.value, row.id)}
                     />
                 </td>
                 <td>
                   <Form.Control 
                     type="text" 
-                    disabled={!row.addOnSelected || row.addOnSelected === 'No'}
+                    disabled={!row.otherGuests || row.otherGuests === 'No'}
                     value={row.addOnlastName} 
-                    onChange={(e) => handleAddOnLastNameChange(e.target.value, index, 'addOnLastName')}
+                    onChange={(e) => handleAddOnLastNameChange(e.target.value, row.id)}
                     />
                 </td>
                 <td>
@@ -388,32 +372,32 @@ const submitEverybodyElse = async () => {
                     min={1} 
                     max={5} 
                     step={0.5} 
-                    disabled={!row.addOnSelected || row.addOnSelected === 'No'}
+                    disabled={!row.otherGuests || row.otherGuests === 'No'}
                     value={row.addOnValue} 
-                    onChange={(e) => handleAddOnValueChange(index, e)} 
+                    onChange={(e) => handleAddOnValueChange(e.target.value, row.id)} 
                   />
                   <p>Selected Value: {row.addOnValue}</p> 
                 </td>
                 <td>
-                  <DropdownButton 
-                    variant="outline-secondary" 
-                    disabled={!row.addOnSelected || row.addOnSelected === 'No'} 
-                    title={row.extraAddOnSelected ? 'Yes' : (row.extraAddOnSelected === false ? 'No' : 'Select One')} 
-                    onSelect={(value) => handleExtraAddOnSelectChange(index, value)}
-                  >
-                    <Dropdown.Item eventKey="Yes">Yes</Dropdown.Item>
-                    <Dropdown.Item eventKey="No">No</Dropdown.Item>
-                  </DropdownButton>
+                <DropdownButton 
+                  variant="outline-secondary" 
+                  disabled={!row.otherGuests || row.otherGuests === 'No'} 
+                  title={row.moreGuests !== null ? (row.moreGuests ? 'Yes' : 'No') : 'Select One'} // Check if moreGuests is null
+                  onSelect={(value) => handleMoreGuestsChange(row.id, value)}
+                >
+                  <Dropdown.Item eventKey="Yes">Yes</Dropdown.Item>
+                  <Dropdown.Item eventKey="No">No</Dropdown.Item>
+                </DropdownButton>
                 </td>
                 <td>
-                  <DropdownButton 
-                    variant="outline-secondary" 
-                    disabled={!row.addOnSelected || row.addOnSelected === 'No'} 
-                    onSelect={(eventKey) => handleSelectedNumber(index, eventKey)} 
-                    title={row.howMany !== null ? row.howMany : ''}
-                  >
-                      {generateDropdownOptions()}
-                  </DropdownButton>
+                <DropdownButton 
+                  variant="outline-secondary" 
+                  disabled={!row.otherGuests || row.otherGuests === 'No'} 
+                  onSelect={(eventKey) => handleSelectedNumber(row.id, eventKey)} 
+                  title={row.howMany !== null && row.howMany !== undefined ? row.howMany : 'Select'}
+                >
+                  {generateDropdownOptions()}
+                </DropdownButton>
                 </td>
               </tr>
             ))}
@@ -421,9 +405,8 @@ const submitEverybodyElse = async () => {
         </Table>
         <div>
           <Button className='add-row-button' onClick={addRowEverybodyElse}>Add Row</Button>
-          <Button className='add-row-button' onClick={submitEverybodyElse}>Submit Everybody Else</Button>
         </div>
-      </Form>
+      </div>
     </div>
   );
 }

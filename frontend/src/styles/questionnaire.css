@@ -7,6 +7,8 @@
 .navbar{
     padding-top: 2.5em;
     padding-bottom: 2.5em;
+    padding-left:2em;
+    padding-right:2em;
 }
 
 .navbar-tabs{
@@ -233,6 +235,16 @@ td p {
     white-space: nowrap;
 }
 
+.category-font{
+    background-color:#f4f4f4;
+    font-size: .6em;
+    padding-bottom:1em;
+    padding-right:5em;
+    padding-left:5em;
+}
+
+
+
 
 @media (min-width: 1000px) {
     .question-input {
@@ -248,7 +260,11 @@ td p {
       margin-left: auto; 
       margin-right: auto; 
     }
+    .category-font{
+        font-size: .5em;
+    }
   }
+
 
 @media (min-height: 800px) {
     .question-input {
@@ -263,6 +279,9 @@ td p {
         margin-top: 2.1em;
         margin-bottom: 1.1em;
     }
+    .category-font{
+        font-size: .5em;
+    }
   }
 
 @media (min-height: 850px) {
@@ -275,8 +294,11 @@ td p {
         margin-bottom: 1.5em;
     }
     .category-form {
-        margin-top: 3.1em;
-        margin-bottom: 2.1em;
+        margin-top: 2.6em;
+        margin-bottom: 1.6em;
+    }
+    .category-font{
+        font-size: .5em;
     }
   }
   
@@ -290,8 +312,8 @@ td p {
         margin-bottom: 2.3em;
     }
      .category-form {
-        margin-top: 4em;
-        margin-bottom: 3em;
+        margin-top: 3.2em;
+        margin-bottom: 2.3em;
     }
   }
 
@@ -305,8 +327,8 @@ td p {
         margin-bottom: 3.2em;
     }
      .category-form {
-        margin-top: 4.8em;
-        margin-bottom: 3.8em;
+        margin-top: 4em;
+        margin-bottom: 3em;
     }
   }
 
@@ -320,8 +342,8 @@ td p {
         margin-bottom: 4em;
     }
      .category-form {
-        margin-top: 5.8em;
-        margin-bottom: 4.8em;
+        margin-top: 5em;
+        margin-bottom: 4em;
     }
   }
 
@@ -335,8 +357,8 @@ td p {
         margin-bottom: 4.9em;
     }
      .category-form {
-        margin-top: 6.7em;
-        margin-bottom: 5.7em;
+        margin-top: 6em;
+        margin-bottom: 5em;
     }
   }
 
@@ -350,8 +372,8 @@ td p {
         margin-bottom: 5.8em;
     }
      .category-form {
-        margin-top: 7.7em;
-        margin-bottom: 6.7em;
+        margin-top: 6.7em;
+        margin-bottom: 5.7em;
     }
   }
 
@@ -444,4 +466,121 @@ td p {
     }
   }
 
-  
+  @media (max-width: 375px) {
+    .firstName-spacing{
+        width: 7em;
+    }
+    .lastName-spacing{
+        width: 7em;
+    }
+    .bride-groom-dropdown{
+        width: 7em;
+        padding: .1em;
+    }
+    .bride-groom-form{
+        padding: 1em;
+    }
+    .question-label{
+        font-size: .6em;
+    }
+    .question-label-category{
+        font-size: .4em;
+    }
+    .category-font{
+        font-size: .25em;
+    }
+    .category-form{
+        margin: 1em
+    }
+    .container-fluid{
+        padding:0em;
+    }
+    .navbar{
+        padding:1em;
+    }
+    .question-input{
+        margin: 2em;
+        padding-top:em;
+    }
+}
+
+@media (max-width: 414px) {
+    .firstName-spacing{
+        width: 7em;
+    }
+    .lastName-spacing{
+        width: 7em;
+    }
+    .bride-groom-dropdown{
+        width: 7em;
+        padding: .1em;
+    }
+    .bride-groom-form{
+        padding: 1em;
+    }
+    .question-label{
+        font-size: .9em;
+    }
+    .question-label-category{
+        font-size: .7em;
+    }
+    .category-font{
+        font-size: .35em;
+        padding-left:.7em;
+        padding-right:.7em;
+    }
+    .category-form{
+        margin: 2em
+    }
+    .container-fluid{
+        padding:0em;
+    }
+    .navbar{
+        padding:1em;
+    }
+    .question-input{
+        margin-top: 5.5em;
+        margin-bottom: 5.5em;
+    }
+}
+
+@media (max-width: 430px) {
+    .firstName-spacing{
+        width: 7em;
+    }
+    .lastName-spacing{
+        width: 7em;
+    }
+    .bride-groom-dropdown{
+        width: 7em;
+        padding: .1em;
+    }
+    .bride-groom-form{
+        padding: 1em;
+    }
+    .question-label{
+        font-size: .9em;
+    }
+    .question-label-category{
+        font-size: .7em;
+    }
+    .category-font{
+        font-size: .35em;
+        padding-left:.7em;
+        padding-right:.7em;
+    }
+    .category-form{
+        margin: 3em
+    }
+    .container-fluid{
+        padding:0em;
+    }
+    .navbar{
+        padding:1em;
+    }
+    .question-input{
+        margin-top: 6.5em;
+        margin-bottom: 6.5em;
+    }
+    
+}

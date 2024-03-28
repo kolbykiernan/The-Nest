@@ -3,49 +3,62 @@ import { useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-export default function BrideGroom({ handleAnswer }) {
-    const [brideSelection, setBrideSelection] = useState('Bride');
-    const [groomSelection, setGroomSelection] = useState('Groom');
-    const [brideFirstName, setBrideFirstName] = useState('');
-    const [brideLastName, setBrideLastName] = useState('');
-    const [groomFirstName, setGroomFirstName] = useState('');
-    const [groomLastName, setGroomLastName] = useState('');
+export default function BrideGroom({ handleAnswer, existingData }) {
 
-    useEffect(() => {
-        handleSelection(brideSelection, true);
-        handleSelection(groomSelection, false);
-    }, []);
+        const [brideSelection, setBrideSelection] = useState('Bride');
+        const [groomSelection, setGroomSelection] = useState('Groom');
+        const [brideFirstName, setBrideFirstName] = useState('');
+        const [brideLastName, setBrideLastName] = useState('');
+        const [groomFirstName, setGroomFirstName] = useState('');
+        const [groomLastName, setGroomLastName] = useState('');
+      
+        useEffect(() => {
+            // Populate inputs with existing data, if available
+            if (existingData) {
+              setBrideFirstName(existingData.brideFirstName || '');
+              setBrideLastName(existingData.brideLastName || '');
+              setBrideSelection(existingData.brideSelection || 'Bride');
+              setGroomFirstName(existingData.groomFirstName || '');
+              setGroomLastName(existingData.groomLastName || '');
+              setGroomSelection(existingData.groomSelection || 'Groom');
+            }
+          }, [existingData]);
+      
+       
 
     const handleSelection = (value, isBride) => {
         if (isBride) {
-            setBrideSelection(value);
-            handleAnswer('brideSelection', value);
+          setBrideSelection(value);
         } else {
-            setGroomSelection(value);
-            handleAnswer('groomSelection', value);
+          setGroomSelection(value);
         }
-    };
-
-    const handleFirstNameChange = (value, isBride) => {
+      };
+    
+      const handleFirstNameChange = (value, isBride) => {
         if (isBride) {
-            setBrideFirstName(value);
-            handleAnswer('brideFirstName', value);
+          setBrideFirstName(value);
         } else {
-            setGroomFirstName(value);
-            handleAnswer('groomFirstName', value);
+          setGroomFirstName(value);
         }
-    };
-
-    const handleLastNameChange = (value, isBride) => {
+      };
+    
+      const handleLastNameChange = (value, isBride) => {
         if (isBride) {
-            setBrideLastName(value);
-            handleAnswer('brideLastName', value);
+          setBrideLastName(value);
         } else {
-            setGroomLastName(value);
-            handleAnswer('groomLastName', value);
+          setGroomLastName(value);
         }
-    };
+      };
 
+      useEffect(() => {
+        // Update the answers whenever inputs change
+        handleAnswer('brideFirstName', brideFirstName);
+        handleAnswer('brideLastName', brideLastName);
+        handleAnswer('brideSelection', brideSelection);
+        handleAnswer('groomFirstName', groomFirstName);
+        handleAnswer('groomLastName', groomLastName);
+        handleAnswer('groomSelection', groomSelection);
+      }, [brideFirstName, brideLastName, brideSelection, groomFirstName, groomLastName, groomSelection]);
     return (
         <div className='bride-groom-form'>
             <div className='bride-groom-spacing'>
