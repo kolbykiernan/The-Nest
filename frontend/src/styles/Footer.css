@@ -1,0 +1,18 @@
+:root {
+    --primary-color: rgb(229, 251, 250);
+    --secondary-color:#f4f4f4
+    --third-color: #FFE25Fff;
+  }
+
+.footer{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.footer-font{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
