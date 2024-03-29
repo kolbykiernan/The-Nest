@@ -164,17 +164,20 @@ const Groomsmen = ({ categories, handleAnswer, onGroomsmenDataUpdate }) => {
                       onChange={(e) => handleLastNameChange(e.target.value, row.id)}
                     />
                 </td>
-                <td>
-                  <Dropdown>
-                    <CategoryDropdown 
-                      index={index}
-                      categories={categories} 
-                      selectedCategories={selectedCategories} 
-                      onChange={(value) => selectCategory(value, row.id)}
-                      isDropdown={false} 
-                      className="category-select" 
-                    />
-                  </Dropdown>
+                <td>                 
+                <DropdownButton
+                  title={selectedCategories[index] || 'Select One'}
+                  variant="outline-secondary"
+                  id={`category-dropdown-${index}`}
+                  align="end"
+                  className="category-select"
+                >
+                  {categories.map((category, idx) => (
+                    <Dropdown.Item key={idx} onClick={() => selectCategory(category.name, index, 'selectedCategory')}>
+                      {category.name}
+                    </Dropdown.Item>
+                  ))}
+                </DropdownButton>       
                 </td>
                 <td>
                   <DropdownButton 
@@ -210,19 +213,19 @@ const Groomsmen = ({ categories, handleAnswer, onGroomsmenDataUpdate }) => {
                 </td>
                 <td>
                 <Form.Check
-                    type="checkbox"
-                    label="bridesmaid"
-                    className="form-margins"
-                    disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
-                    value="bridesmaid"
-                    onChange={() => isAlsoInWeddingParty('bridesmaid', 'bridesmaid', row.id)}
+                  type="checkbox"
+                  label="bridesmaid"
+                  className="form-margins"
+                  disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
+                  checked={row.selectedRole === 'bridesmaid'} 
+                  onChange={() => isAlsoInWeddingParty('bridesmaid', row.id)} 
                 />
                 <Form.Check
-                    type="checkbox"
-                    label="groomsmen"
-                    disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
-                    value="groomsmen"
-                    onChange={() => isAlsoInWeddingParty('groomsmen', 'groomsmen', row.id)}
+                  type="checkbox"
+                  label="groomsmen"
+                  disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
+                  checked={row.selectedRole === 'groomsmen'} 
+                  onChange={() => isAlsoInWeddingParty('groomsmen', row.id)} 
                 />
                 </td>
                 <td>

@@ -23,3 +23,17 @@
     margin:10px;
     font-size: 1.5em;
 }
+
+h1 {
+  font-family: "Bad Script", cursive;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 3em;
+}
+
+h3 {
+  font-family: "Bad Script", cursive;
+  font-weight: 600;
+  font-style: normal;
+  font-size: 2em;
+}

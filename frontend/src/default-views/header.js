@@ -9,7 +9,7 @@ function Header() {
         <div className='header'>
             <Navbar className='navbar' style={{ backgroundColor: 'var(--primary-color)' }}>
                 <Container fluid>
-                    <Navbar.Brand href="/">Wedding App</Navbar.Brand>
+                    <Navbar.Brand href="/" className='header-font'>The Nest</Navbar.Brand>
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>

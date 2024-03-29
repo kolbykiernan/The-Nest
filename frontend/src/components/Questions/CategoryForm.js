@@ -1,11 +1,46 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
-import CategoryDropdown from './CategoryDropdown';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+// import CategoryDropdown from './CategoryDropdown';
 
-
+const CategoryDropdown = (categories, isDropdown, onChange, index) => {
+  if (isDropdown) {
+    return (
+      <DropdownButton
+        title=""
+        variant="outline-secondary"
+        id={`category-dropdown-${index}`}
+        align="end"
+        className="category-dropdown"
+      >
+        {categories.map((category, idx) => (
+          <Dropdown.Item key={idx} onClick={() => onChange(category.name, index)}>
+            {category.name}
+          </Dropdown.Item>
+        ))}
+      </DropdownButton>
+    );
+  } else {
+    return (
+      <DropdownButton
+        className="category-select"
+        variant="outline-secondary"
+        align="end"
+        onChange={(e) => onChange(e.target.value, index)}
+      >
+        {categories.map((category, idx) => (
+          <Dropdown.Item key={idx} value={category.name}>
+            {category.name}
+          </Dropdown.Item>
+        ))}
+      </DropdownButton>
+    );
+  }
+};
 
 
 const CategoryForm = ({categories, fetchCategories}) => {
@@ -15,18 +50,15 @@ const CategoryForm = ({categories, fetchCategories}) => {
   const handleFormSubmit = async (e) => {
 
     try {
-      // Send a POST request to the backend to add the new category
+
       await axios.post('http://localhost:3000/api/categories', { name: categoryName });
-      // Refresh the list of categories after adding a new one
       fetchCategories();
-      // Clear the input field
       setCategoryName('');
     } catch (error) {
       console.error('Error adding category:', error);
     }
   };
 
-  
 
   return (
     <div>
@@ -41,7 +73,11 @@ const CategoryForm = ({categories, fetchCategories}) => {
               className='category-input'
             />
           </InputGroup>
-          <CategoryDropdown categories={categories} isDropdown={true}/>
+          <CategoryDropdown 
+            categories={categories} 
+            isDropdown={true} 
+            // onChange={(name, index) => handleDropdownChange(name, index)}
+          />
         </div>
         <Button
           style={{ backgroundColor: 'var(--primary-color)' }}

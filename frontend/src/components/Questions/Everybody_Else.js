@@ -251,16 +251,19 @@ const selectCategory = (value, index, categoryType) => {
                     />
                 </td>
                 <td>
-                  <Dropdown>
-                    <CategoryDropdown 
-                      index={index}
-                      categories={categories} 
-                      selectedCategories={selectedCategories} 
-                      onChange={(value) => selectCategory(value, row.id)}
-                      isDropdown={false} 
-                      className="category-select" 
-                    />
-                  </Dropdown>
+                  <DropdownButton
+                  title={selectedCategories[index] || 'Select One'}
+                  variant="outline-secondary"
+                  id={`category-dropdown-${index}`}
+                  align="end"
+                  className="category-select"
+                >
+                  {categories.map((category, idx) => (
+                    <Dropdown.Item key={idx} onClick={() => selectCategory(category.name, index, 'selectedCategory')}>
+                      {category.name}
+                    </Dropdown.Item>
+                  ))}
+                </DropdownButton>
                 </td>
                 <td>
                   <DropdownButton

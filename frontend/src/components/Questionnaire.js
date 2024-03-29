@@ -8,7 +8,7 @@ import Bridesmaids from './Questions/Bridesmaids';
 import Groomsmen from './Questions/Groomsmen';
 import EverybodyElse from './Questions/Everybody_Else';
 import Button from 'react-bootstrap/Button';
-
+import Guestlist from './guestlist';
 import '../styles/questionnaire.css';
 
 
@@ -38,22 +38,20 @@ const Questionnaire = () => {
       { id: 11, text: "Everybody Else", type: "Everybody Else"},
  
     ]);
-
+    
     const [categories, setCategories] = useState([]);
-  
 
     useEffect(() => {
-      // Fetch categories from the backend when the component mounts
       fetchCategories();
     }, []);
-
+  
     const fetchCategories = async () => {
       try {
         const response = await axios.get('http://localhost:3000/api/categories');
-        setCategories(response.data); // Assuming the response contains an array of categories
+        setCategories(response.data);
       } catch (error) {
         console.error('Error fetching categories:', error);
-      }
+      } 
     };
 
     const handlePrev = async () => {
@@ -369,7 +367,6 @@ const Questionnaire = () => {
               type="text" 
               value={answer} 
               onChange={(e) => handleAnswer(question.id, e.target.value)} 
-              
               required 
             />
           </div>

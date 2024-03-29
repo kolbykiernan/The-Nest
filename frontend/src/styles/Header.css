@@ -3,13 +3,23 @@
     --secondary-color: #f4f4f4
     --third-color: #FFE25Fff;
   }
-  
-  .navbar {
-    padding-top: 1.5em;
-    padding-bottom: 1.2em;
-  }
 
-  .navbar-tabs {
-    padding-top: .6em;
-    padding-bottom: .6em;
+.navbar{
+    padding-top: 2em;
+    padding-bottom: 1.5em;
+    padding-left:2em;
+    padding-right:2em;
+}
+
+.navbar-tabs{
+    padding-top: 1.5em;
+    padding-bottom: 1.5em;
+    font-size: .9em;
+}
+
+  .header-font{
+    font-family: "Bad Script", cursive;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 2em;
   }
