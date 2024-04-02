@@ -8,11 +8,13 @@ import Bridesmaids from './Questions/Bridesmaids';
 import Groomsmen from './Questions/Groomsmen';
 import EverybodyElse from './Questions/Everybody_Else';
 import Button from 'react-bootstrap/Button';
-import Guestlist from './guestlist';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
 import '../styles/questionnaire.css';
 
 
-const Questionnaire = () => {
+const Questionnaire = ({categories, fetchCategories}) => {
+  console.log('Props in Questionnaire:', categories, fetchCategories);
 
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = localStorage.getItem('currentPage');
@@ -39,20 +41,7 @@ const Questionnaire = () => {
  
     ]);
     
-    const [categories, setCategories] = useState([]);
-
-    useEffect(() => {
-      fetchCategories();
-    }, []);
   
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/api/categories');
-        setCategories(response.data);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      } 
-    };
 
     const handlePrev = async () => {
       const nextIndex = currentPage - 1;

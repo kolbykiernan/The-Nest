@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import CategoryDropdown from './CategoryDropdown';
+
 
 
 const EverybodyElse = ({ categories, handleAnswer, onEverybodyElseDataUpdate }) => {   
