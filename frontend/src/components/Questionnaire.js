@@ -13,12 +13,11 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import '../styles/questionnaire.css';
 
 
-const Questionnaire = ({categories, fetchCategories}) => {
-  console.log('Props in Questionnaire:', categories, fetchCategories);
+const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesmaidsData, groomsmenData, setGroomsmenData, everybodyElseData, setEverybodyElseData}) => {
 
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = localStorage.getItem('currentPage');
-    return savedPage ? parseInt(savedPage) : 1;
+    return savedPage ? parseInt(savedPage) : 0;
   });
 
   useEffect(() => {
@@ -163,20 +162,13 @@ const Questionnaire = ({categories, fetchCategories}) => {
  
       }
     }
-    const [submittedBridesmaidsData, setSubmittedBridesmaidsData] = useState([]);
-
-    const handleBridesmaidsDataUpdate = (updatedBridesmaidsData) => {
-      setSubmittedBridesmaidsData(updatedBridesmaidsData);
-    };
   
     const submitBridesmaidsData = async (bridesmaidsData) => {
       try {
-        for (const row of bridesmaidsData) {
-
-          if (!row.firstName.trim()) {
-  
+        const requests = bridesmaidsData.map(async (row) => {
+          if (!row.firstName.trim() && !row.selectedCategory.trim()) {
             console.log('Skipping row', row.id, 'because firstName is empty');
-            continue;
+            return null; // Skip this row if firstName is empty
           }
           const formData = {
             firstName: row.firstName,
@@ -188,28 +180,27 @@ const Questionnaire = ({categories, fetchCategories}) => {
             selectedRole: row.selectedRole,
             plusOneValueBridesmaids: row.plusOneValueBridesmaids
           };
-  
-          // Perform a POST request to submit bridesmaids data
-          const response = await axios.post('http://localhost:3000/api/bridesmaids', formData);
-          console.log('Bridesmaids data submitted successfully for row', row.id, ':', response.data);
-        }
+          return axios.post('http://localhost:3000/api/bridesmaids', formData);
+        });
+    
+        const responses = await Promise.all(requests);
+        responses.forEach((response, index) => {
+          if (response) {
+            console.log('Bridesmaids data submitted successfully for row', bridesmaidsData[index].id, ':', response.data);
+          }
+        });
       } catch (error) {
         console.error('Error submitting bridesmaids data:', error);
       }
     };
-
-    const [submittedGroomsmenData, setSubmittedGroomsmenData] = useState([]);
-
-    const handleGroomsmenDataUpdate = (updatedGroomsmenData) => {
-      setSubmittedGroomsmenData(updatedGroomsmenData);
-    };
+  
 
     const submitGroomsmenData = async (groomsmenData) => {
       try {
-        for (const row of groomsmenData) {
-          if (!row.firstName.trim()) {
+        const requests = groomsmenData.map(async (row) => {
+          if (!row.firstName.trim() && !row.selectedCategory.trim()) {
             console.log('Skipping row', row.id, 'because firstName is empty');
-            continue;
+            return null; // Skip this row if firstName is empty
           }
           const formData = {
             firstName: row.firstName,
@@ -221,27 +212,28 @@ const Questionnaire = ({categories, fetchCategories}) => {
             selectedRole: row.selectedRole,
             plusOneValueGroomsmen: row.plusOneValueGroomsmen
           };
-  
-          const response = await axios.post('http://localhost:3000/api/groomsmen', formData);
-          console.log('Groomsmen data submitted successfully for row', row.id, ':', response.data);
-        }
+          return axios.post('http://localhost:3000/api/groomsmen', formData);
+        });
+    
+        const responses = await Promise.all(requests);
+        responses.forEach((response, index) => {
+          if (response) {
+            console.log('Groomsmen data submitted successfully for row', groomsmenData[index].id, ':', response.data);
+          }
+        });
       } catch (error) {
         console.error('Error submitting groomsmen data:', error);
       }
     };
-
-    const [submittedEverybodyElseData, setSubmittedEverybodyElseData] = useState([]);
-
-    const handleEverybodyElseDataUpdate = (updatedEverybodyElseData) => {
-      setSubmittedEverybodyElseData(updatedEverybodyElseData);
-    };
-
+   
+  
+    
     const submitEverybodyElseData = async (everybodyElseData) => {
       try {
-        for (const row of everybodyElseData) {
-          if (!row.firstName.trim()) {
+        const requests = everybodyElseData.map(async (row) => {
+          if (!row.firstName.trim() && !row.selectedCategory.trim()) {
             console.log('Skipping row', row.id, 'because firstName is empty');
-            continue;
+            return null; // Skip this row if firstName is empty
           }
           const formData = {
             firstName: row.firstName,
@@ -260,25 +252,29 @@ const Questionnaire = ({categories, fetchCategories}) => {
             moreGuests: row.moreGuests,
             howMany: row.howMany,
           };
-  
-          const response = await axios.post('http://localhost:3000/api/everybodyelse', formData);
-          console.log('EverybodyElse data submitted successfully for row', row.id, ':', response.data);
-        }
+          return axios.post('http://localhost:3000/api/everybodyelse', formData);
+        });
+    
+        const responses = await Promise.all(requests);
+        responses.forEach((response, index) => {
+          if (response) {
+            console.log('EverybodyElse data submitted successfully for row', everybodyElseData[index].id, ':', response.data);
+          }
+        });
       } catch (error) {
         console.error('Error submitting everybodyelse data:', error);
       }
     };
 
-    const redirectToGuestList = () => {
-      window.location.href = '/guestlist';
-    };
+    // const redirectToGuestList = () => {
+    //   window.location.href = '/guestlist';
+    // };
 
     const handleSubmitAllData = () => {
-      submitBridesmaidsData(submittedBridesmaidsData);
-      submitGroomsmenData(submittedGroomsmenData);
-      submitEverybodyElseData(submittedEverybodyElseData);
-
-      redirectToGuestList()
+      submitBridesmaidsData(bridesmaidsData); 
+      submitGroomsmenData(groomsmenData);     
+      submitEverybodyElseData(everybodyElseData);
+      // redirectToGuestList();
     };
      
     
@@ -402,7 +398,9 @@ const Questionnaire = ({categories, fetchCategories}) => {
               value={answer} 
               onChange={(e) => handleAnswer(question.id, e.target.value)} 
               handleAnswer={handleAnswer}
-              onBridesmaidsDataUpdate={handleBridesmaidsDataUpdate}
+     
+              bridesmaidsData={bridesmaidsData}
+                setBridesmaidsData={setBridesmaidsData}
               required
             />
           </div>
@@ -429,7 +427,9 @@ const Questionnaire = ({categories, fetchCategories}) => {
               value={answer} 
               onChange={(e) => handleAnswer(question.id, e.target.value)} 
               handleAnswer={handleAnswer}
-              onGroomsmenDataUpdate={handleGroomsmenDataUpdate}
+
+               groomsmenData={groomsmenData}
+                      setGroomsmenData={setGroomsmenData}
               required
             />
           </div>
@@ -456,7 +456,9 @@ const Questionnaire = ({categories, fetchCategories}) => {
               value={answer} 
               onChange={(e) => handleAnswer(question.id, e.target.value)} 
               handleAnswer={handleAnswer}
-              onEverybodyElseDataUpdate={handleEverybodyElseDataUpdate}
+
+               everybodyElseData={everybodyElseData}
+                      setEverybodyElseData={setEverybodyElseData}
               required
             />
           </div>

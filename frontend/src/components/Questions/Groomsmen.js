@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Form from 'react-bootstrap/Form';
@@ -7,22 +8,8 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 
 
 
-const Groomsmen = ({ categories, handleAnswer, onGroomsmenDataUpdate }) => {
-  const [groomsmenData, setGroomsmenData] = useState(() => {
-    // Initialize groomsmenData from localStorage or with default values
-    const storedData = localStorage.getItem('groomsmenData');
-    return storedData ? JSON.parse(storedData) : Array.from({ length: 10 }, (_, index) => ({
-        id: index, // Unique identifier for each row
-        firstName: '',
-        lastName: '',
-        selectedCategory: '',
-        plusOneSelectedGroomsmen: '',
-        plusOneFirstName: '',
-        plusOneLastName: '',
-        selectedRole: '',
-        plusOneValueGroomsmen: 1,
-    }));
-  });
+const Groomsmen = ({ categories, handleAnswer, groomsmenData, setGroomsmenData }) => {
+
 
   const [selectedCategories, setSelectedCategories] = useState(() => {
     const storedCategories = localStorage.getItem('groomsmenSelectedCategories');
@@ -46,8 +33,8 @@ const Groomsmen = ({ categories, handleAnswer, onGroomsmenDataUpdate }) => {
 
   useEffect(() => {
     localStorage.setItem('groomsmenData', JSON.stringify(groomsmenData));
-    onGroomsmenDataUpdate(groomsmenData);
-  }, [groomsmenData, onGroomsmenDataUpdate]);
+
+  }, [groomsmenData]);
 
   useEffect(() => {
     localStorage.setItem('groomsmenSelectedCategories', JSON.stringify(selectedCategories));

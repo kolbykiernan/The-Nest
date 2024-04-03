@@ -26,16 +26,92 @@ function App() {
 
   console.log('Props in App.js:', categories, fetchCategories);
 
+  const [bridesmaidsData, setBridesmaidsData] = useState(() => {
+    const storedData = localStorage.getItem('bridesmaidsData');
+    return storedData
+      ? JSON.parse(storedData)
+      : Array.from({ length: 10 }, (_, index) => ({
+          id: index,
+          firstName: '',
+          lastName: '',
+          selectedCategory: '',
+          plusOneSelectedBridesmaids: '',
+          plusOneFirstName: '',
+          plusOneLastName: '',
+          selectedRole: '',
+          plusOneValueBridesmaids: 1,
+        }));
+  });
+
+  const [groomsmenData, setGroomsmenData] = useState(() => {
+    // Initialize groomsmenData from localStorage or with default values
+    const storedData = localStorage.getItem('groomsmenData');
+    return storedData ? JSON.parse(storedData) : Array.from({ length: 10 }, (_, index) => ({
+        id: index, // Unique identifier for each row
+        firstName: '',
+        lastName: '',
+        selectedCategory: '',
+        plusOneSelectedGroomsmen: '',
+        plusOneFirstName: '',
+        plusOneLastName: '',
+        selectedRole: '',
+        plusOneValueGroomsmen: 1,
+    }));
+  });
+
+  const [everybodyElseData, setEverybodyElseData] = useState(() => {
+    // Initialize everybodyElseData from localStorage or with default values
+    const storedData = localStorage.getItem('everybodyElseData');
+    return storedData ? JSON.parse(storedData) : Array.from({ length: 10 }, (_, index) => ({
+      id: index, // Unique identifier for each row
+      firstName: '',
+      lastName: '',
+      selectedCategory: '',
+      brideGroomOrMutual: '',
+      guestValue: 1,
+      plusOneSelected: '',
+      plusOneFirstName: '',
+      plusOneLastName: '',
+      plusOneValue: 1,
+      otherGuests: '',
+      addOnFirstName: '',
+      addOnLastName: '',
+      addOnValue: 1,
+      moreGuests: '',
+      howMany: null,
+    }))
+});
+
   return (
     <Router>
-      <div>
+          <div>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/questionnaire" element={<Questionnaire categories={categories} fetchCategories={fetchCategories} />} />
-          <Route path="/guestlist" element={<Guestlist categories={categories} />} />
+          <Route 
+            path="/questionnaire" 
+            element={<Questionnaire 
+                      categories={categories} 
+                      fetchCategories={fetchCategories} 
+                      bridesmaidsData={bridesmaidsData}
+                      setBridesmaidsData={setBridesmaidsData}
+                      groomsmenData={groomsmenData}
+                      setGroomsmenData={setGroomsmenData}
+                      everybodyElseData={everybodyElseData}
+                      setEverybodyElseData={setEverybodyElseData}
+                      />} />
+          {/* <Route 
+            path="/guestlist" 
+            element={<Guestlist 
+                      categories={categories}
+                      bridesmaidsData={bridesmaidsData}
+                      setBridesmaidsData={setBridesmaidsData}
+                      groomsmenData={groomsmenData}
+                      setGroomsmenData={setGroomsmenData}
+                      everybodyElseData={everybodyElseData}
+                      setEverybodyElseData={setEverybodyElseData} />} /> */}
           <Route path="/seatingchart" element={<Seatingchart />} />
         </Routes>
-      </div>
+        </div>
     </Router>
   );
 }

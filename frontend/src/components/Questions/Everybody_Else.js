@@ -7,29 +7,8 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 
 
 
-const EverybodyElse = ({ categories, handleAnswer, onEverybodyElseDataUpdate }) => {   
-  const [everybodyElseData, setEverybodyElseData] = useState(() => {
-    // Initialize everybodyElseData from localStorage or with default values
-    const storedData = localStorage.getItem('everybodyElseData');
-    return storedData ? JSON.parse(storedData) : Array.from({ length: 10 }, (_, index) => ({
-      id: index, // Unique identifier for each row
-      firstName: '',
-      lastName: '',
-      selectedCategory: '',
-      brideGroomOrMutual: '',
-      guestValue: 1,
-      plusOneSelected: '',
-      plusOneFirstName: '',
-      plusOneLastName: '',
-      plusOneValue: 1,
-      otherGuests: '',
-      addOnFirstName: '',
-      addOnLastName: '',
-      addOnValue: 1,
-      moreGuests: '',
-      howMany: null,
-    }))
-});
+const EverybodyElse = ({ categories, handleAnswer, everybodyElseData, setEverybodyElseData }) => {   
+
 
 const [selectedCategories, setSelectedCategories] = useState(() => {
   const storedCategories = localStorage.getItem('everybodyElseSelectedCategories');
@@ -52,8 +31,8 @@ const selectCategory = (value, index, categoryType) => {
     // Save everybodyElseData to localStorage whenever it changes
     useEffect(() => {
       localStorage.setItem('everybodyElseData', JSON.stringify(everybodyElseData));
-      onEverybodyElseDataUpdate(everybodyElseData);
-    }, [everybodyElseData, onEverybodyElseDataUpdate]);
+
+    }, [everybodyElseData]);
 
     useEffect(() => {
       localStorage.setItem('everybodyElseSelectedCategories', JSON.stringify(selectedCategories));
@@ -143,10 +122,10 @@ const selectCategory = (value, index, categoryType) => {
     
     const handleAddOnLastNameChange = (value, id) => {
       const updatedEverybodyElseData = everybodyElseData.map(row =>
-        row.id === id ? { ...row, AddOnLastName: value } : row
+        row.id === id ? { ...row, addOnLastName: value } : row
       );
       setEverybodyElseData(updatedEverybodyElseData);
-      handleAnswer(id, { AddOnLastName: value });
+      handleAnswer(id, { addOnLastName: value });
     };
     
     const handleAddOnValueChange = (value, id) => {
@@ -366,7 +345,7 @@ const selectCategory = (value, index, categoryType) => {
                   <Form.Control 
                     type="text" 
                     disabled={!row.otherGuests || row.otherGuests === 'No'}
-                    value={row.addOnlastName} 
+                    value={row.addOnLastName} 
                     onChange={(e) => handleAddOnLastNameChange(e.target.value, row.id)}
                     />
                 </td>
