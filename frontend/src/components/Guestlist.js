@@ -43,9 +43,17 @@ export default function Guestlist({ categories, bridesmaidsData, setBridesmaidsD
   }, [setBridesmaidsData, setGroomsmenData, setEverybodyElseData]);
 
   const countPlusOnes = (data) => {
-    return data.reduce((count, item) => {
-      return count + (item.plusOneSelectedBridesmaids || item.plusOneSelectedGroomsmen || item.plusOneSelected ? 1 : 0);
-    }, 0);
+    let count = 0;
+    data.forEach((item) => {
+      if (
+        item.plusOneSelectedBridesmaids === 'true' ||
+        item.plusOneSelectedGroomsmen === 'true' ||
+        item.plusOneSelected === 'true'
+      ) {
+        count++;
+      }
+    });
+    return count;
   };
 
 const renderRow = (data, indexOffset) => {
@@ -114,7 +122,22 @@ const renderRow = (data, indexOffset) => {
       rowIndex++; 
     }
 
-
+    if (item.howMany) {
+      for (let i = 0; i < item.howMany; i++) {
+        rows.push(
+          <tr key={rowIndex}>
+            <td>{rowIndex}</td>
+            <td>TBD</td>
+            <td>TBD</td>
+            <td>{item.brideGroomOrMutual}</td>
+            <td>{item.selectedCategory}</td>
+            <td>TBD</td>
+          </tr>
+        );
+        rowIndex++;
+      }
+    }
+    
   });
 
   return rows;
@@ -123,7 +146,7 @@ const renderRow = (data, indexOffset) => {
   return (
     <div className='guestlist'>
       <Header />
-      <div className={'guestlist-body'}>
+      <div className='guestlist-body'>
         <div className="guestlist-sidebar">
           <Sidebar />
         </div>
@@ -155,7 +178,7 @@ const renderRow = (data, indexOffset) => {
                 <tbody>
                   {renderRow(bridesmaidsData, 0)}
                   {renderRow(groomsmenData, bridesmaidsData.length + countPlusOnes(bridesmaidsData))}
-                  {renderRow(everybodyElseData, bridesmaidsData.length + groomsmenData.length + countPlusOnes(groomsmenData))}
+                  {renderRow(everybodyElseData, bridesmaidsData.length + countPlusOnes(bridesmaidsData) + groomsmenData.length + countPlusOnes(groomsmenData))}
                 </tbody>
               </Table>
           </div>

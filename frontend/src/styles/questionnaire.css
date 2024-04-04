@@ -246,15 +246,38 @@ td p {
 .guestlist-body{
     display: flex;
     flex-direction: row;
-    height: 76.5vh
+    height: 77.75vh;
+    position: relative;
 }
 
 .guestlist-table {
-    width: 100%;
+    width:100%;
     border: 1px solid lightgray;
     max-height: 100%; 
     overflow-y: auto; 
 }
+
+.guestlist-sidebar{
+    border: 1px solid lightgray;
+    flex-grow: 1;
+    height: 100%;
+    box-sizing: border-box;
+    
+}
+
+/* .sc-JrDLc.kphGap{
+    width:100%;
+    
+}
+
+.sc-fjvvzt{
+    width:100%;
+}
+
+.sc-bbSZdi{
+    width:100%;
+    
+} */
 
 .scrollable-table {
     height: 100%; 
@@ -265,11 +288,6 @@ td p {
     top: 0;
 } */
 
-
-
-  .guestlist-sidebar{
-    border: 1px solid lightgray;
-}
 
 .seating-chart{
     height: 76.5vh;

@@ -135,6 +135,39 @@ try {
 }
 });
 
+router.put('/bridesmaids/:id', async (req, res) => {
+  const { id } = req.params;
+  const { firstName, lastName, selectedCategory, plusOneSelectedBridesmaids, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValueBridesmaids } = req.body;
+
+  try {
+    // Check if the bridesmaid with the given ID exists
+    const bridesmaid = await Bridesmaids.findByPk(id);
+    if (!bridesmaid) {
+      return res.status(404).json({ error: 'Bridesmaid not found' });
+    }
+
+    // Update the bridesmaid with the provided data
+    bridesmaid.firstName = firstName;
+    bridesmaid.lastName = lastName;
+    bridesmaid.selectedCategory = selectedCategory;
+    bridesmaid.plusOneSelectedBridesmaids = plusOneSelectedBridesmaids;
+    bridesmaid.plusOneFirstName = plusOneFirstName;
+    bridesmaid.plusOneLastName = plusOneLastName;
+    bridesmaid.isAlsoInWeddingParty = isAlsoInWeddingParty;
+    bridesmaid.plusOneValueBridesmaids = plusOneValueBridesmaids;
+
+    // Save the updated bridesmaid data
+    await bridesmaid.save();
+
+    // Return the updated bridesmaid data
+    res.json(bridesmaid);
+  } catch (error) {
+    console.error('Error updating bridesmaid:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 router.get('/groomsmen', async (req, res) => {
 try {
     const groomsmen = await Groomsmen.findAll();
@@ -165,6 +198,39 @@ try {
     res.status(500).json({ error: 'Internal Server Error' });
 }
 });
+
+router.put('/groomsmen/:id', async (req, res) => {
+  const { id } = req.params;
+  const { firstName, lastName, selectedCategory, plusOneSelectedGroomsmen, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValueGroomsmen } = req.body;
+
+  try {
+    // Check if the bridesmaid with the given ID exists
+    const groomsman = await Groomsmen.findByPk(id);
+    if (!groomsman) {
+      return res.status(404).json({ error: 'groomsman not found' });
+    }
+
+    // Update the groomsman with the provided data
+    groomsman.firstName = firstName;
+    groomsman.lastName = lastName;
+    groomsman.selectedCategory = selectedCategory;
+    groomsman.plusOneSelectedGroomsmen = plusOneSelectedGroomsmen;
+    groomsman.plusOneFirstName = plusOneFirstName;
+    groomsman.plusOneLastName = plusOneLastName;
+    groomsman.isAlsoInWeddingParty = isAlsoInWeddingParty;
+    groomsman.plusOneValueGroomsmen = plusOneValueGroomsmen;
+
+    // Save the updated groomsman data
+    await groomsman.save();
+
+    // Return the updated groomsman data
+    res.json(groomsman);
+  } catch (error) {
+    console.error('Error updating groomsman:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 
 router.get('/everybodyelse', async (req, res) => {
   try {
@@ -200,6 +266,47 @@ router.post('/everybodyelse', async (req, res) => {
   } catch (error) {
       console.error('Error creating guest:', error);
       res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+router.put('/everybodyelse/:id', async (req, res) => {
+  const { id } = req.params;
+  const { firstName, lastName, selectedCategory, brideGroomOrMutual, guestValue, plusOneSelected, plusOneFirstName, plusOneLastName, plusOneValue, otherGuests, addOnFirstName, addOnLastName, addOnValue, moreGuests, howMany } = req.body;
+  
+  try {
+    // Check if the guest with the specified ID exists
+    const existingGuest = await EverybodyElse.findByPk(id);
+    
+    if (!existingGuest) {
+      return res.status(404).json({ error: 'Guest not found' });
+    }
+
+    // Update the guest's data
+    existingGuest.firstName = firstName;
+    existingGuest.lastName = lastName;
+    existingGuest.selectedCategory = selectedCategory;
+    existingGuest.brideGroomOrMutual = brideGroomOrMutual;
+    existingGuest.guestValue = guestValue;
+    existingGuest.plusOneSelected = plusOneSelected;
+    existingGuest.plusOneFirstName = plusOneFirstName;
+    existingGuest.plusOneLastName = plusOneLastName;
+    existingGuest.plusOneValue = plusOneValue;
+    existingGuest.otherGuests = otherGuests;
+    existingGuest.addOnFirstName = addOnFirstName;
+    existingGuest.addOnLastName = addOnLastName;
+    existingGuest.addOnValue = addOnValue;
+    existingGuest.moreGuests = moreGuests;
+    existingGuest.howMany = howMany;
+    
+    // Save the updated data
+    await existingGuest.save();
+
+    // Respond with the updated guest data
+    res.status(200).json(existingGuest);
+  } catch (error) {
+    console.error('Error updating guest:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
