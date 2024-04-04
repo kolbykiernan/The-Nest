@@ -6,14 +6,14 @@ const React = require('react')
 
 function Footer () {
     return(
-        <div >
-            <Navbar style={{ backgroundColor: 'var(--primary-color)'}}>
-                <Container className='footer'>
+        <div className='footer'>
+
+                <Container className='footer-bar' >
                     <Navbar.Brand className='footer-font' href="#">
                         <h5>Footer</h5>
                     </Navbar.Brand>
                 </Container>
-            </Navbar>
+
         </div>
     )
 }
