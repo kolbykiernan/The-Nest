@@ -7,50 +7,8 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import axios from 'axios';
 
-export default function Guestlist({ categories, bridesmaidsData, groomsmenData, everybodyElseData, setBridesmaidsData, setGroomsmenData, setEverybodyElseData }) {
-  const [totalRows, setTotalRows] = useState(0);
-  const [formSubmitted, setFormSubmitted] = useState(false);
-
-  
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       console.log('Fetching bridesmaids data...');
-  //       const bridesmaidsResponse = await axios.get('http://localhost:3000/api/bridesmaids');
-  //       console.log('Fetched bridesmaids data:', bridesmaidsResponse.data);
-  //       setBridesmaidsData(bridesmaidsResponse.data);
-  
-  //       console.log('Fetching groomsmen data...');
-  //       const groomsmenResponse = await axios.get('http://localhost:3000/api/groomsmen');
-  //       console.log('Fetched groomsmen data:', groomsmenResponse.data);
-  //       setGroomsmenData(groomsmenResponse.data);
-  
-  //       console.log('Fetching everybody else data...');
-  //       const everybodyElseResponse = await axios.get('http://localhost:3000/api/everybodyelse');
-  //       console.log('Fetched everybody else data:', everybodyElseResponse.data);
-  //       setEverybodyElseData(everybodyElseResponse.data);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-  
-  //   fetchData();
-  // }, []);
-  
+export default function Guestlist({ categories, bridesmaidsData, setBridesmaidsData, groomsmenData, setGroomsmenData, everybodyElseData, setEverybodyElseData }) {
  
-  
-  
-
-  useEffect(() => {
-
-    const total = bridesmaidsData.length + groomsmenData.length + everybodyElseData.length;
-    setTotalRows(total);
-  }, [bridesmaidsData, groomsmenData, everybodyElseData]);
-
-  const toggleVisibility = () => {
-    return formSubmitted ? '' : 'hide'; 
-  };
-
   const renderCategories = () => {
     if (!categories || categories.length === 0) {
       return <div>No categories available</div>;
@@ -65,85 +23,112 @@ export default function Guestlist({ categories, bridesmaidsData, groomsmenData, 
     ));
   };
 
-  const renderRow = (data, indexOffset) => {
-    return data.flatMap((item, index) => {
-      const rows = [];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const bridesmaidsResponse = await axios.get('http://localhost:3000/api/bridesmaids');
+        setBridesmaidsData(bridesmaidsResponse.data);
+
+        const groomsmenResponse = await axios.get('http://localhost:3000/api/groomsmen');
+        setGroomsmenData(groomsmenResponse.data);
+
+        const everybodyElseResponse = await axios.get('http://localhost:3000/api/everybodyelse');
+        setEverybodyElseData(everybodyElseResponse.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [setBridesmaidsData, setGroomsmenData, setEverybodyElseData]);
+
+  const countPlusOnes = (data) => {
+    return data.reduce((count, item) => {
+      return count + (item.plusOneSelectedBridesmaids || item.plusOneSelectedGroomsmen || item.plusOneSelected ? 1 : 0);
+    }, 0);
+  };
+
+const renderRow = (data, indexOffset) => {
+  let rowIndex = indexOffset + 1;
+
+  const rows = [];
+
+  data.forEach((item) => {
+    rows.push(
+      <tr key={rowIndex}>
+        <td>{rowIndex}</td>
+        <td>{item.firstName}</td>
+        <td>{item.lastName}</td>
+        <td>
+          {data === bridesmaidsData ? 'Bridesmaid' : 
+           data === groomsmenData ? 'Groomsman' : 
+           item.brideGroomOrMutual}
+        </td>
+        <td>{item.selectedCategory}</td>
+        <td>
+          {data === bridesmaidsData || groomsmenData ? '5' : item.guestValue}
+        </td>
+      </tr>
+    );
+
+    rowIndex++;
+
+
+   if (item.plusOneSelectedBridesmaids === 'true' || item.plusOneSelectedGroomsmen === 'true' || item.plusOneSelected === 'true') {    
       rows.push(
-        <tr key={index + indexOffset}>
-          <td>{index + 1 + indexOffset}</td>
-          <td>{item.firstName}</td>
-          <td>{item.lastName}</td>
-          <td>
-            {data === bridesmaidsData ? 'Bridesmaid' : 
-             data === groomsmenData ? 'Groomsman' : 
-             item.brideGroomOrMutual}
-          </td>
+        <tr key={rowIndex}>
+          <td>{rowIndex}</td>
+          <td>{item.plusOneFirstName}</td>
+          <td>{item.plusOneLastName}</td>
+          <td>{item.brideGroomOrMutual}</td>
           <td>{item.selectedCategory}</td>
-          <td>
-            {data === bridesmaidsData || groomsmenData ? '5' : item.guestValue}
-          </td>
+          <td>{item.plusOneValueBridesmaids || item.plusOneValueGroomsmen || item.guestValue}</td>
         </tr>
       );
-  
-      // Check if plusOneSelectedBridesmaids is 'Yes' for bridesmaids data
-      if (data === bridesmaidsData && item.plusOneSelectedBridesmaids === true) {
-        rows.push(
-          <tr key={index + indexOffset + 1}>
-            <td>{index + 1 + indexOffset + 1}</td>
-            <td>{item.plusOneFirstName}</td>
-            <td>{item.plusOneLastName}</td>
-            <td>
-              {item.brideGroomOrMutual}
-            </td>
-            <td>{item.selectedCategory}</td>
-            <td>{item.plusOneValueBridesmaids}</td>
-          </tr>
-        );
-      }
+      rowIndex++; 
+    }
+    
+    if ((item.plusOneSelectedBridesmaids === 'true' || 
+    item.plusOneSelectedGroomsmen === 'true' || 
+    item.plusOneSelected === 'true') && 
+    !item.plusOneFirstName) {
+    item.plusOneFirstName = 'TBD';
+    item.plusOneLastName = 'TBD';
+    }
 
-      if (data === groomsmenData && item.plusOneSelectedGroomsmen === true) {
-        rows.push(
-          <tr key={index + indexOffset + 1}>
-            <td>{index + 1 + indexOffset + 1}</td>
-            <td>{item.plusOneFirstName}</td>
-            <td>{item.plusOneLastName}</td>
-            <td>
-              {item.brideGroomOrMutual}
-            </td>
-            <td>{item.selectedCategory}</td>
-            <td>{item.plusOneValueGroomsmen}</td>
-          </tr>
-        );
-      }
+    if (!item.brideGroomOrMutual){
+      item.brideGroomOrMutual = "+1"
+    }
 
-      if (data === everybodyElseData && item.plusOneSelected === true) {
-        rows.push(
-          <tr key={index + indexOffset + 1}>
-            <td>{index + 1 + indexOffset + 1}</td>
-            <td>{item.plusOneFirstName}</td>
-            <td>{item.plusOneLastName}</td>
-            <td>
-              {item.brideGroomOrMutual}
-            </td>
-            <td>{item.selectedCategory}</td>
-            <td>{item.plusOneValueEverybodyElse}</td>
-          </tr>
-        );
-      }
-  
-      return rows;
-    });
-  };
+    if (item.otherGuests == true) {    
+      rows.push(
+        <tr key={rowIndex}>
+          <td>{rowIndex}</td>
+          <td>{item.addOnFirstName}</td>
+          <td>{item.addOnLastName}</td>
+          <td>{item.brideGroomOrMutual}</td>
+          <td>{item.selectedCategory}</td>
+          <td>{item.addOnValue}</td>
+        </tr>
+      );
+      rowIndex++; 
+    }
+
+
+  });
+
+  return rows;
+};
 
   return (
     <div className='guestlist'>
       <Header />
-      <div className={`guestlist-body ${toggleVisibility()}`}>
+      <div className={'guestlist-body'}>
         <div className="guestlist-sidebar">
           <Sidebar />
         </div>
         <div className="guestlist-table">
-          <div>
+
             <Container fluid>
               <Nav className='navbar-tabs' fill variant="underline">
                 <Nav.Item>
@@ -153,13 +138,12 @@ export default function Guestlist({ categories, bridesmaidsData, groomsmenData, 
                 </Nav.Item>
                 {renderCategories()}
               </Nav>
-            </Container>
-          </div>
+            </Container> 
+   
           <div className="scrollable-table">
-          {formSubmitted ? (
               <Table responsive="sm">
-                <thead>
-                  <tr>
+                <thead className='scrollable-table-headers'>
+                  <tr className='scrollable-table-headers-columns'>
                     <th>#</th>
                     <th>First Name</th>
                     <th>Last Name</th>
@@ -170,13 +154,10 @@ export default function Guestlist({ categories, bridesmaidsData, groomsmenData, 
                 </thead>
                 <tbody>
                   {renderRow(bridesmaidsData, 0)}
-                  {renderRow(groomsmenData, bridesmaidsData.length)}
-                  {renderRow(everybodyElseData, bridesmaidsData.length + groomsmenData.length)}
+                  {renderRow(groomsmenData, bridesmaidsData.length + countPlusOnes(bridesmaidsData))}
+                  {renderRow(everybodyElseData, bridesmaidsData.length + groomsmenData.length + countPlusOnes(groomsmenData))}
                 </tbody>
               </Table>
-            ) : (
-              <div className="message">Please fill out and submit the questionnaire before viewing your guest list. You will still be able to make adjustments here!</div>
-            )}
           </div>
         </div>
       </div>

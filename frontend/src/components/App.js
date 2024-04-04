@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'; // Import Link component
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'; // Import Link component
 import "bootstrap/dist/css/bootstrap.min.css";
 import HomePage from './HomePage'; 
 import Questionnaire from './Questionnaire';
@@ -10,7 +10,8 @@ import axios from 'axios';
 function App() {
   
   const [categories, setCategories] = useState([]);
-  
+
+
   const fetchCategories = async () => {
     try {
       const response = await axios.get('http://localhost:3000/api/categories');
@@ -99,7 +100,7 @@ function App() {
                       everybodyElseData={everybodyElseData}
                       setEverybodyElseData={setEverybodyElseData}
                       />} />
-          {/* <Route 
+          <Route 
             path="/guestlist" 
             element={<Guestlist 
                       categories={categories}
@@ -108,8 +109,10 @@ function App() {
                       groomsmenData={groomsmenData}
                       setGroomsmenData={setGroomsmenData}
                       everybodyElseData={everybodyElseData}
-                      setEverybodyElseData={setEverybodyElseData} />} /> */}
+                      setEverybodyElseData={setEverybodyElseData} 
+                    />} />
           <Route path="/seatingchart" element={<Seatingchart />} />
+          <Route path="*" element={<Navigate to="/" />} /> 
         </Routes>
         </div>
     </Router>

@@ -163,118 +163,127 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
       }
     }
   
-    const submitBridesmaidsData = async (bridesmaidsData) => {
-      try {
-        const requests = bridesmaidsData.map(async (row) => {
-          if (!row.firstName.trim() && !row.selectedCategory.trim()) {
-            console.log('Skipping row', row.id, 'because firstName is empty');
-            return null; // Skip this row if firstName is empty
-          }
-          const formData = {
-            firstName: row.firstName,
-            lastName: row.lastName,
-            selectedCategory: row.selectedCategory,
-            plusOneSelectedBridesmaids: row.plusOneSelectedBridesmaids,
-            plusOneFirstName: row.plusOneFirstName,
-            plusOneLastName: row.plusOneLastName,
-            selectedRole: row.selectedRole,
-            plusOneValueBridesmaids: row.plusOneValueBridesmaids
-          };
-          return axios.post('http://localhost:3000/api/bridesmaids', formData);
-        });
-    
-        const responses = await Promise.all(requests);
-        responses.forEach((response, index) => {
-          if (response) {
-            console.log('Bridesmaids data submitted successfully for row', bridesmaidsData[index].id, ':', response.data);
-          }
-        });
-      } catch (error) {
-        console.error('Error submitting bridesmaids data:', error);
+const submitBridesmaidsData = async (bridesmaidsData) => {
+  try {
+    const requests = bridesmaidsData.map(async (row) => {
+      // Check if firstName is empty
+      if (!row.firstName.trim()) {
+        console.log('Skipping row', row.id, 'because firstName is empty');
+        return null; // Skip this row if firstName is empty
       }
-    };
-  
 
-    const submitGroomsmenData = async (groomsmenData) => {
-      try {
-        const requests = groomsmenData.map(async (row) => {
-          if (!row.firstName.trim() && !row.selectedCategory.trim()) {
-            console.log('Skipping row', row.id, 'because firstName is empty');
-            return null; // Skip this row if firstName is empty
-          }
-          const formData = {
-            firstName: row.firstName,
-            lastName: row.lastName,
-            selectedCategory: row.selectedCategory,
-            plusOneSelectedGroomsmen: row.plusOneSelectedGroomsmen,
-            plusOneFirstName: row.plusOneFirstName,
-            plusOneLastName: row.plusOneLastName,
-            selectedRole: row.selectedRole,
-            plusOneValueGroomsmen: row.plusOneValueGroomsmen
-          };
-          return axios.post('http://localhost:3000/api/groomsmen', formData);
-        });
-    
-        const responses = await Promise.all(requests);
-        responses.forEach((response, index) => {
-          if (response) {
-            console.log('Groomsmen data submitted successfully for row', groomsmenData[index].id, ':', response.data);
-          }
-        });
-      } catch (error) {
-        console.error('Error submitting groomsmen data:', error);
+      const formData = {
+        firstName: row.firstName,
+        lastName: row.lastName,
+        selectedCategory: row.selectedCategory,
+        plusOneSelectedBridesmaids: row.plusOneSelectedBridesmaids,
+        plusOneFirstName: row.plusOneFirstName,
+        plusOneLastName: row.plusOneLastName,
+        selectedRole: row.selectedRole,
+        plusOneValueBridesmaids: row.plusOneValueBridesmaids
+      };
+      return axios.post('http://localhost:3000/api/bridesmaids', formData);
+    });
+
+    const responses = await Promise.all(requests);
+    responses.forEach((response, index) => {
+      if (response) {
+        console.log('Bridesmaids data submitted successfully for row', bridesmaidsData[index].id, ':', response.data);
       }
-    };
-   
-  
+    });
+  } catch (error) {
+    console.error('Error submitting bridesmaids data:', error);
+  }
+};
     
-    const submitEverybodyElseData = async (everybodyElseData) => {
-      try {
-        const requests = everybodyElseData.map(async (row) => {
-          if (!row.firstName.trim() && !row.selectedCategory.trim()) {
-            console.log('Skipping row', row.id, 'because firstName is empty');
-            return null; // Skip this row if firstName is empty
-          }
-          const formData = {
-            firstName: row.firstName,
-            lastName: row.lastName,
-            selectedCategory: row.selectedCategory,
-            brideGroomOrMutual: row.brideGroomOrMutual,
-            guestValue: row.guestValue,
-            plusOneSelected: row.plusOneSelected,
-            plusOneFirstName: row.plusOneFirstName,
-            plusOneLastName: row.plusOneLastName,
-            plusOneValue: row.plusOneValue,
-            otherGuests: row.otherGuests,
-            addOnFirstName: row.addOnFirstName,
-            addOnLastName: row.addOnLastName,
-            addOnValue: row.addOnValue,
-            moreGuests: row.moreGuests,
-            howMany: row.howMany,
-          };
-          return axios.post('http://localhost:3000/api/everybodyelse', formData);
-        });
-    
-        const responses = await Promise.all(requests);
-        responses.forEach((response, index) => {
-          if (response) {
-            console.log('EverybodyElse data submitted successfully for row', everybodyElseData[index].id, ':', response.data);
-          }
-        });
-      } catch (error) {
-        console.error('Error submitting everybodyelse data:', error);
+const submitGroomsmenData = async (groomsmenData) => {
+  try {
+    const requests = groomsmenData.map(async (row) => {
+      // Check if firstName is empty
+      if (!row.firstName.trim()) {
+        console.log('Skipping row', row.id, 'because firstName is empty');
+        return null; // Skip this row if firstName is empty
       }
+
+      const formData = {
+        firstName: row.firstName,
+        lastName: row.lastName,
+        selectedCategory: row.selectedCategory,
+        plusOneSelectedGroomsmen: row.plusOneSelectedGroomsmen,
+        plusOneFirstName: row.plusOneFirstName,
+        plusOneLastName: row.plusOneLastName,
+        selectedRole: row.selectedRole,
+        plusOneValueGroomsmen: row.plusOneValueGroomsmen
+      };
+      return axios.post('http://localhost:3000/api/groomsmen', formData);
+    });
+
+    const responses = await Promise.all(requests);
+    responses.forEach((response, index) => {
+      if (response) {
+        console.log('Groomsmen data submitted successfully for row', groomsmenData[index].id, ':', response.data);
+      }
+    });
+  } catch (error) {
+    console.error('Error submitting groomsmen data:', error);
+  }
+};
+
+const submitEverybodyElseData = async (everybodyElseData) => {
+  try {
+    const requests = everybodyElseData.map(async (row) => {
+      // Check if firstName is empty
+      if (!row.firstName.trim()) {
+        console.log('Skipping row', row.id, 'because firstName is empty');
+        return null; // Skip this row if firstName is empty
+      }
+
+      const formData = {
+        firstName: row.firstName,
+        lastName: row.lastName,
+        selectedCategory: row.selectedCategory,
+        brideGroomOrMutual: row.brideGroomOrMutual,
+        guestValue: row.guestValue,
+        plusOneSelected: row.plusOneSelected,
+        plusOneFirstName: row.plusOneFirstName,
+        plusOneLastName: row.plusOneLastName,
+        plusOneValue: row.plusOneValue,
+        otherGuests: row.otherGuests,
+        addOnFirstName: row.addOnFirstName,
+        addOnLastName: row.addOnLastName,
+        addOnValue: row.addOnValue,
+        moreGuests: row.moreGuests,
+        howMany: row.howMany,
+      };
+      return axios.post('http://localhost:3000/api/everybodyelse', formData);
+    });
+
+    const responses = await Promise.all(requests);
+    responses.forEach((response, index) => {
+      if (response) {
+        console.log('EverybodyElse data submitted successfully for row', everybodyElseData[index].id, ':', response.data);
+      }
+    });
+  } catch (error) {
+    console.error('Error submitting everybodyelse data:', error);
+  }
+};
+
+    
+    const redirectToGuestList = () => {
+      window.location.href = '/guestlist';
     };
-
-    // const redirectToGuestList = () => {
-    //   window.location.href = '/guestlist';
-    // };
-
-    const handleSubmitAllData = () => {
-      submitBridesmaidsData(bridesmaidsData); 
-      submitGroomsmenData(groomsmenData);     
-      submitEverybodyElseData(everybodyElseData);
-      // redirectToGuestList();
+    
+    const handleSubmitAllData = async () => {
+      try {
+        await submitBridesmaidsData(bridesmaidsData); 
+        await submitGroomsmenData(groomsmenData);     
+        await submitEverybodyElseData(everybodyElseData);
+        
+        redirectToGuestList();
+      } catch (error) {
+        console.error('Error submitting all data:', error);
+      }
     };
      
     

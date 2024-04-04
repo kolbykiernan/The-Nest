@@ -260,6 +260,11 @@ td p {
     height: 100%; 
 }
 
+/* .container-fluid{
+    position: sticky;
+    top: 0;
+} */
+
 
 
   .guestlist-sidebar{
