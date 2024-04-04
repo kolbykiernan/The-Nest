@@ -7,23 +7,8 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 
 
 
-const Bridesmaids = ({ categories, handleAnswer, onBridesmaidsDataUpdate }) => {
-  const [bridesmaidsData, setBridesmaidsData] = useState(() => {
-    const storedData = localStorage.getItem('bridesmaidsData');
-    return storedData
-      ? JSON.parse(storedData)
-      : Array.from({ length: 10 }, (_, index) => ({
-          id: index,
-          firstName: '',
-          lastName: '',
-          selectedCategory: '',
-          plusOneSelectedBridesmaids: '',
-          plusOneFirstName: '',
-          plusOneLastName: '',
-          selectedRole: '',
-          plusOneValueBridesmaids: 1,
-        }));
-  });
+const Bridesmaids = ({ categories, handleAnswer, bridesmaidsData, setBridesmaidsData }) => {
+  
 
   const [selectedCategories, setSelectedCategories] = useState(() => {
     const storedCategories = localStorage.getItem('bridesmaidsSelectedCategories');
@@ -44,17 +29,17 @@ const Bridesmaids = ({ categories, handleAnswer, onBridesmaidsDataUpdate }) => {
     });
   };
 
-  useEffect(() => {
-    const storedData = localStorage.getItem('bridesmaidsData');
-    if (storedData) {
-      setBridesmaidsData(JSON.parse(storedData));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedData = localStorage.getItem('bridesmaidsData');
+  //   if (storedData) {
+  //     setBridesmaidsData(JSON.parse(storedData));
+  //   }
+  // }, []);
 
   useEffect(() => {
     localStorage.setItem('bridesmaidsData', JSON.stringify(bridesmaidsData));
-    onBridesmaidsDataUpdate(bridesmaidsData);
-  }, [bridesmaidsData, onBridesmaidsDataUpdate]);
+ 
+  }, [bridesmaidsData]);
 
   useEffect(() => {
     localStorage.setItem('bridesmaidsSelectedCategories', JSON.stringify(selectedCategories));
