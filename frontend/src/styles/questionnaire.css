@@ -25,7 +25,8 @@
 .questions{
     display: flex;
     flex-direction: column;
-    width: 100%
+    width: 100%;
+    padding-bottom: 5em;
 }
 
 .question{
@@ -255,6 +256,12 @@ td p {
     border: 1px solid lightgray;
     max-height: 100%; 
     overflow-y: auto; 
+    margin-bottom: 1.5em;
+}
+
+.scrollable-table {
+    height: 100%; 
+    
 }
 
 .guestlist-sidebar{
@@ -262,31 +269,85 @@ td p {
     flex-grow: 1;
     height: 100%;
     box-sizing: border-box;
-    
+    max-width:35%;
+    min-width: 15%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    color: black;
 }
 
-/* .sc-JrDLc.kphGap{
+.expanded{
     width:100%;
-    
 }
 
-.sc-fjvvzt{
+.collapsed{
+    width: 100%
+}
+
+.sidebar{
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.toggle{
+    display:flex;
+    justify-content: flex-end;
+    padding-right:.75em;
+
+}
+
+.sidebar-header{
+    padding-top: .75em;
+    padding-bottom: 1.5em;
+    font-size: 1.5em;
+    background-color: #f4f4f4;
     width:100%;
 }
 
-.sc-bbSZdi{
-    width:100%;
-    
-} */
+.sidebar-content{
+    padding: 2em;
+    font-size: 1.2em;
 
-.scrollable-table {
-    height: 100%; 
 }
 
-/* .container-fluid{
-    position: sticky;
-    top: 0;
-} */
+.sidebar-footer{
+    text-align: center;
+    padding-bottom: 2em;
+}
+
+.guestlist-bride-groom-or-mutual button{
+    padding: 0em;
+    border-color: rgb(227, 227, 227);
+}
+
+.guestlist-bride-groom-or-mutual > .dropdown-toggle::after {
+    display: none;
+  }
+
+.guestlist-categories button{
+    padding: 0em;
+    border-color: rgb(227, 227, 227);
+}
+
+.guestlist-categories > .dropdown-toggle::after {
+    display: none;
+  }
+
+.guestlist-value button{
+    padding: 0em;
+    border-color: rgb(227, 227, 227);
+}
+
+.guestlist-value > .dropdown-toggle::after {
+    display: none;
+  }
+
+.guestlist-names{
+    padding: 0em;
+}
 
 
 .seating-chart{

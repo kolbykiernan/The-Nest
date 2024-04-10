@@ -231,12 +231,12 @@ const selectCategory = (value, index, categoryType) => {
                 </td>
                 <td>
                   <DropdownButton
-                  title={selectedCategories[index] || 'Select One'}
-                  variant="outline-secondary"
-                  id={`category-dropdown-${index}`}
-                  align="end"
-                  className="category-select"
-                >
+                    title={selectedCategories[index] || 'Select One'}
+                    variant="outline-secondary"
+                    id={`category-dropdown-${index}`}
+                    align="end"
+                    className="category-select"
+                  >
                   {categories.map((category, idx) => (
                     <Dropdown.Item key={idx} onClick={() => selectCategory(category.name, index, 'selectedCategory')}>
                       {category.name}

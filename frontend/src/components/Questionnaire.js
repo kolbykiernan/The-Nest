@@ -8,8 +8,6 @@ import Bridesmaids from './Questions/Bridesmaids';
 import Groomsmen from './Questions/Groomsmen';
 import EverybodyElse from './Questions/Everybody_Else';
 import Button from 'react-bootstrap/Button';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
 import '../styles/questionnaire.css';
 
 

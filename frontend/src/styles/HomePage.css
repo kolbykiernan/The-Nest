@@ -37,3 +37,17 @@ h3 {
   font-style: normal;
   font-size: 2em;
 }
+
+  .welcome img {
+      width: 100%; /* Adjust width as needed */
+      height: auto; /* Auto adjust height to maintain aspect ratio */
+      max-width: 450px;
+    
+  }
+
+  @media (max-height: 900px) {
+    .welcome img {
+        width: 100%; /* Adjust width as needed */
+        height: auto; /* Auto adjust height to maintain aspect ratio */
+    }
+}

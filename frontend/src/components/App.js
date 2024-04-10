@@ -25,7 +25,6 @@ function App() {
     fetchCategories();
   }, []);
 
-  console.log('Props in App.js:', categories, fetchCategories);
 
   const [bridesmaidsData, setBridesmaidsData] = useState(() => {
     const storedData = localStorage.getItem('bridesmaidsData');
