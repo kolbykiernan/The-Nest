@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import HamburgerMenu from '../images/Hamburger_icon.svg.png'
 
-const Sidebar = () => {
+const Sidebar = ({submitGuestlistData, answers}) => {
   const [isExpanded, setIsExpanded] = useState(true); // state to track sidebar visibility
 
   const toggleSidebar = () => {
     setIsExpanded(!isExpanded); // toggle the state between true and false
   };
 
+  
+
   return (
-    <div className={`sidebar ${isExpanded ? 'expanded' : 'collapsed'}`}>
+    <div className={`sidebar ${isExpanded ? 'expanded' : 'collapsed'}`}> 
     <div className='sidebar-header'>
       <div className="toggle" onClick={toggleSidebar}>
-        <img src={HamburgerMenu}/>
+        <img src={HamburgerMenu} alt="three line hamburger menu"/>
       </div>
       {isExpanded && (
         <div className='sidebar-header-font'>
@@ -28,7 +30,7 @@ const Sidebar = () => {
         </div>
       )}
       <div className='sidebar-footer'>
-        <Button>Refresh</Button>
+        <Button onClick={submitGuestlistData}>Resubmit</Button>
       </div>
       
     </div>

@@ -25,6 +25,36 @@ function App() {
     fetchCategories();
   }, []);
 
+  const [answers, setAnswers] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const submitWeddingData = async () => {
+    console.log(answers)
+    try {
+      const formData = {
+        date: answers[1],
+        venue: answers[2],
+        capacity: answers[3],
+        invites: answers[4],
+        attendance: answers[5],
+        cost: answers[6],
+        brideFirstName: answers['brideFirstName'],
+        brideLastName: answers['brideLastName'], 
+        brideSelection: answers['brideSelection'], 
+        groomFirstName: answers['groomFirstName'], 
+        groomLastName: answers['groomLastName'], 
+        groomSelection: answers['groomSelection']
+      };
+  
+      const response = await axios.post('http://localhost:3000/api/', formData);
+      console.log('Form submitted successfully:', response.data);
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+
+    }
+  }
+
+
 
   const [bridesmaidsData, setBridesmaidsData] = useState(() => {
     const storedData = localStorage.getItem('bridesmaidsData');
@@ -35,11 +65,11 @@ function App() {
           firstName: '',
           lastName: '',
           selectedCategory: '',
-          plusOneSelectedBridesmaids: '',
+          plusOneSelected: '',
           plusOneFirstName: '',
           plusOneLastName: '',
           selectedRole: '',
-          plusOneValueBridesmaids: 1,
+          plusOneValue: 1,
         }));
   });
 
@@ -51,11 +81,11 @@ function App() {
         firstName: '',
         lastName: '',
         selectedCategory: '',
-        plusOneSelectedGroomsmen: '',
+        plusOneSelected: '',
         plusOneFirstName: '',
         plusOneLastName: '',
         selectedRole: '',
-        plusOneValueGroomsmen: 1,
+        plusOneValue: 1,
     }));
   });
 
@@ -73,12 +103,6 @@ function App() {
       plusOneFirstName: '',
       plusOneLastName: '',
       plusOneValue: 1,
-      otherGuests: '',
-      addOnFirstName: '',
-      addOnLastName: '',
-      addOnValue: 1,
-      moreGuests: '',
-      howMany: null,
     }))
 });
 
@@ -98,6 +122,10 @@ function App() {
                       setGroomsmenData={setGroomsmenData}
                       everybodyElseData={everybodyElseData}
                       setEverybodyElseData={setEverybodyElseData}
+                      answers={answers}
+                      setAnswers={setAnswers}
+                      submitted={submitted}
+                      submitWeddingData={submitWeddingData}
                       />} />
           <Route 
             path="/guestlist" 
@@ -109,6 +137,7 @@ function App() {
                       setGroomsmenData={setGroomsmenData}
                       everybodyElseData={everybodyElseData}
                       setEverybodyElseData={setEverybodyElseData} 
+                      answers={answers}
                     />} />
           <Route path="/seatingchart" element={<Seatingchart />} />
           <Route path="*" element={<Navigate to="/" />} /> 

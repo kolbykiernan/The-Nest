@@ -20,7 +20,7 @@ const Groomsmen = sequelize.define('Groomsmen', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    plusOneSelectedGroomsmen: {
+    plusOneSelected: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -33,7 +33,7 @@ const Groomsmen = sequelize.define('Groomsmen', {
     isAlsoInWeddingParty: {
         type: DataTypes.STRING,
     },
-    plusOneValueGroomsmen: {
+    plusOneValue: {
         type: DataTypes.DECIMAL,
     },
     createdAt: {

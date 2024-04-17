@@ -60,10 +60,10 @@ const Groomsmen = ({ categories, handleAnswer, groomsmenData, setGroomsmenData }
   
   const handlePlusOneSelectChangeGroomsmen = (id, value) => {
     const updatedGroomsmenData = groomsmenData.map(row =>
-      row.id === id ? { ...row, plusOneSelectedGroomsmen: value === 'Yes' } : row
+      row.id === id ? { ...row, plusOneSelected: value === 'Yes' } : row
     );
     setGroomsmenData(updatedGroomsmenData);
-    handleAnswer(id, { plusOneSelectedGroomsmen: value === 'Yes' });
+    handleAnswer(id, { plusOneSelected: value === 'Yes' });
   };
   
   const handlePlusOneFirstNameChange = (value, id) => {
@@ -92,10 +92,10 @@ const Groomsmen = ({ categories, handleAnswer, groomsmenData, setGroomsmenData }
   
   const handlePlusOneValueChange = (value, id) => {
     const updatedGroomsmenData = groomsmenData.map(row =>
-      row.id === id ? { ...row, plusOneValueGroomsmen: value } : row
+      row.id === id ? { ...row, plusOneValue: value } : row
     );
     setGroomsmenData(updatedGroomsmenData);
-    handleAnswer(id, { plusOneValueGroomsmen: value });
+    handleAnswer(id, { plusOneValue: value });
   };
   
 
@@ -105,11 +105,11 @@ const Groomsmen = ({ categories, handleAnswer, groomsmenData, setGroomsmenData }
       firstName: '',
       lastName: '',
       selectedCategory: '',
-      plusOneSelectedGroomsmen: '',
+      plusOneSelected: '',
       plusOneFirstName: '',
       plusOneLastName: '',
       selectedRole: '',
-      plusOneValueGroomsmen: 1,
+      plusOneValue: 1,
     };
 
     const updatedGroomsmenData = [...groomsmenData, newRow];
@@ -169,7 +169,7 @@ const Groomsmen = ({ categories, handleAnswer, groomsmenData, setGroomsmenData }
                 <td>
                   <DropdownButton 
                     variant="outline-secondary" 
-                    title={row.plusOneSelectedGroomsmen ? 'Yes' : (row.plusOneSelectedGroomsmen === false ? 'No' : 'Select One')}
+                    title={row.plusOneSelected ? 'Yes' : (row.plusOneSelected === false ? 'No' : 'Select One')}
                     onSelect={(value) => handlePlusOneSelectChangeGroomsmen(row.id, value)}
                   >
                     <Dropdown.Item 
@@ -185,7 +185,7 @@ const Groomsmen = ({ categories, handleAnswer, groomsmenData, setGroomsmenData }
                 <td>
                   <Form.Control 
                     type="text" 
-                    disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
+                    disabled={!row.plusOneSelected || row.plusOneSelected === 'No'}
                     value={row.plusOneFirstName} 
                     onChange={(e) => handlePlusOneFirstNameChange(e.target.value, row.id)}
                   />
@@ -193,7 +193,7 @@ const Groomsmen = ({ categories, handleAnswer, groomsmenData, setGroomsmenData }
                 <td>
                   <Form.Control 
                     type="text" 
-                    disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
+                    disabled={!row.plusOneSelected || row.plusOneSelected === 'No'}
                     value={row.plusOneLastName} 
                     onChange={(e) => handlePlusOneLastNameChange(e.target.value, row.id)}
                   />
@@ -203,14 +203,14 @@ const Groomsmen = ({ categories, handleAnswer, groomsmenData, setGroomsmenData }
                   type="checkbox"
                   label="bridesmaid"
                   className="form-margins"
-                  disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
+                  disabled={!row.plusOneSelected || row.plusOneSelected === 'No'}
                   checked={row.selectedRole === 'bridesmaid'} 
                   onChange={() => isAlsoInWeddingParty('bridesmaid', row.id)} 
                 />
                 <Form.Check
                   type="checkbox"
                   label="groomsmen"
-                  disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
+                  disabled={!row.plusOneSelected || row.plusOneSelected === 'No'}
                   checked={row.selectedRole === 'groomsmen'} 
                   onChange={() => isAlsoInWeddingParty('groomsmen', row.id)} 
                 />
@@ -220,11 +220,11 @@ const Groomsmen = ({ categories, handleAnswer, groomsmenData, setGroomsmenData }
                     min={1} 
                     max={5} 
                     step={0.5} 
-                    disabled={!row.plusOneSelectedGroomsmen || row.plusOneSelectedGroomsmen === 'No'}
-                    value={row.plusOneValueGroomsmen} 
+                    disabled={!row.plusOneSelected || row.plusOneSelected === 'No'}
+                    value={row.plusOneValue} 
                     onChange={(e) => handlePlusOneValueChange(e.target.value, row.id)}
                   />
-                  <p>Selected Value: {row.plusOneValueGroomsmen}</p>
+                  <p>Selected Value: {row.plusOneValue}</p>
                 </td>
               </tr>
             ))}

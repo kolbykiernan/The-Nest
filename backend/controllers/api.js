@@ -6,8 +6,10 @@ import WeddingData from '../models/WeddingData.js';
 import Bridesmaids from '../models/bridesMaids.js';
 import Groomsmen from '../models/groomsMen.js';
 import EverybodyElse from '../models/EverybodyElse.js';
+// import AddOnGuests from '../models/addOnGuests.js';
+import Guestlist from '../models/Guestlist.js'
 
-router.post('/', async (req, res) => {
+router.post('/weddingdata', async (req, res) => {
 try {
 const { id, date, venue, capacity, invites, attendance, cost, brideFirstName, brideLastName, brideSelection, groomFirstName, groomLastName, groomSelection } = req.body;
 
@@ -21,7 +23,7 @@ res.status(500).json({ error: 'Internal server error' });
 });
 
 
-router.get('/', async (req, res) => {
+router.get('/weddingdata', async (req, res) => {
 try {
 const weddingData = await WeddingData.findAll();
 
@@ -32,7 +34,7 @@ res.status(500).json({ error: 'Internal server error' });
 }
 });
 
-router.put('/', async (req, res) => {
+router.put('/weddingdata/:id', async (req, res) => {
   const weddingId = req.params.id;
   const {
     date,
@@ -50,12 +52,13 @@ router.put('/', async (req, res) => {
   } = req.body;
 
   try {
-    let weddingData = await WeddingData.findOne();
+    let weddingData = await WeddingData.findByPk(weddingId); // Find the wedding data by ID
 
     if (!weddingData) {
       return res.status(404).json({ error: 'Wedding data not found' });
     }
 
+    // Update the wedding data fields
     weddingData.date = date;
     weddingData.venue = venue;
     weddingData.capacity = capacity;
@@ -69,7 +72,7 @@ router.put('/', async (req, res) => {
     weddingData.groomLastName = groomLastName;
     weddingData.groomSelection = groomSelection;
 
-    await weddingData.save();
+    await weddingData.save(); // Save the changes
 
     res.json(weddingData);
   } catch (error) {
@@ -77,6 +80,7 @@ router.put('/', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 
 
 
@@ -105,10 +109,21 @@ res.status(500).json({ error: 'Internal server error' });
 });
 
 
+const sortByField = (array, field) => {
+  return array.sort((a, b) => {
+    if (a[field] < b[field]) return -1;
+    if (a[field] > b[field]) return 1;
+    return 0;
+  });
+};
+
+
+
 router.get('/bridesmaids', async (req, res) => {
 try {
-    const bridesmaids = await Bridesmaids.findAll();
-    res.json(bridesmaids);
+  const bridesmaids = await Bridesmaids.findAll();
+  const sortedBridesmaids = sortByField(bridesmaids, 'id');
+  res.json(sortedBridesmaids);
 } catch (error) {
     console.error('Error fetching bridesmaids:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -116,19 +131,24 @@ try {
 });
 
 router.post('/bridesmaids', async (req, res) => {
-const { firstName, lastName, selectedCategory, plusOneSelectedBridesmaids, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValueBridesmaids } = req.body;
+const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 try {
-    const newBridesmaid = await Bridesmaids.create({
+    await Bridesmaids.create({
         firstName,
         lastName,
         selectedCategory,
-        plusOneSelectedBridesmaids,
+        plusOneSelected,
         plusOneFirstName,
         plusOneLastName,
         isAlsoInWeddingParty,
-        plusOneValueBridesmaids
+        plusOneValue
     });
-    res.status(201).json(newBridesmaid);
+
+    const sortedBridesmaids = await Bridesmaids.findAll({
+      order: [['id', 'ASC']]
+    });
+
+    res.status(201).json(sortedBridesmaids);
 } catch (error) {
     console.error('Error creating bridesmaid:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -137,7 +157,7 @@ try {
 
 router.put('/bridesmaids/:id', async (req, res) => {
   const { id } = req.params;
-  const { firstName, lastName, selectedCategory, plusOneSelectedBridesmaids, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValueBridesmaids } = req.body;
+  const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 
   try {
     // Check if the bridesmaid with the given ID exists
@@ -150,17 +170,20 @@ router.put('/bridesmaids/:id', async (req, res) => {
     bridesmaid.firstName = firstName;
     bridesmaid.lastName = lastName;
     bridesmaid.selectedCategory = selectedCategory;
-    bridesmaid.plusOneSelectedBridesmaids = plusOneSelectedBridesmaids;
+    bridesmaid.plusOneSelected = plusOneSelected;
     bridesmaid.plusOneFirstName = plusOneFirstName;
     bridesmaid.plusOneLastName = plusOneLastName;
     bridesmaid.isAlsoInWeddingParty = isAlsoInWeddingParty;
-    bridesmaid.plusOneValueBridesmaids = plusOneValueBridesmaids;
+    bridesmaid.plusOneValue = plusOneValue;
 
     // Save the updated bridesmaid data
     await bridesmaid.save();
 
-    // Return the updated bridesmaid data
-    res.json(bridesmaid);
+    const sortedBridesmaids = await Bridesmaids.findAll({
+      order: [['id', 'ASC']]
+    });
+
+    res.json(sortedBridesmaids);
   } catch (error) {
     console.error('Error updating bridesmaid:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -171,7 +194,8 @@ router.put('/bridesmaids/:id', async (req, res) => {
 router.get('/groomsmen', async (req, res) => {
 try {
     const groomsmen = await Groomsmen.findAll();
-    res.json(groomsmen);
+    const sortedGroomsmen = sortByField(groomsmen, 'id');
+    res.json(sortedGroomsmen);
 } catch (error) {
     console.error('Error fetching groomsmen:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -180,19 +204,24 @@ try {
 
 
 router.post('/groomsmen', async (req, res) => {
-const { firstName, lastName, selectedCategory, plusOneSelectedGroomsmen, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValueGroomsmen } = req.body;
+const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 try {
-    const newGroomsman = await Groomsmen.create({
+    await Groomsmen.create({
         firstName,
         lastName,
         selectedCategory,
-        plusOneSelectedGroomsmen,
+        plusOneSelected,
         plusOneFirstName,
         plusOneLastName,
         isAlsoInWeddingParty,
-        plusOneValueGroomsmen
+        plusOneValue
     });
-    res.status(201).json(newGroomsman);
+
+    const sortedGroomsmen = await Groomsmen.findAll({
+      order: [['id', 'ASC']]
+    });
+
+    res.status(201).json(sortedGroomsmen);
 } catch (error) {
     console.error('Error creating groomsman:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -201,7 +230,7 @@ try {
 
 router.put('/groomsmen/:id', async (req, res) => {
   const { id } = req.params;
-  const { firstName, lastName, selectedCategory, plusOneSelectedGroomsmen, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValueGroomsmen } = req.body;
+  const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 
   try {
     // Check if the bridesmaid with the given ID exists
@@ -214,17 +243,22 @@ router.put('/groomsmen/:id', async (req, res) => {
     groomsman.firstName = firstName;
     groomsman.lastName = lastName;
     groomsman.selectedCategory = selectedCategory;
-    groomsman.plusOneSelectedGroomsmen = plusOneSelectedGroomsmen;
+    groomsman.plusOneSelected = plusOneSelected;
     groomsman.plusOneFirstName = plusOneFirstName;
     groomsman.plusOneLastName = plusOneLastName;
     groomsman.isAlsoInWeddingParty = isAlsoInWeddingParty;
-    groomsman.plusOneValueGroomsmen = plusOneValueGroomsmen;
+    groomsman.plusOneValue = plusOneValue;
 
     // Save the updated groomsman data
     await groomsman.save();
 
     // Return the updated groomsman data
-    res.json(groomsman);
+    const sortedGroomsmen = await Groomsmen.findAll({
+      order: [['id', 'ASC']]
+    });
+
+    res.json(sortedGroomsmen);
+
   } catch (error) {
     console.error('Error updating groomsman:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -233,9 +267,12 @@ router.put('/groomsmen/:id', async (req, res) => {
 
 
 router.get('/everybodyelse', async (req, res) => {
+  
   try {
+
     const guests = await EverybodyElse.findAll();
-    res.status(200).json(guests);
+    const sortedGuests = sortByField(guests, 'id');
+    res.json(sortedGuests);
   } catch (error) {
     console.error('Error fetching guests:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -243,9 +280,9 @@ router.get('/everybodyelse', async (req, res) => {
 });
 
 router.post('/everybodyelse', async (req, res) => {
-  const { firstName, lastName, selectedCategory, brideGroomOrMutual, guestValue, plusOneSelected, plusOneFirstName, plusOneLastName, plusOneValue, otherGuests, addOnFirstName, addOnLastName, addOnValue, moreGuests, howMany } = req.body;
+  const { firstName, lastName, selectedCategory, brideGroomOrMutual, guestValue, plusOneSelected, plusOneFirstName, plusOneLastName, plusOneValue} = req.body;
   try {
-      const newGuest = await EverybodyElse.create({
+      await EverybodyElse.create({
           firstName,
           lastName,
           selectedCategory,
@@ -254,15 +291,13 @@ router.post('/everybodyelse', async (req, res) => {
           plusOneSelected,
           plusOneFirstName,
           plusOneLastName,
-          plusOneValue,
-          otherGuests,
-          addOnFirstName,
-          addOnLastName,
-          addOnValue,
-          moreGuests,
-          howMany
+          plusOneValue,   
       });
-      res.status(201).json(newGuest);
+      const sortedGuests = await EverybodyElse.findAll({
+        order: [['id', 'ASC']]
+      });
+  
+      res.status(201).json(sortedGuests);
   } catch (error) {
       console.error('Error creating guest:', error);
       res.status(500).json({ error: 'Internal Server Error' });
@@ -272,7 +307,7 @@ router.post('/everybodyelse', async (req, res) => {
 
 router.put('/everybodyelse/:id', async (req, res) => {
   const { id } = req.params;
-  const { firstName, lastName, selectedCategory, brideGroomOrMutual, guestValue, plusOneSelected, plusOneFirstName, plusOneLastName, plusOneValue, otherGuests, addOnFirstName, addOnLastName, addOnValue, moreGuests, howMany } = req.body;
+  const { firstName, lastName, selectedCategory, brideGroomOrMutual, guestValue, plusOneSelected, plusOneFirstName, plusOneLastName, plusOneValue } = req.body;
   
   try {
     // Check if the guest with the specified ID exists
@@ -292,23 +327,141 @@ router.put('/everybodyelse/:id', async (req, res) => {
     existingGuest.plusOneFirstName = plusOneFirstName;
     existingGuest.plusOneLastName = plusOneLastName;
     existingGuest.plusOneValue = plusOneValue;
-    existingGuest.otherGuests = otherGuests;
-    existingGuest.addOnFirstName = addOnFirstName;
-    existingGuest.addOnLastName = addOnLastName;
-    existingGuest.addOnValue = addOnValue;
-    existingGuest.moreGuests = moreGuests;
-    existingGuest.howMany = howMany;
     
     // Save the updated data
     await existingGuest.save();
 
     // Respond with the updated guest data
-    res.status(200).json(existingGuest);
+    const sortedGuests = await EverybodyElse.findAll({
+      order: [['id', 'ASC']]
+    });
+
+    res.json(sortedGuests);
   } catch (error) {
     console.error('Error updating guest:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+
+router.get('/guestlist', async (req, res) => {
+  try {
+    // Fetch all guestlist entries from the Guestlist table
+    const guestlistEntries = await Guestlist.findAll();
+    const sortedGuestlist = sortByField(guestlistEntries, 'id');
+    res.status(200).json(sortedGuestlist);
+  } catch (error) {
+    console.error('Error fetching guestlist data:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.post('/guestlist', async (req, res) => {
+  try {
+    const guestlistData = req.body.map((item, index) => ({ ...item, order: index }));
+
+    // Map each item in guestlistData to a new entry in the database
+    await Promise.all(guestlistData.map(async item => {
+      // Check if the guest has a plus one
+      if (item.plusOneSelected === 'true') {
+        // Create separate entries for the guest and their plus one
+        const plusOneData = {
+          id: item.plusOneId, // Assuming plusOneId is already provided for plus one entries
+          firstName: item.plusOneFirstName,
+          lastName: item.plusOneLastName,
+          selectedCategory: item.selectedCategory,
+          brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party +1',
+          guestValue: item.plusOneValue
+        };
+        const guestData = {
+          id: item.guestId, // Assuming guestId is already provided for guest entries
+          firstName: item.firstName,
+          lastName: item.lastName,
+          selectedCategory: item.selectedCategory,
+          brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party',
+          guestValue: item.guestValue || 5
+        };
+
+        // Insert the new entries into the database
+        const plusOneEntry = await Guestlist.create(plusOneData);
+        const guestEntry = await Guestlist.create(guestData);
+
+        return [plusOneEntry, guestEntry];
+      } else {
+        // Create an entry for the guest only
+        const guestData = {
+          id: item.guestId, // Assuming guestId is already provided for guest entries
+          firstName: item.firstName,
+          lastName: item.lastName,
+          selectedCategory: item.selectedCategory,
+          brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party',
+          guestValue: item.guestValue || 5
+        };
+
+        // Insert the new entry into the database
+        const guestEntry = await Guestlist.create(guestData);
+        return guestEntry;
+      }
+    }));
+
+    // Retrieve the newly created entries
+    const sortedEntries = await Guestlist.findAll({
+      order: [['id', 'ASC']]
+    });
+
+    res.status(201).json(sortedEntries);
+  } catch (error) {
+    console.error('Error creating guestlist entries:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+router.put('/guestlist', async (req, res) => {
+  try {
+    const guestlistData = req.body.map((item, index) => ({ ...item, order: index }));
+
+    // Array to hold updated entries
+    const updatedEntries = [];
+
+    // Loop through each item in guestlistData
+    await Promise.all(guestlistData.map(async item => {
+      // Find the existing entry in the database by its ID
+      let existingEntry = await Guestlist.findByPk(item.id);
+
+      if (existingEntry) {
+        // Update the existing entry with the new data
+        existingEntry.firstName = item.firstName;
+        existingEntry.lastName = item.lastName;
+        existingEntry.selectedCategory = item.selectedCategory;
+        existingEntry.brideGroomOrMutual = item.brideGroomOrMutual;
+        existingEntry.guestValue = item.guestValue;
+        await existingEntry.save();
+        updatedEntries.push(existingEntry);
+      } else {
+        // If the entry does not exist, create a new entry
+        const newEntryData = {
+          firstName: item.firstName,
+          lastName: item.lastName,
+          selectedCategory: item.selectedCategory,
+          brideGroomOrMutual: item.brideGroomOrMutual,
+          guestValue: item.guestValue
+        };
+        // Create new entry
+        const newEntry = await Guestlist.create(newEntryData);
+        updatedEntries.push(newEntry);
+      }
+    }));
+    const sortedEntries = updatedEntries.sort((a, b) => a.order - b.order);
+
+
+    res.status(200).json(sortedEntries);
+  } catch (error) {
+    console.error('Error updating guestlist entries:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 
 
 export default router;

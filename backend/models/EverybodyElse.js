@@ -41,24 +41,6 @@ const EverybodyElse = sequelize.define('EverybodyElse', {
     plusOneValue: {
         type: DataTypes.DECIMAL,
     },
-    otherGuests: {
-        type: DataTypes.BOOLEAN,
-    },
-    addOnFirstName: {
-        type: DataTypes.STRING,
-    },
-    addOnLastName: {
-        type: DataTypes.STRING,
-    },
-    addOnValue: {
-        type: DataTypes.DECIMAL,
-    },
-    moreGuests: {
-        type: DataTypes.BOOLEAN,
-    },
-    howMany: {
-        type: DataTypes.INTEGER,
-    },
     createdAt: {
         type: DataTypes.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')

@@ -11,7 +11,8 @@ import Button from 'react-bootstrap/Button';
 import '../styles/questionnaire.css';
 
 
-const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesmaidsData, groomsmenData, setGroomsmenData, everybodyElseData, setEverybodyElseData}) => {
+const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesmaidsData, groomsmenData, setGroomsmenData, everybodyElseData, setEverybodyElseData, answers, setAnswers, submitted, submitWeddingData}) => {
+
 
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = localStorage.getItem('currentPage');
@@ -22,7 +23,7 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
     localStorage.setItem('currentPage', currentPage);
   }, [currentPage]);
 
-    const [answers, setAnswers] = useState({});
+    
     const [questions] = useState([
       { id: 1, text: "What is your wedding date?", type: "date"},
       { id: 2, text: "What is the name of your venue?", type: "text"},
@@ -81,7 +82,7 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
       }
     };
 
-    const [submitted, setSubmitted] = useState(false);
+    
     const [existingData, setExistingData] = useState(null);
 
     const handleNext = async () => {
@@ -134,35 +135,14 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
     
 
 
-    const submitWeddingData = async () => {
-      console.log(answers)
-      try {
-        const formData = {
-          date: answers[1],
-          venue: answers[2],
-          capacity: answers[3],
-          invites: answers[4],
-          attendance: answers[5],
-          cost: answers[6],
-          brideFirstName: answers['brideFirstName'],
-          brideLastName: answers['brideLastName'], 
-          brideSelection: answers['brideSelection'], 
-          groomFirstName: answers['groomFirstName'], 
-          groomLastName: answers['groomLastName'], 
-          groomSelection: answers['groomSelection']
-        };
     
-        const response = await axios.post('http://localhost:3000/api/', formData);
-        console.log('Form submitted successfully:', response.data);
-        setSubmitted(true);
-      } catch (error) {
-        console.error('Error submitting form:', error);
- 
-      }
-    }
-  
-const submitBridesmaidsData = async (bridesmaidsData) => {
-  try {
+    
+
+
+
+    
+    const submitBridesmaidsData = async (bridesmaidsData) => {
+      try {
     const requests = bridesmaidsData.map(async (row) => {
       // Check if firstName is empty
       if (!row.firstName.trim()) {
@@ -174,11 +154,11 @@ const submitBridesmaidsData = async (bridesmaidsData) => {
         firstName: row.firstName,
         lastName: row.lastName,
         selectedCategory: row.selectedCategory,
-        plusOneSelectedBridesmaids: row.plusOneSelectedBridesmaids,
+        plusOneSelected: row.plusOneSelected,
         plusOneFirstName: row.plusOneFirstName,
         plusOneLastName: row.plusOneLastName,
         selectedRole: row.selectedRole,
-        plusOneValueBridesmaids: row.plusOneValueBridesmaids
+        plusOneValue: row.plusOneValue
       };
       return axios.post('http://localhost:3000/api/bridesmaids', formData);
     });
@@ -207,11 +187,11 @@ const submitGroomsmenData = async (groomsmenData) => {
         firstName: row.firstName,
         lastName: row.lastName,
         selectedCategory: row.selectedCategory,
-        plusOneSelectedGroomsmen: row.plusOneSelectedGroomsmen,
+        plusOneSelected: row.plusOneSelected,
         plusOneFirstName: row.plusOneFirstName,
         plusOneLastName: row.plusOneLastName,
         selectedRole: row.selectedRole,
-        plusOneValueGroomsmen: row.plusOneValueGroomsmen
+        plusOneValue: row.plusOneValue
       };
       return axios.post('http://localhost:3000/api/groomsmen', formData);
     });
@@ -246,12 +226,6 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         plusOneFirstName: row.plusOneFirstName,
         plusOneLastName: row.plusOneLastName,
         plusOneValue: row.plusOneValue,
-        otherGuests: row.otherGuests,
-        addOnFirstName: row.addOnFirstName,
-        addOnLastName: row.addOnLastName,
-        addOnValue: row.addOnValue,
-        moreGuests: row.moreGuests,
-        howMany: row.howMany,
       };
       return axios.post('http://localhost:3000/api/everybodyelse', formData);
     });
@@ -287,82 +261,27 @@ const submitEverybodyElseData = async (everybodyElseData) => {
     
 
   const renderQuestion = (question) => {
+    if (!question) return null;
+
     const answer = answers[question.id] || '';
     switch (question.type) {
-      case "date":
-        return (
-          <div className='questionnaire-questions'>
-            <label 
-              className='question-label' 
-              style={{ backgroundColor: 'var(--secondary-color)'}}
-            >
-              {question.text}
-            </label>
-            <input 
-              className='question-input' 
-              type="date" 
-              value={answer} 
-              onChange={(e) => handleAnswer(question.id, e.target.value)} 
-              required/>
-          </div>
-        );
-      case "text":
-        return (
-          <div className='questionnaire-questions'>
-            <label 
-              className='question-label' 
-              style={{ backgroundColor: 'var(--secondary-color)'}}
-            >
-              {question.text}
-            </label>
-            <input 
-              className='question-input' 
-              type="text" value={answer} 
-              onChange={(e) => handleAnswer(question.id, e.target.value)}
-              required/>
-          </div>
-        );
-      case "number":
-        return (
-          <div className='questionnaire-questions'>
-            <label 
-              className='question-label' 
-              style={{ backgroundColor: 'var(--secondary-color)'}}
-            >
-              {question.text}
-            </label>
-            <input 
-              className='question-input' 
-              type="number" 
-              value={answer} 
-              onChange={(e) => handleAnswer(question.id, parseInt(e.target.value))} 
-              
-              required/>
-          </div>
-        );
-      case "categoryForm":
-        return (
-          <div className='questionnaire-questions' key={question.id}>
-            <label 
-              className='question-label-category' 
-              style={{ backgroundColor: 'var(--secondary-color)'}}
-            >
-              {question.text}
-            </label>
-            <p className='category-font'>
-                  It's best if you are together for this portion! Think of how you both know all of the people that will come to your wedding. The average person has between 4 - 6 categories that the majority of their guests can fall into. Maybe they're unique to one of you or maybe they are mutual. For example: Let's say you and your partner both want to invite friends from high school, but you didn't go to the same high school. You only need to fill that category out once because we will be assigning which partner they originated from or if they are mutual later. Take a little time to consider these as this will influence your seating chart! There may still be a few that don't fit into any category. For those, you can leave the category blank, or create 'Other'.
-            </p>
-            <CategoryForm 
-              fetchCategories={fetchCategories} 
-              categories={categories} 
-              className='question-input' 
-              type="text" 
-              value={answer} 
-              onChange={(e) => handleAnswer(question.id, e.target.value)} 
-              required 
-            />
-          </div>
-        );
+    case "date":
+    case "text":
+    case "number":
+      return (
+        <div className='questionnaire-questions'>
+          <label className='question-label' style={{ backgroundColor: 'var(--secondary-color)'}}>
+            {question.text}
+          </label>
+          <input 
+            className='question-input' 
+            type={question.type} 
+            value={answer} 
+            onChange={(e) => handleAnswer(question.id, e.target.value)} 
+            required
+          />
+        </div>
+      );
       case "brideGroom":
         return (
           <div className='questionnaire-questions'>
@@ -379,10 +298,41 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               value={answer} 
               onChange={(e) => handleAnswer(question.id, e.target.value)} 
               handleAnswer={handleAnswer}
+              existingData={existingData}
+              brideFirstName={answers['brideFirstName']}
+              brideLastName={answers['brideLastName']}
+              brideSelection={answers['brideSelection']}
+              groomFirstName={answers['groomFirstName']}
+              groomLastName={answers['groomLastName']}
+              groomSelection={answers['groomSelection']}
               required
             />
           </div>
         );
+      case "categoryForm":
+        return (
+          <div className='questionnaire-questions' key={question.id}>
+            <label 
+              className='question-label-category' 
+              style={{ backgroundColor: 'var(--secondary-color)'}}
+            >
+              {question.text}
+            </label>
+            <p className='category-font'>
+                  It's best if you are together for this portion! Think of how you both know all of the people that will come to your wedding. The average person has between 4 - 6 categories that the majority of their guests can fall into. Maybe they're unique to one of you or maybe they are mutual. For example: Let's say you and your partner both want to invite friends from high school, but you didn't go to the same high school. You only need to fill that category out once because we will be assigning which partner they originated from or if they are mutual later. This could also apply for categories such as 'Family', but we'll let you decide these! Take a little time to consider these as this will influence your seating chart! There may still be a few that don't fit into any category. For those, you can create a category called 'Extra' or 'Other'. After you add a category, you should see it appear when clicking the dropdown!
+            </p>
+            <CategoryForm 
+              fetchCategories={fetchCategories} 
+              categories={categories} 
+              className='question-input' 
+              type="text" 
+              value={answer} 
+              onChange={(e) => handleAnswer(question.id, e.target.value)} 
+              required 
+            />
+          </div>
+        );
+      
       case "bridesmaids":
         return (
           <div className='question-banner'>
@@ -483,7 +433,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
                 {renderQuestion(questions[currentPage])}
               </div>
               <div>
-                {currentPage > 0 && (
+              {currentPage > 0 && (
                   <Button className="button" variant="primary" onClick={handlePrev}>Prev</Button>
                 )}
                 {currentPage < questions.length - 1 && (

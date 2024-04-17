@@ -5,20 +5,13 @@
   }
 
 .footer{
-    position: fixed;
-    width: 100vw;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
+    flex-shrink: 0; /* Prevent footer from shrinking */
     background-color: rgb(229, 251, 250);
-    z-index: 1;
     padding: 2em;
     box-sizing: border-box;
 }
 
-.footer.fixed{
-    position: fixed;
-}
+
 
 .footer-font{
     display: flex;
