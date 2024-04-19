@@ -11,7 +11,7 @@ import Button from 'react-bootstrap/Button';
 import '../styles/questionnaire.css';
 
 
-const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesmaidsData, groomsmenData, setGroomsmenData, everybodyElseData, setEverybodyElseData, answers, setAnswers, submitted, submitWeddingData}) => {
+const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesmaidsData, groomsmenData, setGroomsmenData, everybodyElseData, setEverybodyElseData}) => {
 
 
   const [currentPage, setCurrentPage] = useState(() => {
@@ -23,123 +23,185 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
     localStorage.setItem('currentPage', currentPage);
   }, [currentPage]);
 
-    
-    const [questions] = useState([
-      { id: 1, text: "What is your wedding date?", type: "date"},
-      { id: 2, text: "What is the name of your venue?", type: "text"},
-      { id: 3, text: "What is the maximum capacity at your venue?", type: "number"},
-      { id: 4, text: "How many guests do you plan to invite?", type: "number"},
-      { id: 5, text: "What is the ideal number of guests to attend?", type: "number"},
-      { id: 6, text: "How much does it cost per guest?", type: "number"},
-      { id: 7, text: "Let's start with the lovebirds!", type: "brideGroom"},
-      { id: 8, text: "Next we're going to categorize how you know your guests!", type: "categoryForm"},
-      { id: 9, text: "Bridesmaids", type: "bridesmaids"},
-      { id: 10, text: "Groomsmen", type: "Groomsmen"},
-      { id: 11, text: "Everybody Else", type: "Everybody Else"},
- 
+    const [answers, setAnswers] = useState({});
+    const [submitted, setSubmitted] = useState(false);
+    // const [existingData, setExistingData] = useState(null);
+    const [questions, setQuestions] = useState([
+      { id: 1, text: "Let's start with the lovebirds!", type: "brideGroom"},
+      { id: 2, text: "Next we're going to categorize how you know your guests!", type: "categoryForm"},
+      { id: 3, text: "Bridesmaids", type: "bridesmaids"},
+      { id: 4, text: "Groomsmen", type: "Groomsmen"},
+      { id: 5, text: "Everybody Else", type: "Everybody Else"},
     ]);
-    
-  
 
     const handlePrev = async () => {
       const nextIndex = currentPage - 1;
       setCurrentPage(nextIndex);
-
-      if (questions[currentPage].id === 7) {
-        if (submitted) {
-          // If the form has already been submitted, perform a PUT request to update existing data
-          try {
-            const formData = {
-              date: answers[1],
-              venue: answers[2],
-              capacity: answers[3],
-              invites: answers[4],
-              attendance: answers[5],
-              cost: answers[6],
-              brideFirstName: answers['brideFirstName'],
-              brideLastName: answers['brideLastName'], 
-              brideSelection: answers['brideSelection'], 
-              groomFirstName: answers['groomFirstName'], 
-              groomLastName: answers['groomLastName'], 
-              groomSelection: answers['groomSelection']
-            };
-    
-            const response = await axios.put('http://localhost:3000/api/', formData);
-            console.log('Form updated successfully:', response.data);
-          } catch (error) {
-            console.error('Error updating form:', error);
-          }
-        } else {
-          submitWeddingData();
-        }
-      } else if (questions[nextIndex].id === 7) {
+      if (nextIndex === 0) {
         try {
-          const response = await axios.get('http://localhost:3000/api/');
-          setExistingData(response.data);
+          const response = await axios.get('http://localhost:3000/api/weddingdata'); // Replace with your actual endpoint
+          
+          const data = response.data;
+          return {
+            brideSelection: response.data.brideSelection,
+            groomSelection: response.data.groomSelection,
+            brideFirstName: response.data.brideFirstName,
+            brideLastName: response.data.brideLastName,
+            groomFirstName: response.data.groomFirstName,
+            groomLastName: response.data.groomLastName
+          };
+    
         } catch (error) {
-          console.error('Error fetching existing data:', error);
+          console.error('Error fetching wedding data:', error);
         }
       }
     };
-
-    
-    const [existingData, setExistingData] = useState(null);
-
+  
     const handleNext = async () => {
       const nextIndex = currentPage + 1;
       setCurrentPage(nextIndex);
+  
+      if (currentPage === 0 && !submitted) {
+        submitWeddingData();
+      } 
+    };
+  
+      const handleAnswer = (questionId, answer) => {
+        setAnswers(prevAnswers => ({
+          ...prevAnswers,
+          [questionId]: answer
+        }));
+      }; 
     
-      if (questions[currentPage].id === 7) {
-        if (submitted) {
-          // If the form has already been submitted, perform a PUT request to update existing data
-          try {
-            const formData = {
-              date: answers[1],
-              venue: answers[2],
-              capacity: answers[3],
-              invites: answers[4],
-              attendance: answers[5],
-              cost: answers[6],
-              brideFirstName: answers['brideFirstName'],
-              brideLastName: answers['brideLastName'], 
-              brideSelection: answers['brideSelection'], 
-              groomFirstName: answers['groomFirstName'], 
-              groomLastName: answers['groomLastName'], 
-              groomSelection: answers['groomSelection']
-            };
+    const [brideSelection, setBrideSelection] = useState('Bride');
+    const [groomSelection, setGroomSelection] = useState('Groom');
+    const [brideFirstName, setBrideFirstName] = useState('');
+    const [brideLastName, setBrideLastName] = useState('');
+    const [groomFirstName, setGroomFirstName] = useState('');
+    const [groomLastName, setGroomLastName] = useState('');
     
-            const response = await axios.put('http://localhost:3000/api/', formData);
-            console.log('Form updated successfully:', response.data);
-          } catch (error) {
-            console.error('Error updating form:', error);
-          }
-        } else {
-          submitWeddingData();
-        }
-      } else if (questions[nextIndex].id === 7) {
-        try {
-          const response = await axios.get('http://localhost:3000/api/');
-          setExistingData(response.data);
-        } catch (error) {
-          console.error('Error fetching existing data:', error);
-        }
+    const saveToLocalStorage = (key, data) => {
+      localStorage.setItem(key, JSON.stringify(data));
+    };
+    
+    // Function to retrieve wedding data from localStorage
+    const getFromLocalStorage = (key) => {
+      const data = localStorage.getItem(key);
+      return data ? JSON.parse(data) : null;
+    };
+    
+    // Initialize wedding data from localStorage on component mount
+    useEffect(() => {
+      const savedWeddingData = getFromLocalStorage('weddingData');
+      if (savedWeddingData) {
+        setBrideFirstName(savedWeddingData.brideFirstName);
+        setBrideLastName(savedWeddingData.brideLastName);
+        setBrideSelection(savedWeddingData.brideSelection);
+        setGroomFirstName(savedWeddingData.groomFirstName);
+        setGroomLastName(savedWeddingData.groomLastName);
+        setGroomSelection(savedWeddingData.groomSelection);
+      }
+    }, []);
+    
+    
+    const submitWeddingData = async () => {
+      try {
+        // Update the answers before submitting the form data
+        handleAnswer('brideFirstName', brideFirstName);
+        handleAnswer('brideLastName', brideLastName);
+        handleAnswer('brideSelection', brideSelection);
+        handleAnswer('groomFirstName', groomFirstName);
+        handleAnswer('groomLastName', groomLastName);
+        handleAnswer('groomSelection', groomSelection);
+    
+        const formData = {
+          brideFirstName: answers['brideFirstName'],
+          brideLastName: answers['brideLastName'], 
+          brideSelection: answers['brideSelection'], 
+          groomFirstName: answers['groomFirstName'], 
+          groomLastName: answers['groomLastName'], 
+          groomSelection: answers['groomSelection']
+        };
+    
+        const response = await axios.post('http://localhost:3000/api/weddingdata', formData);
+        console.log('Form submitted successfully:', response.data);
+        setSubmitted(true);
+
+        saveToLocalStorage('weddingData', formData);
+      } catch (error) {
+        console.error('Error submitting form:', error);
       }
     };
-
-    const handleAnswer = (questionId, answer) => {
-      setAnswers(prevAnswers => ({
-        ...prevAnswers,
-        [questionId]: answer
-      }));
-    };
     
 
+    useEffect(() => {
+      // Fetch bride's first name
+      const fetchBrideData = async () => {
+        try {
+          const response = await axios.get('http://localhost:3000/api/weddingdata'); // Replace with your actual endpoint
+          return response.data.brideFirstName;
+        } catch (error) {
+          console.error('Error fetching bride first name:', error);
+        }
+      };
+    
+      // Fetch groom's first name
+      const fetchGroomData = async () => {
+        try {
+          const response = await axios.get('http://localhost:3000/api/weddingdata'); // Replace with your actual endpoint
+          return response.data.groomFirstName;
+        } catch (error) {
+          console.error('Error fetching groom first name:', error);
+        }
+      };
+    
+      fetchBrideData();
+      fetchGroomData();
+    }, []);
+    
+    useEffect(() => {
+      // Update the text of question #3 to include brideFirstName
+      setQuestions(prevQuestions => {
+        const updatedQuestions = [...prevQuestions];
+        const bridesmaidsQuestion = updatedQuestions.find(q => q.id === 3);
+        if (bridesmaidsQuestion) {
+          bridesmaidsQuestion.text = `${brideFirstName}'s Wedding Party`;
+        }
+        return updatedQuestions;
+      });
+    }, [brideFirstName]);
+    
+    useEffect(() => {
+      // Update the text of question #4 to include groomFirstName
+      setQuestions(prevQuestions => {
+        const updatedQuestions = [...prevQuestions];
+        const groomsmenQuestion = updatedQuestions.find(q => q.id === 4);
+        if (groomsmenQuestion) {
+          groomsmenQuestion.text = `${groomFirstName}'s Wedding Party`;
+        }
+        return updatedQuestions;
+      });
+    }, [groomFirstName]);
+
+  
+      useEffect(() => {
+        // Update the answers whenever inputs change
+        handleAnswer('brideFirstName', brideFirstName);
+        handleAnswer('brideLastName', brideLastName);
+        handleAnswer('brideSelection', brideSelection);
+        handleAnswer('groomFirstName', groomFirstName);
+        handleAnswer('groomLastName', groomLastName);
+        handleAnswer('groomSelection', groomSelection);
+      }, [brideFirstName, brideLastName, brideSelection, groomFirstName, groomLastName, groomSelection]);
+
+
 
     
+
+   
     
-
-
-
+    
+   
     
     const submitBridesmaidsData = async (bridesmaidsData) => {
       try {
@@ -265,23 +327,6 @@ const submitEverybodyElseData = async (everybodyElseData) => {
 
     const answer = answers[question.id] || '';
     switch (question.type) {
-    case "date":
-    case "text":
-    case "number":
-      return (
-        <div className='questionnaire-questions'>
-          <label className='question-label' style={{ backgroundColor: 'var(--secondary-color)'}}>
-            {question.text}
-          </label>
-          <input 
-            className='question-input' 
-            type={question.type} 
-            value={answer} 
-            onChange={(e) => handleAnswer(question.id, e.target.value)} 
-            required
-          />
-        </div>
-      );
       case "brideGroom":
         return (
           <div className='questionnaire-questions'>
@@ -298,13 +343,18 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               value={answer} 
               onChange={(e) => handleAnswer(question.id, e.target.value)} 
               handleAnswer={handleAnswer}
-              existingData={existingData}
-              brideFirstName={answers['brideFirstName']}
-              brideLastName={answers['brideLastName']}
-              brideSelection={answers['brideSelection']}
-              groomFirstName={answers['groomFirstName']}
-              groomLastName={answers['groomLastName']}
-              groomSelection={answers['groomSelection']}
+              brideFirstName={brideFirstName}
+              setBrideFirstName={setBrideFirstName}
+              brideLastName={brideLastName}
+              setBrideLastName={setBrideLastName}
+              brideSelection={brideSelection}
+              setBrideSelection={setBrideSelection}
+              groomFirstName={groomFirstName}
+              setGroomFirstName={setGroomFirstName}
+              groomLastName={groomLastName}
+              setGroomLastName={setGroomLastName}
+              groomSelection={groomSelection}
+              setGroomSelection={setGroomSelection}
               required
             />
           </div>
@@ -404,7 +454,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               className='question-label-instructions' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
             >
-              Now let's add everybody else! A best practice could be to go down your 'Category List', add all of the guests that you would put in that list., then start with the next category. For now, you can only hit submit once, so give it your best guess! Don't worry if you forget a few. We can add them in Guest List. 
+              Now let's add everybody else! A best practice could be to go down your 'Category List', add all of the guests that you would put in that list., then start with the next category. For now, you can only hit submit once, so give it your best guess!If your guests have young children or you forget a few, we can add them in the next section. 
             </label>
             <EverybodyElse
               categories={categories} 

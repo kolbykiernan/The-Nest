@@ -8,30 +8,6 @@ const WeddingData = sequelize.define('WeddingData', {
         primaryKey: true,
         autoIncrement: true,
     },
-    date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-    },
-    venue: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    capacity: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-    invites: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-    attendance: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-    cost: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
     brideFirstName: {
         type: DataTypes.STRING,
         allowNull: false

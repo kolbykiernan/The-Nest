@@ -29,13 +29,6 @@ const Bridesmaids = ({ categories, handleAnswer, bridesmaidsData, setBridesmaids
     });
   };
 
-  // useEffect(() => {
-  //   const storedData = localStorage.getItem('bridesmaidsData');
-  //   if (storedData) {
-  //     setBridesmaidsData(JSON.parse(storedData));
-  //   }
-  // }, []);
-
   useEffect(() => {
     localStorage.setItem('bridesmaidsData', JSON.stringify(bridesmaidsData));
  

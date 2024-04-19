@@ -122,15 +122,11 @@
     color: black;
 }
 
-/* bridegroom */
 
 .bride-groom-form{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /* margin-top: .25em;
-    margin-left:.25em;
-    margin-right:.25em; */
 }
 
 .bride-groom-dropdown{
@@ -174,7 +170,6 @@
     background-color: white;
     color: rgb(92, 92, 92);
     border-color: lightgray;
-    /* margin-right: 8em; */
 }
 
 .dropdown-toggle{
@@ -247,7 +242,7 @@ td p {
     font-size: 1.75em;
     padding: 2px;
     border-bottom: 1px solid lightgray;
-    border-top: 1px solid lightgray; /* Initially, set a transparent border */
+    border-top: 1px solid lightgray;
 }
 
 .guestlist td input {
@@ -255,12 +250,9 @@ td p {
 }
 
 .guestlist td:focus {
-    border: 1px solid black; /* When clicked, set a black border */
-    outline: none; /* Remove the default focus outline */
+    border: 1px solid black; 
+    outline: none;
 }
-
-
-
 
 .guestlist td button{
     margin: 0px;
@@ -293,6 +285,17 @@ td p {
     margin-bottom: 4.5em;
 }
 
+.guestlist-table-rows{
+    width:100%;
+}
+
+.green-background {
+    background-color: rgb(229, 251, 250);
+  }
+  
+.red-background {
+    background-color: #f6e6e6;
+}
 
 .guestlist-sidebar{
     border: 1px solid lightgray;
@@ -337,16 +340,70 @@ td p {
     width:100%;
 }
 
-.sidebar-content{
+.sidebar-analysis{
     padding: 2em;
     font-size: 1.2em;
 
+}
+
+.sidebar-inputs{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+.sidebar-capacity{
+    display: flex;
+    margin: 1em;
+    flex-direction: row;
+    width: 100%;
+}
+
+.sidebar-capacity-text{
+    margin-right: 2em;
+}
+
+.sidebar-invites{
+    display: flex;
+    margin: 1em;
+    flex-direction: row;  
+    width: 100%;
+}
+
+.sidebar-invites-text{
+    margin-right: 2em;
+}
+
+.sidebar-attendance{
+    display: flex;
+    margin: 1em;
+    flex-direction: row;
+    width: 100%;
+}
+
+
+.sidebar-attendance-text{
+    margin-right: 2em;
+}
+
+.sidebar-cost{
+    display: flex;
+    margin: 1em;
+    flex-direction: row; 
+    width: 100%;
+}
+
+.sidebar-cost-text{
+    margin-right: 2em;
 }
 
 .sidebar-footer{
     text-align: center;
     padding-bottom: 2em;
 }
+
 
 .guestlist-bride-groom-or-mutual button{
     padding: 0em;
@@ -355,7 +412,7 @@ td p {
 
 .guestlist-bride-groom-or-mutual > .dropdown-toggle::after {
     display: none;
-  }
+}
 
 .guestlist-categories button{
     padding: 0em;
@@ -365,19 +422,20 @@ td p {
 .guestlist-categories > .dropdown-toggle::after {
     display: none;
   }
-
-.guestlist-value button{
+  
+  .guestlist-value button{
     padding: 0em;
     border-color: rgb(227, 227, 227);
 }
 
 .guestlist-value > .dropdown-toggle::after {
     display: none;
-  }
+}
 
 .guestlist-names{
     padding: 0em;
 }
+
 
 
 

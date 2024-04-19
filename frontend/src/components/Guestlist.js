@@ -13,15 +13,18 @@ import axios from 'axios';
 
 
 
-export default function Guestlist({ categories, setBridesmaidsData, setGroomsmenData, setEverybodyElseData, answers }) {
+export default function Guestlist({ categories, answers }) {
  
   const [loading, setLoading] = useState(true);
   const [rowIndexOffset, setRowIndexOffset] = useState(0); 
-  const [howManyGuestValue, setHowManyGuestValue] = useState('');
-  const [howManyFirstName, setHowManyFirstName] = useState('');
-  const [howManyLastName, setHowManyLastName] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Total');
- 
+  const [guestlistData, setGuestlistData] = useState(null);
+  const [initialDataFetched, setInitialDataFetched] = useState(false);
+  const [venueCapacity, setVenueCapacity] = useState('');
+  const [desiredAttendance, setDesiredAttendance] = useState('');
+  const [inviteCount, setInviteCount] = useState('');
+  const [costPerPerson, setCostPerPerson] = useState('');
+  const [markedList, setMarkedList] = useState(null);
   
   
   const renderCategories = () => {
@@ -43,8 +46,7 @@ export default function Guestlist({ categories, setBridesmaidsData, setGroomsmen
     );
   };
   
-  const [guestlistData, setGuestlistData] = useState(null);
-  const [initialDataFetched, setInitialDataFetched] = useState(false);
+  
   
   useEffect(() => {
     const fetchData = async () => {
@@ -191,10 +193,14 @@ const renderRowsForCategory = () => {
   let currentRowIndex = rowIndexOffset + 1;
   const rows = [];
 
-  if (guestlistData) {
-    guestlistData.forEach((item, index) => {
+  const dataToUse = markedList ? markedList : guestlistData;
+  console.log("Rendering data:", dataToUse);
+
+  if (dataToUse) {
+    dataToUse.forEach((item, index) => {
       if (selectedCategory === 'Total' || item.selectedCategory === selectedCategory) {
-        // Render rows only for the selected category
+        console.log('Background class:', item.backgroundClass);
+
         rows.push(renderRowItem(item, index, currentRowIndex));
         currentRowIndex += getRowCount(item); // Increment currentRowIndex by the number of rows rendered for the current item
       }
@@ -204,12 +210,11 @@ const renderRowsForCategory = () => {
   return rows;
 };
 
-
 const renderRowItem = (item, index, currentRowIndex) => {
   const rowItems = [];
 
   rowItems.push(
-        <tr key={index}>
+        <tr key={index} className={item.backgroundClass}>
           <td>{currentRowIndex}</td>
           <td>{renderEditableField(item.firstName, index, 'firstName', item)}</td>
           <td>{renderEditableField(item.lastName, index, 'lastName', item)}</td>
@@ -231,7 +236,7 @@ const renderRowItem = (item, index, currentRowIndex) => {
       if (item.plusOneSelected === 'true') {
 
         rowItems.push(
-          <tr key={`${index}-plusOne`}>
+          <tr key={`${index}-plusOne`} className={item.backgroundClass}>
             <td>{currentRowIndex}</td>
             <td>{renderEditableField(item.plusOneFirstName, index, 'plusOneFirstName')}</td>
             <td>{renderEditableField(item.plusOneLastName, index, 'plusOneLastName')}</td>
@@ -247,9 +252,9 @@ const renderRowItem = (item, index, currentRowIndex) => {
           </tr>
         );
         currentRowIndex++;
-      }
-  
-    return rowItems; 
+     }
+
+    return rowItems;
   };
 
   const getRowCount = (item) => {
@@ -262,65 +267,88 @@ const renderRowItem = (item, index, currentRowIndex) => {
   };
 
 const [submittedOnce, setSubmittedOnce] = useState(false);
-// Function to send the editableData to the server and submit it to the guestlist table
-const submitGuestlistData = async () => {
 
-  if (!guestlistData) return;
-
-  const newData = [];
-
-  guestlistData.forEach(item => {
-    if (!item.dynamicallyAdded && item.plusOneSelected === 'true') {
-      const plusOneData = {
-        firstName: item.plusOneFirstName,
-        lastName: item.plusOneLastName,
-        selectedCategory: item.selectedCategory,
-        brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party +1',
-        guestValue: item.plusOneValue
-      };
-      const guestData = {
-        firstName: item.firstName,
-        lastName: item.lastName,
-        selectedCategory: item.selectedCategory,
-        brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party',
-        guestValue: item.guestValue || 5
-      };
-      newData.push(plusOneData);
-      newData.push(guestData);
-    } else {
-      newData.push({
-        firstName: item.firstName,
-        lastName: item.lastName,
-        selectedCategory: item.selectedCategory,
-        brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party',
-        guestValue: item.guestValue || 5
-      });
-    }
-  });
-
-  console.log(newData);
-  
+const runSortedList = async () => {
   try {
-    if (!submittedOnce) {
-      // If not submitted once, make a POST request
-      const response = await axios.post('http://localhost:3000/api/guestlist', newData);
-      console.log('Guestlist data submitted:', response.data);
-      setSubmittedOnce(true);
-      setGuestlistData(response.data); // Update the state to indicate submission
-    } else {
-      // If submitted once, make a PUT request
-      const response = await axios.put('http://localhost:3000/api/guestlist', guestlistData);
-      console.log('Guestlist data updated:', response.data);
-      setGuestlistData(response.data);
-    }
-  
-    // Fetch the updated guestlist data after submitting or updating
-    const updatedResponse = await axios.get('http://localhost:3000/api/guestlist');
-    setGuestlistData(updatedResponse.data); // Update the state with the latest data
+    const desiredAttendanceCount = parseInt(desiredAttendance);
+
+    const newData = [];
+
+    guestlistData.forEach(item => {
+      if (!item.dynamicallyAdded && item.plusOneSelected === 'true') {
+        const plusOneData = {
+          firstName: item.plusOneFirstName,
+          lastName: item.plusOneLastName,
+          selectedCategory: item.selectedCategory,
+          brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party +1',
+          guestValue: item.plusOneValue
+        };
+        const guestData = {
+          firstName: item.firstName,
+          lastName: item.lastName,
+          selectedCategory: item.selectedCategory,
+          brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party',
+          guestValue: item.guestValue || 5
+        };
+        newData.push(plusOneData);
+        newData.push(guestData);
+      } else {
+        newData.push({
+          firstName: item.firstName,
+          lastName: item.lastName,
+          selectedCategory: item.selectedCategory,
+          brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party',
+          guestValue: item.guestValue || 5
+        });
+      }
+    });
+
+    console.log(newData);
+
+    const response = !submittedOnce
+      ? await axios.post('http://localhost:3000/api/guestlist', newData)
+      : await axios.put('http://localhost:3000/api/guestlist', guestlistData);
+
+    console.log(submittedOnce ? 'Guestlist data updated:' : 'Guestlist data submitted:', response.data);
+
+    setSubmittedOnce(true);
+    const sortedResponse = await axios.get('http://localhost:3000/api/guestlist?sortBy=guestValue&order=desc');
+    const sortedGuestlist = sortedResponse.data;
+
+    setGuestlistData(sortedGuestlist.map((guest, index) => {
+      const adjustedIndex = index + 1;
+      const backgroundClass = adjustedIndex <= desiredAttendanceCount ? 'green-background' : 'red-background';
+      return { ...guest, backgroundClass };
+    }));
+
+    console.log('Sorted guestlist data fetched successfully:', sortedGuestlist);
   } catch (error) {
-    console.error('Error submitting or updating guestlist data:', error);
+    console.error('Error updating guestlist data:', error);
   }
 };
+
+
+
+const handleInputChange = (event, setter, key) => {
+  const { value } = event.target;
+  setter(value);
+  localStorage.setItem(key, value);
+};
+
+useEffect(() => {
+    const storedCapacity = localStorage.getItem('venueCapacity');
+    if (storedCapacity) setVenueCapacity(storedCapacity);
+
+    const storedDesiredAttendance = localStorage.getItem('desiredAttendance');
+    if (storedDesiredAttendance) setDesiredAttendance(storedDesiredAttendance);
+
+    const storedInviteCount = localStorage.getItem('inviteCount');
+    if (storedInviteCount) setInviteCount(storedInviteCount);
+
+    const storedCostPerPerson = localStorage.getItem('costPerPerson');
+    if (storedCostPerPerson) setCostPerPerson(storedCostPerPerson);
+  }, []);
+
   
 
   return (
@@ -328,7 +356,19 @@ const submitGuestlistData = async () => {
       <Header />
       <div className='guestlist-body'>
         <div className="guestlist-sidebar">
-          <Sidebar submitGuestlistData={submitGuestlistData} answers={answers} />
+          <Sidebar 
+            guestlistData={guestlistData} 
+            runSortedList={runSortedList}
+            handleInputChange={handleInputChange}
+            desiredAttendance={desiredAttendance}
+            setDesiredAttendance={setDesiredAttendance}
+            venueCapacity={venueCapacity}
+            setVenueCapacity={setVenueCapacity}
+            inviteCount={inviteCount}
+            setInviteCount={setInviteCount}
+            costPerPerson={costPerPerson}
+            setCostPerPerson={setCostPerPerson}
+          />
         </div>
         <div className="guestlist-table">
 
@@ -339,7 +379,7 @@ const submitGuestlistData = async () => {
             </Container> 
    
           <div className="scrollable-table">
-              <Table responsive="sm">
+              <table responsive="sm" className='guestlist-table-rows'>
                 <thead className='scrollable-table-headers'>
                   <tr className='scrollable-table-headers-columns'>
                     <th>#</th>
@@ -354,7 +394,7 @@ const submitGuestlistData = async () => {
                 <tbody>
                   {renderRowsForCategory()}
                 </tbody>
-              </Table>
+              </table>
               <Button className='add-row-button' onClick={handleAddRowFromTheBottom}>Add Row</Button>
           </div>
         </div>
