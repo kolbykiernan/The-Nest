@@ -126,11 +126,11 @@ const selectCategory = (value, index, categoryType) => {
 
   return (
     <div className='wedding-party-form'>
-      <div className="row-fluid">
+      <div className="wedding-party-columns">
         <Table responsive="sm">
           <thead className='table-head'>
             <tr>
-            <th>#</th>
+              <th>#</th>
               <th>Guest First Name</th>
               <th>Guest Last Name</th>
               <th>Category</th>
@@ -142,7 +142,7 @@ const selectCategory = (value, index, categoryType) => {
               <th>How important is it that they come?</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="row-fluid">
             {everybodyElseData.map((row, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>

@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import HamburgerMenu from '../images/Hamburger_icon.svg.png'
 
-const Sidebar = ({ desiredAttendance, venueCapacity, setVenueCapacity, handleInputChange, inviteCount, setInviteCount, setDesiredAttendance, costPerPerson, setCostPerPerson, runSortedList}) => {
+const Sidebar = ({ analysisMessage, desiredAttendance, venueCapacity, setVenueCapacity, handleInputChange, inviteCount, setInviteCount, setDesiredAttendance, costPerPerson, setCostPerPerson, runSortedList}) => {
   const [isExpanded, setIsExpanded] = useState(true); // state to track sidebar visibility
   
 
@@ -12,7 +12,7 @@ const Sidebar = ({ desiredAttendance, venueCapacity, setVenueCapacity, handleInp
     setIsExpanded(!isExpanded); // toggle the state between true and false
   };
 
-    
+
 
   return (
     <div className={`sidebar ${isExpanded ? 'expanded' : 'collapsed'}`}>
@@ -22,7 +22,7 @@ const Sidebar = ({ desiredAttendance, venueCapacity, setVenueCapacity, handleInp
       </div>
       {isExpanded && (
         <div className='sidebar-header-font'>
-          Analysis
+          Fill these out and click 'Run List' to get a custom breakdown.
         </div>
       )}
     </div> 
@@ -76,13 +76,13 @@ const Sidebar = ({ desiredAttendance, venueCapacity, setVenueCapacity, handleInp
         </div>
       </div>
     </div>
-
-      {isExpanded && (
-        <div className="sidebar-analysis">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          Sed ut perspiciatis unde omnis iste natus error sit volupt
+    {isExpanded && (
+      <div className="sidebar-analysis">
+        <div className="analysis-message">
+          {analysisMessage}
         </div>
-      )}
+      </div>
+    )}
       <div className='sidebar-footer'>
         <Button onClick={runSortedList}>Run List</Button>
       </div>

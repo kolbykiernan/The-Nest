@@ -369,8 +369,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               {question.text}
             </label>
             <p className='category-font'>
-                  It's best if you are together for this portion! Think of how you both know all of the people that will come to your wedding. The average person has between 4 - 6 categories that the majority of their guests can fall into. Maybe they're unique to one of you or maybe they are mutual. For example: Let's say you and your partner both want to invite friends from high school, but you didn't go to the same high school. You only need to fill that category out once because we will be assigning which partner they originated from or if they are mutual later. This could also apply for categories such as 'Family', but we'll let you decide these! Take a little time to consider these as this will influence your seating chart! There may still be a few that don't fit into any category. For those, you can create a category called 'Extra' or 'Other'. After you add a category, you should see it appear when clicking the dropdown!
-            </p>
+            It's best if you're together for this part! Consider how both of you know all the people who will attend your wedding. On average, most people have between 4 to 6 categories that encompass the majority of their guests. These categories might be unique to one of you or mutual. For instance, let's say you and your partner both want to invite friends from high school, but you attended different high schools. You only need to fill out that category once because we'll later specify which partner they originated from or if they are mutual. This same approach could apply to categories like 'Family,' but we'll leave those decisions to you! Take a moment to think about this, as it will affect your seating arrangements. There may still be a few guests who don't fit into any category. For them, you can create a category called 'Extra' or 'Other.' After adding a category, you should see it appear when clicking the dropdown!            </p>
             <CategoryForm 
               fetchCategories={fetchCategories} 
               categories={categories} 
@@ -385,7 +384,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
       
       case "bridesmaids":
         return (
-          <div className='question-banner'>
+          <div className='questionnaire-questions'>
             <label 
               className='question-label-wedding-party' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
@@ -396,7 +395,8 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               className='question-label-instructions' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
               >
-                For this section, let's just focus on the wedding party and their plus-one's. If there are other guests that you'd like to add along with these guests, such as kids, we'll add them later! If you want to grant a plus-one to someone and don't know who it will be, just leave the name fields blank, but still fill out the rest.
+
+              For this section, let's focus solely on the wedding party and their plus-ones. If you wish to add other guests, such as children, we'll address them later. If you want to grant a plus-one to someone but don't know who it will be, simply leave the name fields blank while still filling out the rest.            
             </label>
             <Bridesmaids
               categories={categories}
@@ -414,7 +414,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         );
         case "Groomsmen":
         return (
-          <div className='question-banner'>
+          <div className='questionnaire-questions'>
             <label 
               className='question-label-wedding-party' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
@@ -425,8 +425,8 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               className='question-label-instructions' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
             >
-              For this section, let's just focus on the wedding party and their plus-one's. If there are other guests that you'd like to add along with these guests, such as kids, we'll add them later! If you want to grant a plus-one to someone and don't know who it will be, just leave the name fields blank, but still fill out the rest.
-            </label>
+            For this section, let's focus solely on the wedding party and their plus-ones. If you wish to add other guests, such as children, we'll address them later. If you want to grant a plus-one to someone but don't know who it will be, simply leave the name fields blank while still filling out the rest."            
+          </label>
             <Groomsmen 
               categories={categories} 
               className='question-input' 
@@ -443,7 +443,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         );
       case "Everybody Else":
         return (
-          <div className='question-banner'>
+          <div className='questionnaire-questions'>
             <label 
               className='question-label-wedding-party' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
@@ -454,7 +454,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               className='question-label-instructions' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
             >
-              Now let's add everybody else! A best practice could be to go down your 'Category List', add all of the guests that you would put in that list., then start with the next category. For now, you can only hit submit once, so give it your best guess!If your guests have young children or you forget a few, we can add them in the next section. 
+                Now let's get starte adding some more important guest! A best practice could be to go down your 'Category List' and add all of the guests that you would categorize under each list. Then, start with the next category. If your guests have young children or you forget a few, we can add them in the next section.
             </label>
             <EverybodyElse
               categories={categories} 
@@ -484,13 +484,13 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               </div>
               <div>
               {currentPage > 0 && (
-                  <Button className="button" variant="primary" onClick={handlePrev}>Prev</Button>
+                  <Button className="prev-next-button" variant="primary" onClick={handlePrev}>Prev</Button>
                 )}
                 {currentPage < questions.length - 1 && (
-                  <Button className="button" variant="primary" onClick={handleNext}>Next</Button>
+                  <Button className="prev-next-button" variant="primary" onClick={handleNext}>Next</Button>
                 )}
                 {currentPage === questions.length - 1 && (
-                  <Button className="button" variant="primary" onClick={handleSubmitAllData}>Submit</Button>
+                  <Button className="prev-next-button" variant="primary" onClick={handleSubmitAllData}>Submit</Button>
                 )} 
               </div>     
             </div>

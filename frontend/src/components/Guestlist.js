@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './sidebar';
 import Header from '../default-views/header';
 import Footer from '../default-views/Footer';
-import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -13,7 +12,7 @@ import axios from 'axios';
 
 
 
-export default function Guestlist({ categories, answers }) {
+export default function Guestlist({ categories }) {
  
   const [loading, setLoading] = useState(true);
   const [rowIndexOffset, setRowIndexOffset] = useState(0); 
@@ -106,38 +105,42 @@ const renderEditableField = (value, index, field, item) => {
     }
   
 
-  if (field === 'brideGroomOrMutual') {
-    return (
-      <DropdownButton title={value || 'Select One'} onSelect={handleInputChange} variant="outline-secondary" className='guestlist-bride-groom-or-mutual'>
-        <Dropdown.Item eventKey="Bride">Bride</Dropdown.Item>
-        <Dropdown.Item eventKey="Groom">Groom</Dropdown.Item>
-        <Dropdown.Item eventKey="Mutual">Mutual</Dropdown.Item>
-      </DropdownButton>
-    );
-  } else if (field === 'selectedCategory') {
-    return (
-      <DropdownButton title={value || 'Select One'} onSelect={handleInputChange} variant="outline-secondary" className='guestlist-categories'>
-        {categories.map(category => (
-          <Dropdown.Item key={category.id} eventKey={category.name}>{category.name}</Dropdown.Item>
-        ))}
-      </DropdownButton>
-    );
-  } else if (field === 'guestValue' || field === 'plusOneValue' || field === 'addOnValue') {
-    return (
-      <DropdownButton title={value || 'TBD'} placeholder={value || 'TBD'} onSelect={handleInputChange} variant="outline-secondary" className='guestlist-value'>
-        {[...Array(9)].map((_, i) => {
-          const optionValue = i / 2 + 1; 
-          return <Dropdown.Item key={i} eventKey={optionValue}>{optionValue}</Dropdown.Item>;
-        })}
-      </DropdownButton>      
-    );
-  } 
-  else if (field === 'firstName' || field === 'lastName' || field === 'plusOneFirstName' || field === 'plusOneLastName'){
-    return (
-      <Form.Control type="text" placeholder={value || 'TBD'} value={value} onChange={(e) => handleInputChange(e.target.value)} className='guestlist-names'/>
-    );
-  } 
-};
+    let conditionalClass = '';
+    if (field === 'brideGroomOrMutual') {
+      conditionalClass = 'guestlist-bride-groom-or-mutual';
+      return (
+        <DropdownButton title={value || 'Select One'} onSelect={handleInputChange} variant="outline-secondary" className={conditionalClass}>
+          <Dropdown.Item eventKey="Bride">Bride</Dropdown.Item>
+          <Dropdown.Item eventKey="Groom">Groom</Dropdown.Item>
+          <Dropdown.Item eventKey="Mutual">Mutual</Dropdown.Item>
+        </DropdownButton>
+      );
+    } else if (field === 'selectedCategory') {
+      conditionalClass = 'guestlist-categories';
+      return (
+        <DropdownButton title={value || 'Select One'} onSelect={handleInputChange} variant="outline-secondary" className={conditionalClass}>
+          {categories.map(category => (
+            <Dropdown.Item key={category.id} eventKey={category.name}>{category.name}</Dropdown.Item>
+          ))}
+        </DropdownButton>
+      );
+    } else if (field === 'guestValue' || field === 'plusOneValue' || field === 'addOnValue') {
+      conditionalClass = 'guestlist-value';
+      return (
+        <DropdownButton title={value || 'TBD'} placeholder={value || 'TBD'} onSelect={handleInputChange} variant="outline-secondary" className={conditionalClass}>
+          {[...Array(9)].map((_, i) => {
+            const optionValue = i / 2 + 1; 
+            return <Dropdown.Item key={i} eventKey={optionValue}>{optionValue}</Dropdown.Item>;
+          })}
+        </DropdownButton>
+      );
+    } else if (field === 'firstName' || field === 'lastName' || field === 'plusOneFirstName' || field === 'plusOneLastName'){
+      conditionalClass = 'guestlist-names';
+      return (
+        <Form.Control type="text" placeholder={value || 'TBD'} value={value} onChange={(e) => handleInputChange(e.target.value)} className={conditionalClass}/>
+      );
+    }
+  };
 
 
 const handleAddRow = (index) => {
@@ -267,14 +270,19 @@ const renderRowItem = (item, index, currentRowIndex) => {
   };
 
 const [submittedOnce, setSubmittedOnce] = useState(false);
+const [analysisMessage, setAnalysisMessage] = useState('');
 
 const runSortedList = async () => {
   try {
     const desiredAttendanceCount = parseInt(desiredAttendance);
 
     const newData = [];
+    
 
-    guestlistData.forEach(item => {
+    guestlistData.forEach((item, index)  => {
+      const adjustedIndex = index + 1;
+      const backgroundClass = adjustedIndex <= desiredAttendanceCount ? 'able-to-attend' : 'unable-to-attend';
+
       if (!item.dynamicallyAdded && item.plusOneSelected === 'true') {
         const plusOneData = {
           firstName: item.plusOneFirstName,
@@ -303,7 +311,7 @@ const runSortedList = async () => {
       }
     });
 
-    console.log(newData);
+    setGuestlistData(newData);
 
     const response = !submittedOnce
       ? await axios.post('http://localhost:3000/api/guestlist', newData)
@@ -315,13 +323,22 @@ const runSortedList = async () => {
     const sortedResponse = await axios.get('http://localhost:3000/api/guestlist?sortBy=guestValue&order=desc');
     const sortedGuestlist = sortedResponse.data;
 
-    setGuestlistData(sortedGuestlist.map((guest, index) => {
+    // Calculate backgroundClass based on the updated guestlistData
+    const updatedGuestlistData = sortedGuestlist.map((guest, index) => {
       const adjustedIndex = index + 1;
-      const backgroundClass = adjustedIndex <= desiredAttendanceCount ? 'green-background' : 'red-background';
+      const backgroundClass = adjustedIndex <= desiredAttendanceCount ? 'able-to-attend' : 'unable-to-attend';
       return { ...guest, backgroundClass };
-    }));
+    });
 
-    console.log('Sorted guestlist data fetched successfully:', sortedGuestlist);
+    // Update the guestlist data state with backgroundClass
+    setGuestlistData(updatedGuestlistData);
+
+    // Set analysis message based on the desired attendance count
+    const analysisMessage = desiredAttendanceCount >= sortedGuestlist.length ?
+      "Based on the number of guests you'd like to attend, you can invite everybody on your list!" :
+      `Based on the number of guests you'd like to attend, ${sortedGuestlist.length - desiredAttendanceCount} guests will not be able to come. You can continue to make adjustments to help manage your guestlist!`;
+
+    setAnalysisMessage(analysisMessage);
   } catch (error) {
     console.error('Error updating guestlist data:', error);
   }
@@ -368,17 +385,17 @@ useEffect(() => {
             setInviteCount={setInviteCount}
             costPerPerson={costPerPerson}
             setCostPerPerson={setCostPerPerson}
+            analysisMessage={analysisMessage} 
           />
         </div>
         <div className="guestlist-table">
 
-            <Container fluid>
-              <Nav className='navbar-tabs' fill variant="underline">
+            <Container className='guestlist-navbar-tabs' >
+              <Nav fill variant="underline" className='guestlist-navbar-tabs-scrollable'>
                 {renderCategories()}
               </Nav>
             </Container> 
-   
-          <div className="scrollable-table">
+
               <table responsive="sm" className='guestlist-table-rows'>
                 <thead className='scrollable-table-headers'>
                   <tr className='scrollable-table-headers-columns'>
@@ -391,13 +408,12 @@ useEffect(() => {
                     <th></th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="scrollable-table">
                   {renderRowsForCategory()}
                 </tbody>
               </table>
-              <Button className='add-row-button' onClick={handleAddRowFromTheBottom}>Add Row</Button>
+            <Button className='add-row-button' onClick={handleAddRowFromTheBottom}>Add Row</Button>
           </div>
-        </div>
       </div>
       <Footer />
     </div>

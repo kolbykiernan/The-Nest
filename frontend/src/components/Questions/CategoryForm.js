@@ -24,9 +24,9 @@ const CategoryForm = ({categories, fetchCategories}) => {
   };
 
   return (
-    <div>
       <div className='category-form'>
         <div className='category-input-dropdown'>
+          
           <InputGroup className="parent-input-group">
             <Form.Control 
               type="text"
@@ -49,17 +49,18 @@ const CategoryForm = ({categories, fetchCategories}) => {
             ))}
           </DropdownButton>
         </div>
-        <Button
-          style={{ backgroundColor: 'var(--primary-color)' }}
-          className="category-button"
-          variant="secondary"
-          type="submit"
-          onClick={handleFormSubmit}
-        >
-        Add Category
-        </Button>
+        <div className="category-button-container">
+          <Button
+            style={{ backgroundColor: 'var(--primary-color)' }}
+            className="category-button"
+            variant="secondary"
+            type="submit"
+            onClick={handleFormSubmit}
+          >
+           Add Category
+          </Button>
+        </div>
       </div>
-    </div>
   );
 };
 

@@ -114,13 +114,13 @@ const handlePlusOneValueChange = (value, id) => {
 
   return (
     <div className='wedding-party-form'>
-      <div>
+      <div className="wedding-party-columns">
         <Table responsive="sm">
           <thead className='table-head'>
             <tr>
               <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th>Guest First Name</th>
+              <th>Guest Last Name</th>
               <th>Category</th>
               <th>Plus One / Significant Other?</th>
               <th>Plus One First Name</th>
@@ -129,7 +129,7 @@ const handlePlusOneValueChange = (value, id) => {
               <th>How important is it that the plus-one comes?</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="row-fluid">
             {bridesmaidsData.map((row, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>

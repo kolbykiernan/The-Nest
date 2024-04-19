@@ -9,12 +9,16 @@
     padding-bottom: 1.5em;
     padding-left:2em;
     padding-right:2em;
+    font-size: 1.5vh;
+    height: 10vh;
+    
 }
 
 .navbar-tabs{
     padding-top: 1.5em;
     padding-bottom: 1.5em;
-    font-size: .9em;
+    font-size: 1.5vh;
+    height:7.5vh;
 }
 
 
