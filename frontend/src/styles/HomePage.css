@@ -8,15 +8,24 @@
     text-align: center;
   }
 
-  .body{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+.body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.homepage-border{
+  margin: 4em;
+  background-color: white;
+  height:100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+}
 
 .welcome{
-    margin:40px;
-    
+    margin-bottom:5em; 
 }
 
 .btn-primary{
@@ -28,26 +37,20 @@ h1 {
   font-family: "Bad Script", cursive;
   font-weight: 600;
   font-style: normal;
-  font-size: 3em;
+  font-size: calc(2vw + 2vh);
 }
 
 h3 {
   font-family: "Bad Script", cursive;
   font-weight: 600;
   font-style: normal;
-  font-size: 2em;
+  font-size: calc(1.5vw + 1.5vh);
+  margin-right: 1em;
+  margin-left: 1em;
 }
 
-  .welcome img {
-      width: 100%; /* Adjust width as needed */
-      height: auto; /* Auto adjust height to maintain aspect ratio */
-      max-width: 450px;
-    
-  }
-
-  @media (max-height: 900px) {
-    .welcome img {
-        width: 100%; /* Adjust width as needed */
-        height: auto; /* Auto adjust height to maintain aspect ratio */
-    }
+.welcome img {
+  width: calc(15vw + 15vh); 
+  margin: 2em;   
 }
+

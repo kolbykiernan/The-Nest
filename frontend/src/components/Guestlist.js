@@ -372,7 +372,6 @@ useEffect(() => {
     <div className='guestlist'>
       <Header />
       <div className='guestlist-body'>
-        <div className="guestlist-sidebar">
           <Sidebar 
             guestlistData={guestlistData} 
             runSortedList={runSortedList}
@@ -387,16 +386,15 @@ useEffect(() => {
             setCostPerPerson={setCostPerPerson}
             analysisMessage={analysisMessage} 
           />
-        </div>
         <div className="guestlist-table">
 
-            <Container className='guestlist-navbar-tabs' >
-              <Nav fill variant="underline" className='guestlist-navbar-tabs-scrollable'>
+            
+              <Nav fill variant="underline" className='guestlist-navbar-tabs'>
                 {renderCategories()}
               </Nav>
-            </Container> 
-
+           
               <table responsive="sm" className='guestlist-table-rows'>
+
                 <thead className='scrollable-table-headers'>
                   <tr className='scrollable-table-headers-columns'>
                     <th>#</th>

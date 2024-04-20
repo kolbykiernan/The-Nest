@@ -301,47 +301,34 @@ td p {
 }
 
 .guestlist-table {
-    display: flex;
     flex-direction: column;
-    width:100%;
     border: 1px solid lightgray;
     height: 100%; 
     overflow-y: auto; 
     margin-bottom: 4.5em;
     position: relative;
+    padding-left:.5em;
 }
 
+.guestlist-navbar-tabs{
+    padding: 1em;
+}
 
+.guestlist-navbar-tabs .nav-item{
+    padding-right: .3em;
+    padding-left: .3em;
+}
 
-.guestlist-navbar-tabs {
+.guestlist-navbar-tabs-scrollable.nav.nav-underline.nav-fill {
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    padding-top:1em;
-    padding-bottom:1em;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    background-color: white;
-    z-index: 1000;
-    white-space: nowrap;
-    font-size: calc(.6vw + .8vh);  
+    flex-direction: row;
     
+   
 }
 
-.guestlist-navbar-tabs-scrollable{
-    display: flex;
-    width: 100%;
-    flex-wrap: nowrap; 
-    background-color: white;
-}
 
 
 .scrollable-table-headers {
-    
-    position: sticky;
-    top: 4.5vh; /* Adjust this value to the height of your .navbar-tabs */
     background-color: white;
     z-index: 999;
 }
@@ -430,51 +417,131 @@ td p {
     border-color: rgb(227, 227, 227); /* Example border color */
 }
 
-/* Additional styling fors */
+
 .guestlist-names {
     padding: 0em;
 }
 
 .dropdown-toggle:focus {
-    color: #000 !important; /* Set text color to black */
+    color: #000 !important;
 }
 
 .dropdown-toggle:active {
-    color: #000 !important; /* Set text color to black */
+    color: #000 !important; 
 }
 
-
-
-
-
-
-.guestlist-sidebar{
-    border: 1px solid lightgray;
-    flex-grow: 1;
-    height: 100%;
+.sidebar {
+    border: 1px solid lightgray;    
     box-sizing: border-box;
-    max-width:35%;
-    min-width: 15%;
     display: flex;
     flex-direction: column;
-    align-items: center; 
+    align-items: center;
     color: black;
 }
 
-.expanded{
-    width:100%;
+.sidebar.expanded {
+    width: 35%;
+    display: flex;
+    flex-direction:column;
 }
 
-.collapsed{
-    width: 100%
+.sidebar.collapsed {
+    width: 5%;
 }
 
-.sidebar{
-    height:100%;
+.guestlist-table {
+    width: 65%;
+}
+
+.sidebar.collapsed + .guestlist-table {
+    width: 95%;
+}
+
+.sidebar-header {
+    height: 15vh;
+}
+
+.sidebar-header-font{
+    font-size: calc(.65vw + .9vh); 
+    margin-right:1.5em;
+    margin-left:.5em;
+}
+
+.sidebar-inputs {
+    margin-top: 2em;
+    height: 35vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
+    font-size: 1vw;
 }
+
+.sidebar-inputs div{
+    font-size: 1vw;
+}
+
+.analysis-message {
+    height: 20vh;
+    
+}
+
+.analysis-message p{
+    font-size: 2vh;
+}
+
+
+.run-list-button {
+    height: 12.5vh;
+}
+
+@media (max-width: 881px) {
+    .sidebar.expanded {
+        width: 100%;
+        height:100%;
+        display: flex;
+        flex-direction:column;
+    }
+
+    .sidebar.expanded + .guestlist-table {
+        display: none;
+        width: 0;
+    }
+
+    .sidebar.expanded  .sidebar-header {
+        height: 15vh;
+    }
+
+    .sidebar.expanded .sidebar-header-font{
+        font-size: calc(1.25vw + 1.15vh); 
+    }
+
+    .sidebar.expanded  .sidebar-inputs {
+        margin-top: 2em;
+        height: 35vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        font-size: 1.75vh;
+    }
+
+    .sidebar.expanded  .analysis-message {
+        height: 20vh;
+        font-size: 2vh;
+    }
+
+    .sidebar.expanded  .run-list-button {
+        height: 12.5vh;
+    }
+
+    .sidebar.collapsed {
+        width: 6.5%;
+    }
+
+    .sidebar.collapsed + .guestlist-table {
+        width: 93.5%;
+    }
+}
+
 
 .toggle{
     display:flex;
@@ -486,14 +553,19 @@ td p {
 .sidebar-header{
     padding-top: .75em;
     padding-bottom: 1.5em;
-    font-size: 1.5em;
+    font-size: 1.75vw;
     background-color: #f4f4f4;
     width:100%;
 }
 
-.sidebar-analysis{
+.sidebar-header-font{
+    padding-right: 2em;
+    padding-left: 2em;
+}
+
+.analysis-message{
     padding: 2em;
-    font-size: 1.2em;
+    font-size: 1.5vw;
 
 }
 
@@ -503,6 +575,7 @@ td p {
     align-items: center;
     margin-left: 2em;
     margin-right: 2em;
+    font-size: 1.5vw;
 }
 
 .sidebar-capacity{
@@ -550,10 +623,7 @@ td p {
     margin-right: 2em;
 }
 
-.sidebar-footer{
-    text-align: center;
-    padding-bottom: 2em;
-}
+
 
 
 
