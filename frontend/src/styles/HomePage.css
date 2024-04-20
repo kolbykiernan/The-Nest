@@ -20,8 +20,9 @@
   height:100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  
+  align-items: center;
+  justify-content: space-around;
+
 }
 
 .welcome{
@@ -54,3 +55,19 @@ h3 {
   margin: 2em;   
 }
 
+.sign-up-form{
+  padding: 5em;
+  display: flex;
+  flex-direction:column;
+  width:60%;
+  align-items: center;
+  height:100%;
+  justify-content: space-around;
+}
+
+.sign-in-info{
+  display:flex;
+  flex-direction: column;
+  height:50%;
+  justify-content: space-around;
+}

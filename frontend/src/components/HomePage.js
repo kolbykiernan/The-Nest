@@ -17,8 +17,8 @@ const HomePage = () => {
                         <h3>Organizing your wedding guest list has never been easier!</h3>
                     </div>
                     <div className='links'>
-                        <Link to="/questionnaire" className='btn btn-primary'> Log In </Link>
-                        <Link to="/questionnaire" className='btn btn-primary'> Get Started </Link>
+                        <Link to="/sign-up" className='btn btn-primary'> Get Started </Link>
+                        <Link to="/login" className='btn btn-primary'> Log In </Link>
                     </div>
                 </div>
             </div>

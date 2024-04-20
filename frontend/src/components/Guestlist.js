@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './sidebar';
 import Header from '../default-views/header';
 import Footer from '../default-views/Footer';
-import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';

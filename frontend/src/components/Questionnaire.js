@@ -63,7 +63,8 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
   
       if (currentPage === 0 && !submitted) {
         submitWeddingData();
-      } 
+        setSubmitted(true)
+      }  
     };
   
       const handleAnswer = (questionId, answer) => {
@@ -310,15 +311,20 @@ const submitEverybodyElseData = async (everybodyElseData) => {
     
     const handleSubmitAllData = async () => {
       try {
-        await submitBridesmaidsData(bridesmaidsData); 
-        await submitGroomsmenData(groomsmenData);     
-        await submitEverybodyElseData(everybodyElseData);
-        
-        redirectToGuestList();
+          if (!submitted) {
+              await submitBridesmaidsData(bridesmaidsData);
+              await submitGroomsmenData(groomsmenData);
+              await submitEverybodyElseData(everybodyElseData);
+              
+              setSubmitted(true);
+              redirectToGuestList();
+          } else {
+              console.log('Data already submitted. Cannot submit again.');
+          }
       } catch (error) {
-        console.error('Error submitting all data:', error);
+          console.error('Error submitting all data:', error);
       }
-    };
+  };
      
     
 

@@ -6,7 +6,6 @@ import WeddingData from '../models/WeddingData.js';
 import Bridesmaids from '../models/bridesMaids.js';
 import Groomsmen from '../models/groomsMen.js';
 import EverybodyElse from '../models/EverybodyElse.js';
-import SideBar from '../models/sidebar.js';
 import Guestlist from '../models/Guestlist.js'
 
 router.post('/weddingdata', async (req, res) => {
@@ -33,101 +32,6 @@ console.error(error);
 res.status(500).json({ error: 'Internal server error' });
 }
 });
-
-// router.put('/weddingdata/:id', async (req, res) => {
-//   const weddingId = req.params.id;
-//   const {
-//     brideFirstName,
-//     brideLastName,
-//     brideSelection,
-//     groomFirstName,
-//     groomLastName,
-//     groomSelection
-//   } = req.body;
-
-//   try {
-//     let weddingData = await WeddingData.findByPk(weddingId); // Find the wedding data by ID
-
-//     if (!weddingData) {
-//       return res.status(404).json({ error: 'Wedding data not found' });
-//     }
-
-//     weddingData.brideFirstName = brideFirstName;
-//     weddingData.brideLastName = brideLastName;
-//     weddingData.brideSelection = brideSelection;
-//     weddingData.groomFirstName = groomFirstName;
-//     weddingData.groomLastName = groomLastName;
-//     weddingData.groomSelection = groomSelection;
-
-//     await weddingData.save(); // Save the changes
-
-//     res.json(weddingData);
-//   } catch (error) {
-//     console.error('Error updating wedding data:', error);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// });
-
-
-router.post('/sidebarlogic', async (req, res) => {
-  try {
-  const { id, capacity, invites, attendance, cost } = req.body;
-  
-  const sidebar = await SideBar.create({ id, capacity, invites, attendance, cost });
-  
-  res.status(201).json(sidebar);
-  } catch (error) {
-  console.error(error);
-  res.status(500).json({ error: 'Internal server error' });
-  }
-  });
-  
-  
-  router.get('/sidebarlogic', async (req, res) => {
-  try {
-  const sidebar = await SideBar.findAll();
-  
-  res.status(200).json(sidebar);
-  } catch (error) {
-  console.error(error);
-  res.status(500).json({ error: 'Internal server error' });
-  }
-  });
-  
-  // router.put('/sidebarlogic/:id', async (req, res) => {
-  //   const Siba = req.params.id;
-  //   const {
-  //     capacity,
-  //     invites,
-  //     attendance,
-  //     cost
-  //   } = req.body;
-  
-  //   try {
-  //     let sidebar = await Sidebar.findByPk(weddingId); // Find the wedding data by ID
-  
-  //     if (!weddingData) {
-  //       return res.status(404).json({ error: 'Wedding data not found' });
-  //     }
-  
-  //     // Update the wedding data fields
-  //     weddingData.date = date;
-  //     weddingData.venue = venue;
-  //     weddingData.capacity = capacity;
-  //     weddingData.invites = invites;
-  //     weddingData.attendance = attendance;
-  //     weddingData.cost = cost;
-
-  
-  //     await weddingData.save(); // Save the changes
-  
-  //     res.json(weddingData);
-  //   } catch (error) {
-  //     console.error('Error updating wedding data:', error);
-  //     res.status(500).json({ error: 'Internal Server Error' });
-  //   }
-  // });
-
 
 
 router.post('/categories', async (req, res) => {

@@ -19,7 +19,7 @@ const Sidebar = ({ analysisMessage, desiredAttendance, venueCapacity, setVenueCa
         {isExpanded && (
           <div>
             <div className='sidebar-header-font'>
-              Click the hamburger icon to toggle back and forth between your guest list. Fill these out and click 'Run List' to get a custom breakdown.
+              Click the toggle to switch back and forth between your guest list. Fill out the questions and click 'Run List' to get a custom breakdown.
             </div>
           </div>
         )}
@@ -28,7 +28,7 @@ const Sidebar = ({ analysisMessage, desiredAttendance, venueCapacity, setVenueCa
         <div className='sidebar-inputs'>
           <div className='sidebar-capacity'>
             <div className='sidebar-capacity-text'>
-              What is the capacity of the venue?
+              <p>What is the capacity of the venue?</p>
             </div>
             <div className='sidebar-capacity-input'>
               <Form.Control 

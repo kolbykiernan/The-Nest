@@ -1,20 +1,20 @@
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
+
 import '../styles/Footer.css'
 const React = require('react')
 
 
 function Footer () {
     return(
-        <div className='footer'>
-
-                <Container className='footer-bar' >
-                    <Navbar.Brand className='footer-font' href="#">
-                        <h5>Footer</h5>
-                    </Navbar.Brand>
-                </Container>
-
+       <div className='footer'>
+        <div className='footer-links'>
+            <div>
+                <a href=""> About Us </a>
+            </div>
+            <div>
+                <a href=""> FAQ </a>
+            </div>
         </div>
+    </div>
     )
 }
 
