@@ -2,7 +2,7 @@ import { Sequelize, DataTypes } from 'sequelize';
 
 const sequelize = new Sequelize('postgres://postgres:P3aceonurt%23@localhost:5432/wedding_app');
 
-const Bridesmaids = sequelize.define('Bridesmaids', {
+const Guestlist = sequelize.define('Guestlist', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -10,30 +10,17 @@ const Bridesmaids = sequelize.define('Bridesmaids', {
     },
     firstName: {
         type: DataTypes.STRING,
-        allowNull: false,
     },
     lastName: {
         type: DataTypes.STRING,
-        allowNull: false,
     },
     selectedCategory: {
         type: DataTypes.STRING,
-        allowNull: false,
     },
-    plusOneSelected: {
-        type: DataTypes.STRING,
-        allowNull: false,
+    brideGroomOrMutual: {
+        type: DataTypes.STRING,      
     },
-    plusOneFirstName: {
-        type: DataTypes.STRING,
-    },
-    plusOneLastName: {
-        type: DataTypes.STRING,
-    },
-    isAlsoInWeddingParty: {
-        type: DataTypes.STRING,
-    },
-    plusOneValue: {
+    guestValue: {
         type: DataTypes.DECIMAL,
     },
     createdAt: {
@@ -47,4 +34,4 @@ const Bridesmaids = sequelize.define('Bridesmaids', {
     }
 })
 
-export default Bridesmaids;
+export default Guestlist;

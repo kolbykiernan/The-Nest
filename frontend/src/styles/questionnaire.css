@@ -2,15 +2,45 @@
     --primary-color: rgb(229, 251, 250);
     --secondary-color:#f4f4f4;
     --third-color: #FFE25Fff;
+    --fourth-color:rgb(248, 130, 130);
+    --italic-font: italic;
+    --italic-font-size: 1.4em;
+}
+
+#root{
+    height:100vh;
+}
+
+body{
+    height:100vh;
+}
+
+.header{
+    height:17.5vh;
+}
+
+.footer{
+    height:5vh;
 }
 
 
+.questionnaire{
+    height:100vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+
+.guestlist{
+    height:100vh;
+}
   
 .questionnaire-questions{
     display: flex;
     flex-direction: column;
     width: 100%;
-    
+    height:100%;
 }
 
 .question-input{
@@ -18,14 +48,23 @@
     margin-bottom: 3.3em;
     margin-left: 3em;
     margin-right: 3em;
-    
 }
 
+.prev-next-button{
+    margin-right:1em;
+    margin-left:1em;
+    height:5vh;
+    width:9vh;
+    font-size: 2vh;
+ }
 
 .questions{
     display: flex;
     flex-direction: column;
-    width: 100%
+    width: 100%;
+    padding-bottom: 1em;
+    height:77.5vh;
+    overflow: auto; 
 }
 
 .question{
@@ -33,73 +72,99 @@
     display:flex;
     width: 100%;
     justify-content: center;
+    height:85vh;
 }
-
-
 
 .question-container{
     padding-top:1.5em;
     padding-bottom: 1.5em;
 }
 
-.question-label {
-    padding:2em;
-    padding-left: 1.5em;
-    padding-right: 1.5em;
-    
-}
-
-.question-label-instructions{
-    font-size: .5em;
-    padding: 1em;
-}
-
-.question-label-wedding-party{
-    padding-top:1em;
-    
-    padding-left: 1.5em;
-    padding-right: 1.5em;
-}
-
 .question-banner{
     display: flex;
     flex-direction: column;
     width: 100vw;
+    height: 100%;
+    align-content:stretch;
 }
 
+.bride-groom-form{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height:75%;
+    width:100%;
+}
 
-
-
-
-.questionnaire{
+.bride-groom-spacing{
     display: flex;
     flex-direction: column;
-    text-align: center;
+    padding: 1em;
+    width: 30%;
+    height:100%;
+    justify-content: center;
 }
 
-.button{
-   margin-bottom: 1.8em;
-   margin-right:1em;
-   margin-left:1em;
+.bride-groom-dropdown{
+    margin-top: .75em;
+    margin-bottom: .75em;
+    font-size: 2vh;
+    height:5vh;
+    color: black;
+    border-color: lightgray;
+}
+
+.firstName-spacing{
+    margin-top: .75em;
+    margin-bottom: .75em;
+    font-size: 2vh;
+    height:5vh;
+}
+
+.lastName-spacing{
+    margin-top: .75em;
+    margin-bottom: .75em;
+    font-size: 2vh;
+    height:5vh;
+}
+
+.question-label {
+    padding:2em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+    height:30%;
+    font-size: 3.5vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .question-label-category{
     padding: .5em;
     padding-left: .5em;
     padding-right: .5em;
-    font-size: 1em;
+    font-size: calc(1.25vw + 1.25vh); 
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center
 }
 
-.question-label-category-info{
-    font-size: .55em;
-    padding-left: 2em;
-    padding-right: 2em;
-    padding-bottom: 1em;
+.category-font{
+    height: 30%;
+    background-color:#f4f4f4;
+    font-size: calc(.65vw + .65vh); 
+    padding-bottom:1em;
+    padding-right:2.5em;
+    padding-left:2.5em;
 }
-
 
 .category-form{
-    margin-top: 1.5em;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height:55%;
     margin-left: 2.5em;
     margin-right: 2.5em;
 }
@@ -110,99 +175,95 @@
     padding-bottom: .4em;
     
 }
-.category-button{
-    margin: 1.5em;
-    font-size: .6em;
-    padding-left: 2.5em;
-    padding-right: 2.5em;
-    color: black;
-}
-
-/* bridegroom */
-
-.bride-groom-form{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    /* margin-top: .25em;
-    margin-left:.25em;
-    margin-right:.25em; */
-}
-
-.bride-groom-dropdown{
-    color: gray;
-    font-size: .75em;
-    padding-left: 4.2em;
-    padding-right: 4.2em;
-}
-
-.bride-groom-spacing{
-    padding: 1em;
-}
-
-.firstName-spacing{
-    margin-top: .5em;
-    margin-bottom: .5em;
-}
-
-.lastName-spacing{
-    margin-top: .5em;
-    margin-bottom: .5em;
-}
-
-.wedding-party-form{
-    padding-right:1em;
-    padding-left:1em;
-}
 
 .category-input-dropdown{
-    display: flex;   
+    display: flex;  
+    flex-direction: row;
+    justify-content:center;
+    width: 65vw; 
+    font-size: 3vh;
+    height:5vh;
+    margin-bottom: 1em;
 }
 
 .category-dropdown{
    display: flex;
    border-color: lightgray;
-   
+   width:3.5vh;
+   height: 5.6vh;
 }
 
-.category-select{
-    display: flex;
-    background-color: white;
-    color: rgb(92, 92, 92);
-    border-color: lightgray;
-    /* margin-right: 8em; */
+.dropdown-menu.show.dropdown-menu-end{
+    width:15vh;
+    font-size: 1.5vh;
+}
+
+.parent-input-group.input-group{
+    height:100%;
+}
+
+
+.category-button{
+    margin: 1.5em;
+    font-size: 1.75vh;
+    padding-left: 2.5em;
+    padding-right: 2.5em;
+    color: black;
+}
+
+
+.wedding-party-form{
+    padding-right:1em;
+    padding-left:1em;
+    height: 57.5vh;
+    overflow: auto;
+    position: relative;
+}
+
+.wedding-party-form tbody{
+    height:90%;
+}
+
+
+.question-label-instructions{
+    font-size: .5em;
+    padding: 1em;
+}
+
+.question-label-wedding-party{
+    padding-top:1em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
 }
 
 .dropdown-toggle{
     width:100%
 }
 
-.first-name{
-    padding-left: 4em;
-    padding-right: 4em;
+.wedding-party-form td{
+    padding-top:.5em;
+    padding-bottom: .5em;
 }
 
-.last-name{
-    padding-left: 4em;
-    padding-right: 4em;
-}
-
-.plus-one-select{
-    padding-top:.35em;
-}
+.table-head {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    z-index: 999;
+  }
+ 
 
 tr{
     font-size: .4em;
     padding:0em;
 }
 
-td{
-    font-size: 1em;
-    padding-bottom: 0px;
-}
-
 td p {
     margin: 0em;
+}
+
+.wedding-party-columns{
+    white-space: nowrap;
 }
 
 .form-check{
@@ -219,60 +280,367 @@ td p {
 }
 
 .row-fluid{
-    overflow: auto;
-    
+    overflow: auto; 
 }
 
 .row-fluid th{
     white-space: nowrap;
 }
 
-.category-font{
-    background-color:#f4f4f4;
-    font-size: .6em;
-    padding-bottom:1em;
-    padding-right:5em;
-    padding-left:5em;
-}
 
-.guestlist th{
-    font-size: 2em;
-}
 
-.guestlist td{
-    font-size: 1.75em;
-}
+
+
+
 
 .guestlist-body{
     display: flex;
     flex-direction: row;
-    height: 76.5vh
+    height: 85vh;
+    position: relative;
 }
 
 .guestlist-table {
-    width: 100%;
+    flex-direction: column;
     border: 1px solid lightgray;
-    max-height: 100%; 
-    overflow-y: auto; 
-}
-
-.scrollable-table {
     height: 100%; 
+    overflow-y: auto; 
+    margin-bottom: 4.5em;
+    position: relative;
+    
 }
 
-/* .container-fluid{
-    position: sticky;
-    top: 0;
-} */
-
-
-
-  .guestlist-sidebar{
-    border: 1px solid lightgray;
+.guestlist-navbar-tabs{
+    padding: 2em;
 }
+
+.guestlist-navbar-tabs .nav-item{
+    padding-right: .3em;
+    padding-left: .3em;
+}
+
+.guestlist-navbar-tabs-scrollable.nav.nav-underline.nav-fill {
+    display: flex;
+    flex-direction: row;
+    
+   
+}
+
+.scrollable-table tr td{
+    padding-left:1.5em;
+}
+
+.scrollable-table-headers {
+    background-color: white;
+    z-index: 999;
+  
+}
+
+.scrollable-table-headers tr th{
+    padding-left:1.5em;
+    padding-bottom:.5em;
+    font-size: 1.2vh;
+}
+
+
+.guestlist th{
+    font-size: 2em;
+    
+    white-space: nowrap; 
+    margin-right: 1em;
+    margin-left: 1em;
+}
+
+  .guestlist td {
+    font-size: 1.75em;
+    padding: 2px;
+    border-bottom: 1px solid lightgray;
+    border-top: 1px solid lightgray;
+}
+
+.guestlist td input {
+    border: 1px solid transparent; 
+}
+
+.guestlist td:focus {
+    border: 1px solid black; 
+    outline: none;
+}
+
+.guestlist td button{
+    margin: 0px;
+    margin-right: 3px;
+    margin-left: 3px;
+    background-color: white;
+    border: 1px solid transparent; 
+    color: rgb(0, 0, 0);
+    padding:1px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.add-subtract-row-buttons{
+    outline: 1px solid lightgray;
+}
+
+.guestlist-table-rows{
+    width:100%;
+}
+
+.able-to-attend {
+    background-color: rgb(245, 255, 255);
+  }
+  
+.unable-to-attend {
+    background-color: #f6e6e6;
+}
+
+
+.guestlist-bride-groom-or-mutual button,
+.guestlist-categories button,
+.guestlist-value button,
+.guestlist-names {
+    background-color: transparent; 
+}
+
+
+.able-to-attend .guestlist-bride-groom-or-mutual button,
+.able-to-attend .guestlist-categories button,
+.able-to-attend .guestlist-value button,
+.able-to-attend .guestlist-names {
+    background-color: rgb(245, 255, 255);
+}
+
+
+.unable-to-attend .guestlist-bride-groom-or-mutual button,
+.unable-to-attend .guestlist-categories button,
+.unable-to-attend .guestlist-value button,
+.unable-to-attend .guestlist-names {
+    background-color: #f6e6e6; 
+}
+
+
+.guestlist-bride-groom-or-mutual button,
+.guestlist-categories button,
+.guestlist-value button {
+    padding: 0em;
+    border-color: rgb(227, 227, 227); 
+}
+
+
+.guestlist-names {
+    padding: 0em;
+}
+
+.dropdown-toggle:focus {
+    color: #000 !important;
+}
+
+.dropdown-toggle:active {
+    color: #000 !important; 
+}
+
+.sidebar {
+    border: 1px solid lightgray;    
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+}
+
+.sidebar.expanded {
+    width: 35%;
+    display: flex;
+    flex-direction:column;
+}
+
+.sidebar.collapsed {
+    width: 5%;
+}
+
+.guestlist-table {
+    width: 65%;
+}
+
+.sidebar.collapsed + .guestlist-table {
+    width: 95%;
+}
+
+.sidebar-header {
+    height: 15vh;
+}
+
+.sidebar-header-font{
+    font-size: calc(.65vw + .9vh); 
+    margin-right:1.5em;
+    margin-left:.5em;
+}
+
+.sidebar-inputs {
+    margin-top: 2em;
+    height: 35vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-size: 1vw;
+}
+
+.analysis-message {
+    height: 20vh;
+    
+}
+
+.analysis-message p{
+    font-size: 2vh;
+}
+
+
+.run-list-button {
+    height: 12.5vh;
+}
+
+@media (max-width: 881px) {
+    .sidebar.expanded {
+        width: 100%;
+        height:100%;
+        display: flex;
+        flex-direction:column;
+    }
+
+    .sidebar.expanded + .guestlist-table {
+        display: none;
+        width: 0;
+    }
+
+    .sidebar.expanded  .sidebar-header {
+        height: 15vh;
+    }
+
+    .sidebar.expanded .sidebar-header-font{
+        font-size: calc(1.25vw + 1.15vh); 
+    }
+
+    .sidebar.expanded  .sidebar-inputs {
+        margin-top: 2em;
+        height: 35vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        font-size: 1.5vh;
+    }
+
+    .sidebar.expanded  .analysis-message {
+        height: 20vh;
+        font-size: 2vh;
+    }
+
+    .sidebar.expanded  .run-list-button {
+        height: 12.5vh;
+    }
+
+    .sidebar.collapsed {
+        width: 6.5%;
+    }
+
+    .sidebar.collapsed + .guestlist-table {
+        width: 93.5%;
+    }
+}
+
+
+.toggle{
+    display:flex;
+    justify-content: flex-end;
+    padding-right:.75em;
+
+}
+
+.sidebar-header{
+    padding-top: .75em;
+    padding-bottom: 1.5em;
+    font-size: 1.75vw;
+    background-color: #f4f4f4;
+    width:100%;
+}
+
+.sidebar-header-font{
+    padding-right: 2em;
+    padding-left: 2em;
+}
+
+.analysis-message{
+    padding: 2em;
+    font-size: 1.5vw;
+
+}
+
+.sidebar-inputs{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 2em;
+    margin-right: 2em;
+    font-size: 1.5vw;
+}
+
+.sidebar-capacity{
+    display: flex;
+    margin: 1em;
+    flex-direction: row;
+    width: 100%;
+}
+
+.sidebar-capacity-text{
+    margin-right: 2em;
+}
+
+.sidebar-invites{
+    display: flex;
+    margin: 1em;
+    flex-direction: row;  
+    width: 100%;
+}
+
+.sidebar-invites-text{
+    margin-right: 2em;
+}
+
+.sidebar-attendance{
+    display: flex;
+    margin: 1em;
+    flex-direction: row;
+    width: 100%;
+}
+
+
+.sidebar-attendance-text{
+    margin-right: 2em;
+}
+
+.sidebar-cost{
+    display: flex;
+    margin: 1em;
+    flex-direction: row; 
+    width: 100%;
+}
+
+.sidebar-cost-text{
+    margin-right: 2em;
+}
+
+
+
+
+
+
+
+
+
+
 
 .seating-chart{
-    height: 76.5vh;
+    height: 77.5vh;
     display: flex;
     flex-direction: column;
     padding: 7em;
@@ -284,351 +652,9 @@ td p {
   font-family: "Bad Script", cursive;
   font-weight: 600;
   font-style: normal;
-  font-size: 3em;
+  font-size: calc(2vw + 2vh);
 }
 
 .seating-chart img{
-    width:40%
-}
-
-
-
-
-@media (min-width: 1000px) {
-    .question-input {
-      margin-top: 4.6em;
-      margin-bottom: 4.6em;
-      min-width: 800px; 
-      margin-left: auto; 
-      margin-right: auto; 
-    }
-
-    .category-input-dropdown{
-      max-width: 800px; 
-      margin-left: auto; 
-      margin-right: auto; 
-    }
-    .category-font{
-        font-size: .5em;
-    }
-  }
-
-
-@media (min-height: 800px) {
-    .question-input {
-        margin-top: 4.6em;
-        margin-bottom: 4.6em;
-    }
-    .bride-groom-form {
-        margin-top: .8em;
-        margin-bottom: .8em;
-    }
-    .category-form {
-        margin-top: 2.1em;
-        margin-bottom: 1.1em;
-    }
-    .category-font{
-        font-size: .5em;
-    }
-  }
-
-@media (min-height: 850px) {
-    .question-input {
-        margin-top: 4.6em;
-        margin-bottom: 4.6em;
-    }
-    .bride-groom-form {
-        margin-top: 1.5em;
-        margin-bottom: 1.5em;
-    }
-    .category-form {
-        margin-top: 2.6em;
-        margin-bottom: 1.6em;
-    }
-    .category-font{
-        font-size: .5em;
-    }
-  }
-  
-  @media (min-height: 900px) {
-    .question-input {
-        margin-top: 5.5em;
-        margin-bottom: 5.5em;
-    }
-    .bride-groom-form {
-        margin-top: 2.3em;
-        margin-bottom: 2.3em;
-    }
-     .category-form {
-        margin-top: 3.2em;
-        margin-bottom: 2.3em;
-    }
-  }
-
-  @media (min-height: 950px) {
-    .question-input {
-        margin-top: 6.5em;
-        margin-bottom: 6.5em;
-    }
-    .bride-groom-form {
-        margin-top: 3.2em;
-        margin-bottom: 3.2em;
-    }
-     .category-form {
-        margin-top: 4em;
-        margin-bottom: 3em;
-    }
-  }
-
-  @media (min-height: 1000px) {
-    .question-input {
-        margin-top: 7.3em;
-        margin-bottom: 7.3em;
-    }
-    .bride-groom-form {
-        margin-top: 4em;
-        margin-bottom: 4em;
-    }
-     .category-form {
-        margin-top: 5em;
-        margin-bottom: 4em;
-    }
-  }
-
-  @media (min-height: 1050px) {
-    .question-input {
-        margin-top: 8.1em;
-        margin-bottom: 8.1em;
-    }
-    .bride-groom-form {
-        margin-top: 4.9em;
-        margin-bottom: 4.9em;
-    }
-     .category-form {
-        margin-top: 6em;
-        margin-bottom: 5em;
-    }
-  }
-
-  @media (min-height: 1100px) {
-    .question-input {
-        margin-top: 9em;
-        margin-bottom: 9em;
-    }
-    .bride-groom-form {
-        margin-top: 5.8em;
-        margin-bottom: 5.8em;
-    }
-     .category-form {
-        margin-top: 6.7em;
-        margin-bottom: 5.7em;
-    }
-  }
-
-  @media (min-height: 1150px) {
-    .question-input {
-        margin-top: 9.8em;
-        margin-bottom: 9.8em;
-    }
-    .bride-groom-form {
-        margin-top: 6.4em;
-        margin-bottom: 6.4em;
-    }
-     .category-form {
-        margin-top: 7.5em;
-        margin-bottom: 6.5em;
-    }
-  }
-
-  @media (min-height: 1200px) {
-    .question-input {
-        margin-top: 10.6em;
-        margin-bottom: 10.6em;
-    }
-    .bride-groom-form {
-        margin-top: 7.4em;
-        margin-bottom: 7.4em;
-    }
-     .category-form {
-        margin-top: 8.3em;
-        margin-bottom: 7.3em;
-    }
-  }
-
-  @media (min-height: 1250px) {
-    .question-input {
-        margin-top: 11.4em;
-        margin-bottom: 11.4em;
-    }
-    .bride-groom-form {
-        margin-top: 8.2em;
-        margin-bottom: 8.2em;
-    }
-     .category-form {
-        margin-top: 9.1em;
-        margin-bottom: 8.1em;
-    }
-  }
-
-  @media (min-height: 1300px) {
-    .question-input {
-        margin-top: 12.2em;
-        margin-bottom: 12.2em;
-    }
-    .bride-groom-form {
-        margin-top: 9em;
-        margin-bottom: 9em;
-    }
-     .category-form {
-        margin-top: 10em;
-        margin-bottom: 9em;
-    }
-  }
-
-  @media (min-height: 1350px) {
-    .question-input {
-        margin-top: 13em;
-        margin-bottom: 13em;
-    }
-    .bride-groom-form {
-        margin-top: 9.8em;
-        margin-bottom: 9.8em;
-    }
-     .category-form {
-        margin-top: 11.8em;
-        margin-bottom: 10.8em;
-    }
-  }
-  @media (min-height: 1400px) {
-    .question-input {
-        margin-top: 13em;
-        margin-bottom: 13em;
-    }
-    .bride-groom-form {
-        margin-top: 10.6em;
-        margin-bottom: 10.6em;
-    }
-     .category-form {
-        margin-top: 11.8em;
-        margin-bottom: 10.8em;
-    }
-  }
-
-  @media (max-width: 375px) {
-    .firstName-spacing{
-        width: 7em;
-    }
-    .lastName-spacing{
-        width: 7em;
-    }
-    .bride-groom-dropdown{
-        width: 7em;
-        padding: .1em;
-    }
-    .bride-groom-form{
-        padding: 1em;
-    }
-    .question-label{
-        font-size: .6em;
-    }
-    .question-label-category{
-        font-size: .4em;
-    }
-    .category-font{
-        font-size: .25em;
-    }
-    .category-form{
-        margin: 1em
-    }
-    .container-fluid{
-        padding:0em;
-    }
-    .navbar{
-        padding:1em;
-    }
-    .question-input{
-        margin: 2em;
-        padding-top:em;
-    }
-}
-
-@media (max-width: 414px) {
-    .firstName-spacing{
-        width: 7em;
-    }
-    .lastName-spacing{
-        width: 7em;
-    }
-    .bride-groom-dropdown{
-        width: 7em;
-        padding: .1em;
-    }
-    .bride-groom-form{
-        padding: 1em;
-    }
-    .question-label{
-        font-size: .9em;
-    }
-    .question-label-category{
-        font-size: .7em;
-    }
-    .category-font{
-        font-size: .35em;
-        padding-left:.7em;
-        padding-right:.7em;
-    }
-    .category-form{
-        margin: 2em
-    }
-    .container-fluid{
-        padding:0em;
-    }
-    .navbar{
-        padding:1em;
-    }
-    .question-input{
-        margin-top: 5.5em;
-        margin-bottom: 5.5em;
-    }
-}
-
-@media (max-width: 430px) {
-    .firstName-spacing{
-        width: 7em;
-    }
-    .lastName-spacing{
-        width: 7em;
-    }
-    .bride-groom-dropdown{
-        width: 7em;
-        padding: .1em;
-    }
-    .bride-groom-form{
-        padding: 1em;
-    }
-    .question-label{
-        font-size: .9em;
-    }
-    .question-label-category{
-        font-size: .7em;
-    }
-    .category-font{
-        font-size: .35em;
-        padding-left:.7em;
-        padding-right:.7em;
-    }
-    .category-form{
-        margin: 3em
-    }
-    .container-fluid{
-        padding:0em;
-    }
-    .navbar{
-        padding:1em;
-    }
-    .question-input{
-        margin-top: 6.5em;
-        margin-bottom: 6.5em;
-    }
-    
+    width: calc(17.5vw + 17.5vh); 
 }

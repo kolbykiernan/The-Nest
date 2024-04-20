@@ -29,13 +29,6 @@ const Bridesmaids = ({ categories, handleAnswer, bridesmaidsData, setBridesmaids
     });
   };
 
-  // useEffect(() => {
-  //   const storedData = localStorage.getItem('bridesmaidsData');
-  //   if (storedData) {
-  //     setBridesmaidsData(JSON.parse(storedData));
-  //   }
-  // }, []);
-
   useEffect(() => {
     localStorage.setItem('bridesmaidsData', JSON.stringify(bridesmaidsData));
  
@@ -63,10 +56,10 @@ const handleLastNameChange = (value, id) => {
 
 const handlePlusOneSelectChangeBridesmaids = (id, value) => {
   const updatedBridesmaidsData = bridesmaidsData.map(row =>
-    row.id === id ? { ...row, plusOneSelectedBridesmaids: value === 'Yes' } : row
+    row.id === id ? { ...row, plusOneSelected: value === 'Yes' } : row
   );
   setBridesmaidsData(updatedBridesmaidsData);
-  handleAnswer(id, { plusOneSelectedBridesmaids: value === 'Yes' });
+  handleAnswer(id, { plusOneSelected: value === 'Yes' });
 };
 
 const handlePlusOneFirstNameChange = (value, id) => {
@@ -95,10 +88,10 @@ const isAlsoInWeddingParty = (value, id) => {
 
 const handlePlusOneValueChange = (value, id) => {
   const updatedBridesmaidsData = bridesmaidsData.map(row =>
-    row.id === id ? { ...row, plusOneValueBridesmaids: value } : row
+    row.id === id ? { ...row, plusOneValue: value } : row
   );
   setBridesmaidsData(updatedBridesmaidsData);
-  handleAnswer(id, { plusOneValueBridesmaids: value });
+  handleAnswer(id, { plusOneValue: value });
 };
 
 
@@ -108,11 +101,11 @@ const handlePlusOneValueChange = (value, id) => {
       firstName: '',
       lastName: '',
       selectedCategory: '',
-      plusOneSelectedBridesmaids: '',
+      plusOneSelected: '',
       plusOneFirstName: '',
       plusOneLastName: '',
       selectedRole: '',
-      plusOneValueBridesmaids: 1,
+      plusOneValue: 1,
     };
   
     const updatedBridesmaidsData = [...bridesmaidsData, newRow];
@@ -121,13 +114,13 @@ const handlePlusOneValueChange = (value, id) => {
 
   return (
     <div className='wedding-party-form'>
-      <div>
+      <div className="wedding-party-columns">
         <Table responsive="sm">
           <thead className='table-head'>
             <tr>
               <th>#</th>
-              <th>First Name</th>
-              <th>Last Name</th>
+              <th>Guest First Name</th>
+              <th>Guest Last Name</th>
               <th>Category</th>
               <th>Plus One / Significant Other?</th>
               <th>Plus One First Name</th>
@@ -136,7 +129,7 @@ const handlePlusOneValueChange = (value, id) => {
               <th>How important is it that the plus-one comes?</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="row-fluid">
             {bridesmaidsData.map((row, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
@@ -172,7 +165,7 @@ const handlePlusOneValueChange = (value, id) => {
                 <td>
                   <DropdownButton 
                     variant="outline-secondary" 
-                    title={row.plusOneSelectedBridesmaids ? 'Yes' : (row.plusOneSelectedBridesmaids === false ? 'No' : 'Select One')}
+                    title={row.plusOneSelected ? 'Yes' : (row.plusOneSelected === false ? 'No' : 'Select One')}
                     onSelect={(value) => handlePlusOneSelectChangeBridesmaids(row.id, value)}
                   >
                     <Dropdown.Item 
@@ -188,7 +181,7 @@ const handlePlusOneValueChange = (value, id) => {
                 <td>
                   <Form.Control 
                     type="text" 
-                    disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
+                    disabled={!row.plusOneSelected || row.plusOneSelected === 'No'}
                     value={row.plusOneFirstName} 
                     onChange={(e) => handlePlusOneFirstNameChange(e.target.value, row.id)}
                   />
@@ -196,7 +189,7 @@ const handlePlusOneValueChange = (value, id) => {
                 <td>
                   <Form.Control 
                     type="text" 
-                    disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
+                    disabled={!row.plusOneSelected || row.plusOneSelected === 'No'}
                     value={row.plusOneLastName} 
                     onChange={(e) => handlePlusOneLastNameChange(e.target.value, row.id)}
                   />
@@ -206,14 +199,14 @@ const handlePlusOneValueChange = (value, id) => {
                   type="checkbox"
                   label="bridesmaid"
                   className="form-margins"
-                  disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
+                  disabled={!row.plusOneSelected || row.plusOneSelected === 'No'}
                   checked={row.selectedRole === 'bridesmaid'} 
                   onChange={() => isAlsoInWeddingParty('bridesmaid', row.id)} 
                 />
                 <Form.Check
                   type="checkbox"
                   label="groomsmen"
-                  disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
+                  disabled={!row.plusOneSelected || row.plusOneSelected === 'No'}
                   checked={row.selectedRole === 'groomsmen'} 
                   onChange={() => isAlsoInWeddingParty('groomsmen', row.id)} 
                 />
@@ -223,11 +216,11 @@ const handlePlusOneValueChange = (value, id) => {
                     min={1} 
                     max={5} 
                     step={0.5} 
-                    disabled={!row.plusOneSelectedBridesmaids || row.plusOneSelectedBridesmaids === 'No'}
-                    value={row.plusOneValueBridesmaids} 
+                    disabled={!row.plusOneSelected || row.plusOneSelected === 'No'}
+                    value={row.plusOneValue} 
                     onChange={(e) => handlePlusOneValueChange(e.target.value, row.id)}
                   />
-                  <p>Selected Value: {row.plusOneValueBridesmaids}</p>
+                  <p>Selected Value: {row.plusOneValue}</p>
                 </td>
               </tr>
             ))}

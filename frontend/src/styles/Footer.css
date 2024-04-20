@@ -6,13 +6,39 @@
 
 .footer{
     display: flex;
-    flex-direction: column;
-    text-align: center;
+    background-color: rgb(229, 251, 250);
+    
+    flex-direction: row;
+    justify-content: center;
 }
 
-.footer-font{
+.footer-links{
     display: flex;
-    flex-direction: column;
-    text-align: center;
+    flex-direction:row;
+    justify-content:center;
+    width:100%;
+    font-size: 1.1vh;
+    align-items: center;
 }
 
+.footer-links div{
+    display: flex;
+    margin-right: 4em;
+    margin-left: 4em;
+}
+
+.footer-links a:link{
+    text-decoration: none;
+    color:rgb(0, 0, 0);
+}
+
+.footer-links a:visited{
+    text-decoration: none;
+    color:rgb(0, 0, 0);
+}
+
+.footer-links a:hover{
+    color: blue; 
+    text-decoration: underline; 
+    cursor: pointer;
+}

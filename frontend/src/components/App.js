@@ -5,7 +5,10 @@ import HomePage from './HomePage';
 import Questionnaire from './Questionnaire';
 import Guestlist from './Guestlist';
 import Seatingchart from './seatingchart';
+import FAQ from '../default-views/faq';
 import axios from 'axios';
+import SignUpForm from '../users/SignUpForm';
+import LoginForm from '../users/LoginForm';
 
 function App() {
   
@@ -25,7 +28,7 @@ function App() {
     fetchCategories();
   }, []);
 
-  console.log('Props in App.js:', categories, fetchCategories);
+
 
   const [bridesmaidsData, setBridesmaidsData] = useState(() => {
     const storedData = localStorage.getItem('bridesmaidsData');
@@ -36,35 +39,35 @@ function App() {
           firstName: '',
           lastName: '',
           selectedCategory: '',
-          plusOneSelectedBridesmaids: '',
+          plusOneSelected: '',
           plusOneFirstName: '',
           plusOneLastName: '',
           selectedRole: '',
-          plusOneValueBridesmaids: 1,
+          plusOneValue: 1,
         }));
   });
 
   const [groomsmenData, setGroomsmenData] = useState(() => {
-    // Initialize groomsmenData from localStorage or with default values
+
     const storedData = localStorage.getItem('groomsmenData');
     return storedData ? JSON.parse(storedData) : Array.from({ length: 10 }, (_, index) => ({
-        id: index, // Unique identifier for each row
+        id: index, 
         firstName: '',
         lastName: '',
         selectedCategory: '',
-        plusOneSelectedGroomsmen: '',
+        plusOneSelected: '',
         plusOneFirstName: '',
         plusOneLastName: '',
         selectedRole: '',
-        plusOneValueGroomsmen: 1,
+        plusOneValue: 1,
     }));
   });
 
   const [everybodyElseData, setEverybodyElseData] = useState(() => {
-    // Initialize everybodyElseData from localStorage or with default values
+
     const storedData = localStorage.getItem('everybodyElseData');
     return storedData ? JSON.parse(storedData) : Array.from({ length: 10 }, (_, index) => ({
-      id: index, // Unique identifier for each row
+      id: index, 
       firstName: '',
       lastName: '',
       selectedCategory: '',
@@ -74,12 +77,6 @@ function App() {
       plusOneFirstName: '',
       plusOneLastName: '',
       plusOneValue: 1,
-      otherGuests: '',
-      addOnFirstName: '',
-      addOnLastName: '',
-      addOnValue: 1,
-      moreGuests: '',
-      howMany: null,
     }))
 });
 
@@ -88,6 +85,8 @@ function App() {
           <div>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/sign-up" element={<SignUpForm />}/>
+          <Route path="/login" element={<LoginForm />}/>
           <Route 
             path="/questionnaire" 
             element={<Questionnaire 
@@ -112,6 +111,7 @@ function App() {
                       setEverybodyElseData={setEverybodyElseData} 
                     />} />
           <Route path="/seatingchart" element={<Seatingchart />} />
+          <Route path="/FAQ" element={<FAQ/>} />
           <Route path="*" element={<Navigate to="/" />} /> 
         </Routes>
         </div>

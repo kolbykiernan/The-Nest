@@ -3,26 +3,8 @@ import { useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-export default function BrideGroom({ handleAnswer, existingData }) {
+export default function BrideGroom({ brideFirstName, setBrideFirstName, brideLastName, setBrideLastName, brideSelection, setBrideSelection, groomFirstName, setGroomFirstName, groomLastName, setGroomLastName, groomSelection, setGroomSelection }) {
 
-        const [brideSelection, setBrideSelection] = useState('Bride');
-        const [groomSelection, setGroomSelection] = useState('Groom');
-        const [brideFirstName, setBrideFirstName] = useState('');
-        const [brideLastName, setBrideLastName] = useState('');
-        const [groomFirstName, setGroomFirstName] = useState('');
-        const [groomLastName, setGroomLastName] = useState('');
-      
-        useEffect(() => {
-            // Populate inputs with existing data, if available
-            if (existingData) {
-              setBrideFirstName(existingData.brideFirstName || '');
-              setBrideLastName(existingData.brideLastName || '');
-              setBrideSelection(existingData.brideSelection || 'Bride');
-              setGroomFirstName(existingData.groomFirstName || '');
-              setGroomLastName(existingData.groomLastName || '');
-              setGroomSelection(existingData.groomSelection || 'Groom');
-            }
-          }, [existingData]);
       
        
 
@@ -50,15 +32,7 @@ export default function BrideGroom({ handleAnswer, existingData }) {
         }
       };
 
-      useEffect(() => {
-        // Update the answers whenever inputs change
-        handleAnswer('brideFirstName', brideFirstName);
-        handleAnswer('brideLastName', brideLastName);
-        handleAnswer('brideSelection', brideSelection);
-        handleAnswer('groomFirstName', groomFirstName);
-        handleAnswer('groomLastName', groomLastName);
-        handleAnswer('groomSelection', groomSelection);
-      }, [brideFirstName, brideLastName, brideSelection, groomFirstName, groomLastName, groomSelection]);
+     
     return (
         <div className='bride-groom-form'>
             <div className='bride-groom-spacing'>

@@ -8,12 +8,11 @@ import Bridesmaids from './Questions/Bridesmaids';
 import Groomsmen from './Questions/Groomsmen';
 import EverybodyElse from './Questions/Everybody_Else';
 import Button from 'react-bootstrap/Button';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
 import '../styles/questionnaire.css';
 
 
 const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesmaidsData, groomsmenData, setGroomsmenData, everybodyElseData, setEverybodyElseData}) => {
+
 
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = localStorage.getItem('currentPage');
@@ -25,127 +24,98 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
   }, [currentPage]);
 
     const [answers, setAnswers] = useState({});
-    const [questions] = useState([
-      { id: 1, text: "What is your wedding date?", type: "date"},
-      { id: 2, text: "What is the name of your venue?", type: "text"},
-      { id: 3, text: "What is the maximum capacity at your venue?", type: "number"},
-      { id: 4, text: "How many guests do you plan to invite?", type: "number"},
-      { id: 5, text: "What is the ideal number of guests to attend?", type: "number"},
-      { id: 6, text: "How much does it cost per guest?", type: "number"},
-      { id: 7, text: "Let's start with the lovebirds!", type: "brideGroom"},
-      { id: 8, text: "Next we're going to categorize how you know your guests!", type: "categoryForm"},
-      { id: 9, text: "Bridesmaids", type: "bridesmaids"},
-      { id: 10, text: "Groomsmen", type: "Groomsmen"},
-      { id: 11, text: "Everybody Else", type: "Everybody Else"},
- 
+    const [submitted, setSubmitted] = useState(false);
+    // const [existingData, setExistingData] = useState(null);
+    const [questions, setQuestions] = useState([
+      { id: 1, text: "Let's start with the lovebirds!", type: "brideGroom"},
+      { id: 2, text: "Next we're going to categorize how you know your guests!", type: "categoryForm"},
+      { id: 3, text: "Bridesmaids", type: "bridesmaids"},
+      { id: 4, text: "Groomsmen", type: "Groomsmen"},
+      { id: 5, text: "Everybody Else", type: "Everybody Else"},
     ]);
-    
-  
 
     const handlePrev = async () => {
       const nextIndex = currentPage - 1;
       setCurrentPage(nextIndex);
-
-      if (questions[currentPage].id === 7) {
-        if (submitted) {
-          // If the form has already been submitted, perform a PUT request to update existing data
-          try {
-            const formData = {
-              date: answers[1],
-              venue: answers[2],
-              capacity: answers[3],
-              invites: answers[4],
-              attendance: answers[5],
-              cost: answers[6],
-              brideFirstName: answers['brideFirstName'],
-              brideLastName: answers['brideLastName'], 
-              brideSelection: answers['brideSelection'], 
-              groomFirstName: answers['groomFirstName'], 
-              groomLastName: answers['groomLastName'], 
-              groomSelection: answers['groomSelection']
-            };
-    
-            const response = await axios.put('http://localhost:3000/api/', formData);
-            console.log('Form updated successfully:', response.data);
-          } catch (error) {
-            console.error('Error updating form:', error);
-          }
-        } else {
-          submitWeddingData();
-        }
-      } else if (questions[nextIndex].id === 7) {
+      if (nextIndex === 0) {
         try {
-          const response = await axios.get('http://localhost:3000/api/');
-          setExistingData(response.data);
+          const response = await axios.get('http://localhost:3000/api/weddingdata'); // Replace with your actual endpoint
+          
+          const data = response.data;
+          return {
+            brideSelection: response.data.brideSelection,
+            groomSelection: response.data.groomSelection,
+            brideFirstName: response.data.brideFirstName,
+            brideLastName: response.data.brideLastName,
+            groomFirstName: response.data.groomFirstName,
+            groomLastName: response.data.groomLastName
+          };
+    
         } catch (error) {
-          console.error('Error fetching existing data:', error);
+          console.error('Error fetching wedding data:', error);
         }
       }
     };
-
-    const [submitted, setSubmitted] = useState(false);
-    const [existingData, setExistingData] = useState(null);
-
+  
     const handleNext = async () => {
       const nextIndex = currentPage + 1;
       setCurrentPage(nextIndex);
+  
+      if (currentPage === 0 && !submitted) {
+        submitWeddingData();
+        setSubmitted(true)
+      }  
+    };
+  
+      const handleAnswer = (questionId, answer) => {
+        setAnswers(prevAnswers => ({
+          ...prevAnswers,
+          [questionId]: answer
+        }));
+      }; 
     
-      if (questions[currentPage].id === 7) {
-        if (submitted) {
-          // If the form has already been submitted, perform a PUT request to update existing data
-          try {
-            const formData = {
-              date: answers[1],
-              venue: answers[2],
-              capacity: answers[3],
-              invites: answers[4],
-              attendance: answers[5],
-              cost: answers[6],
-              brideFirstName: answers['brideFirstName'],
-              brideLastName: answers['brideLastName'], 
-              brideSelection: answers['brideSelection'], 
-              groomFirstName: answers['groomFirstName'], 
-              groomLastName: answers['groomLastName'], 
-              groomSelection: answers['groomSelection']
-            };
+    const [brideSelection, setBrideSelection] = useState('Bride');
+    const [groomSelection, setGroomSelection] = useState('Groom');
+    const [brideFirstName, setBrideFirstName] = useState('');
+    const [brideLastName, setBrideLastName] = useState('');
+    const [groomFirstName, setGroomFirstName] = useState('');
+    const [groomLastName, setGroomLastName] = useState('');
     
-            const response = await axios.put('http://localhost:3000/api/', formData);
-            console.log('Form updated successfully:', response.data);
-          } catch (error) {
-            console.error('Error updating form:', error);
-          }
-        } else {
-          submitWeddingData();
-        }
-      } else if (questions[nextIndex].id === 7) {
-        try {
-          const response = await axios.get('http://localhost:3000/api/');
-          setExistingData(response.data);
-        } catch (error) {
-          console.error('Error fetching existing data:', error);
-        }
+    const saveToLocalStorage = (key, data) => {
+      localStorage.setItem(key, JSON.stringify(data));
+    };
+    
+    // Function to retrieve wedding data from localStorage
+    const getFromLocalStorage = (key) => {
+      const data = localStorage.getItem(key);
+      return data ? JSON.parse(data) : null;
+    };
+    
+    // Initialize wedding data from localStorage on component mount
+    useEffect(() => {
+      const savedWeddingData = getFromLocalStorage('weddingData');
+      if (savedWeddingData) {
+        setBrideFirstName(savedWeddingData.brideFirstName);
+        setBrideLastName(savedWeddingData.brideLastName);
+        setBrideSelection(savedWeddingData.brideSelection);
+        setGroomFirstName(savedWeddingData.groomFirstName);
+        setGroomLastName(savedWeddingData.groomLastName);
+        setGroomSelection(savedWeddingData.groomSelection);
       }
-    };
-
-    const handleAnswer = (questionId, answer) => {
-      setAnswers(prevAnswers => ({
-        ...prevAnswers,
-        [questionId]: answer
-      }));
-    };
+    }, []);
     
-
-
+    
     const submitWeddingData = async () => {
-      console.log(answers)
       try {
+        // Update the answers before submitting the form data
+        handleAnswer('brideFirstName', brideFirstName);
+        handleAnswer('brideLastName', brideLastName);
+        handleAnswer('brideSelection', brideSelection);
+        handleAnswer('groomFirstName', groomFirstName);
+        handleAnswer('groomLastName', groomLastName);
+        handleAnswer('groomSelection', groomSelection);
+    
         const formData = {
-          date: answers[1],
-          venue: answers[2],
-          capacity: answers[3],
-          invites: answers[4],
-          attendance: answers[5],
-          cost: answers[6],
           brideFirstName: answers['brideFirstName'],
           brideLastName: answers['brideLastName'], 
           brideSelection: answers['brideSelection'], 
@@ -154,17 +124,88 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
           groomSelection: answers['groomSelection']
         };
     
-        const response = await axios.post('http://localhost:3000/api/', formData);
+        const response = await axios.post('http://localhost:3000/api/weddingdata', formData);
         console.log('Form submitted successfully:', response.data);
         setSubmitted(true);
+
+        saveToLocalStorage('weddingData', formData);
       } catch (error) {
         console.error('Error submitting form:', error);
- 
       }
-    }
+    };
+    
+
+    useEffect(() => {
+      // Fetch bride's first name
+      const fetchBrideData = async () => {
+        try {
+          const response = await axios.get('http://localhost:3000/api/weddingdata'); // Replace with your actual endpoint
+          return response.data.brideFirstName;
+        } catch (error) {
+          console.error('Error fetching bride first name:', error);
+        }
+      };
+    
+      // Fetch groom's first name
+      const fetchGroomData = async () => {
+        try {
+          const response = await axios.get('http://localhost:3000/api/weddingdata'); // Replace with your actual endpoint
+          return response.data.groomFirstName;
+        } catch (error) {
+          console.error('Error fetching groom first name:', error);
+        }
+      };
+    
+      fetchBrideData();
+      fetchGroomData();
+    }, []);
+    
+    useEffect(() => {
+      // Update the text of question #3 to include brideFirstName
+      setQuestions(prevQuestions => {
+        const updatedQuestions = [...prevQuestions];
+        const bridesmaidsQuestion = updatedQuestions.find(q => q.id === 3);
+        if (bridesmaidsQuestion) {
+          bridesmaidsQuestion.text = `${brideFirstName}'s Wedding Party`;
+        }
+        return updatedQuestions;
+      });
+    }, [brideFirstName]);
+    
+    useEffect(() => {
+      // Update the text of question #4 to include groomFirstName
+      setQuestions(prevQuestions => {
+        const updatedQuestions = [...prevQuestions];
+        const groomsmenQuestion = updatedQuestions.find(q => q.id === 4);
+        if (groomsmenQuestion) {
+          groomsmenQuestion.text = `${groomFirstName}'s Wedding Party`;
+        }
+        return updatedQuestions;
+      });
+    }, [groomFirstName]);
+
   
-const submitBridesmaidsData = async (bridesmaidsData) => {
-  try {
+      useEffect(() => {
+        // Update the answers whenever inputs change
+        handleAnswer('brideFirstName', brideFirstName);
+        handleAnswer('brideLastName', brideLastName);
+        handleAnswer('brideSelection', brideSelection);
+        handleAnswer('groomFirstName', groomFirstName);
+        handleAnswer('groomLastName', groomLastName);
+        handleAnswer('groomSelection', groomSelection);
+      }, [brideFirstName, brideLastName, brideSelection, groomFirstName, groomLastName, groomSelection]);
+
+
+
+    
+
+   
+    
+    
+   
+    
+    const submitBridesmaidsData = async (bridesmaidsData) => {
+      try {
     const requests = bridesmaidsData.map(async (row) => {
       // Check if firstName is empty
       if (!row.firstName.trim()) {
@@ -176,11 +217,11 @@ const submitBridesmaidsData = async (bridesmaidsData) => {
         firstName: row.firstName,
         lastName: row.lastName,
         selectedCategory: row.selectedCategory,
-        plusOneSelectedBridesmaids: row.plusOneSelectedBridesmaids,
+        plusOneSelected: row.plusOneSelected,
         plusOneFirstName: row.plusOneFirstName,
         plusOneLastName: row.plusOneLastName,
         selectedRole: row.selectedRole,
-        plusOneValueBridesmaids: row.plusOneValueBridesmaids
+        plusOneValue: row.plusOneValue
       };
       return axios.post('http://localhost:3000/api/bridesmaids', formData);
     });
@@ -209,11 +250,11 @@ const submitGroomsmenData = async (groomsmenData) => {
         firstName: row.firstName,
         lastName: row.lastName,
         selectedCategory: row.selectedCategory,
-        plusOneSelectedGroomsmen: row.plusOneSelectedGroomsmen,
+        plusOneSelected: row.plusOneSelected,
         plusOneFirstName: row.plusOneFirstName,
         plusOneLastName: row.plusOneLastName,
         selectedRole: row.selectedRole,
-        plusOneValueGroomsmen: row.plusOneValueGroomsmen
+        plusOneValue: row.plusOneValue
       };
       return axios.post('http://localhost:3000/api/groomsmen', formData);
     });
@@ -248,12 +289,6 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         plusOneFirstName: row.plusOneFirstName,
         plusOneLastName: row.plusOneLastName,
         plusOneValue: row.plusOneValue,
-        otherGuests: row.otherGuests,
-        addOnFirstName: row.addOnFirstName,
-        addOnLastName: row.addOnLastName,
-        addOnValue: row.addOnValue,
-        moreGuests: row.moreGuests,
-        howMany: row.howMany,
       };
       return axios.post('http://localhost:3000/api/everybodyelse', formData);
     });
@@ -276,95 +311,28 @@ const submitEverybodyElseData = async (everybodyElseData) => {
     
     const handleSubmitAllData = async () => {
       try {
-        await submitBridesmaidsData(bridesmaidsData); 
-        await submitGroomsmenData(groomsmenData);     
-        await submitEverybodyElseData(everybodyElseData);
-        
-        redirectToGuestList();
+          if (!submitted) {
+              await submitBridesmaidsData(bridesmaidsData);
+              await submitGroomsmenData(groomsmenData);
+              await submitEverybodyElseData(everybodyElseData);
+              
+              setSubmitted(true);
+              redirectToGuestList();
+          } else {
+              console.log('Data already submitted. Cannot submit again.');
+          }
       } catch (error) {
-        console.error('Error submitting all data:', error);
+          console.error('Error submitting all data:', error);
       }
-    };
+  };
      
     
 
   const renderQuestion = (question) => {
+    if (!question) return null;
+
     const answer = answers[question.id] || '';
     switch (question.type) {
-      case "date":
-        return (
-          <div className='questionnaire-questions'>
-            <label 
-              className='question-label' 
-              style={{ backgroundColor: 'var(--secondary-color)'}}
-            >
-              {question.text}
-            </label>
-            <input 
-              className='question-input' 
-              type="date" 
-              value={answer} 
-              onChange={(e) => handleAnswer(question.id, e.target.value)} 
-              required/>
-          </div>
-        );
-      case "text":
-        return (
-          <div className='questionnaire-questions'>
-            <label 
-              className='question-label' 
-              style={{ backgroundColor: 'var(--secondary-color)'}}
-            >
-              {question.text}
-            </label>
-            <input 
-              className='question-input' 
-              type="text" value={answer} 
-              onChange={(e) => handleAnswer(question.id, e.target.value)}
-              required/>
-          </div>
-        );
-      case "number":
-        return (
-          <div className='questionnaire-questions'>
-            <label 
-              className='question-label' 
-              style={{ backgroundColor: 'var(--secondary-color)'}}
-            >
-              {question.text}
-            </label>
-            <input 
-              className='question-input' 
-              type="number" 
-              value={answer} 
-              onChange={(e) => handleAnswer(question.id, parseInt(e.target.value))} 
-              
-              required/>
-          </div>
-        );
-      case "categoryForm":
-        return (
-          <div className='questionnaire-questions' key={question.id}>
-            <label 
-              className='question-label-category' 
-              style={{ backgroundColor: 'var(--secondary-color)'}}
-            >
-              {question.text}
-            </label>
-            <p className='category-font'>
-                  It's best if you are together for this portion! Think of how you both know all of the people that will come to your wedding. The average person has between 4 - 6 categories that the majority of their guests can fall into. Maybe they're unique to one of you or maybe they are mutual. For example: Let's say you and your partner both want to invite friends from high school, but you didn't go to the same high school. You only need to fill that category out once because we will be assigning which partner they originated from or if they are mutual later. Take a little time to consider these as this will influence your seating chart! There may still be a few that don't fit into any category. For those, you can leave the category blank, or create 'Other'.
-            </p>
-            <CategoryForm 
-              fetchCategories={fetchCategories} 
-              categories={categories} 
-              className='question-input' 
-              type="text" 
-              value={answer} 
-              onChange={(e) => handleAnswer(question.id, e.target.value)} 
-              required 
-            />
-          </div>
-        );
       case "brideGroom":
         return (
           <div className='questionnaire-questions'>
@@ -381,13 +349,48 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               value={answer} 
               onChange={(e) => handleAnswer(question.id, e.target.value)} 
               handleAnswer={handleAnswer}
+              brideFirstName={brideFirstName}
+              setBrideFirstName={setBrideFirstName}
+              brideLastName={brideLastName}
+              setBrideLastName={setBrideLastName}
+              brideSelection={brideSelection}
+              setBrideSelection={setBrideSelection}
+              groomFirstName={groomFirstName}
+              setGroomFirstName={setGroomFirstName}
+              groomLastName={groomLastName}
+              setGroomLastName={setGroomLastName}
+              groomSelection={groomSelection}
+              setGroomSelection={setGroomSelection}
               required
             />
           </div>
         );
+      case "categoryForm":
+        return (
+          <div className='questionnaire-questions' key={question.id}>
+            <label 
+              className='question-label-category' 
+              style={{ backgroundColor: 'var(--secondary-color)'}}
+            >
+              {question.text}
+            </label>
+            <p className='category-font'>
+            It's best if you're together for this part! Consider how both of you know all the people who will attend your wedding. On average, most people have between 4 to 6 categories that encompass the majority of their guests. These categories might be unique to one of you or mutual. For instance, let's say you and your partner both want to invite friends from high school, but you attended different high schools. You only need to fill out that category once because we'll later specify which partner they originated from or if they are mutual. This same approach could apply to categories like 'Family,' but we'll leave those decisions to you! Take a moment to think about this, as it will affect your seating arrangements. There may still be a few guests who don't fit into any category. For them, you can create a category called 'Extra' or 'Other.' After adding a category, you should see it appear when clicking the dropdown!            </p>
+            <CategoryForm 
+              fetchCategories={fetchCategories} 
+              categories={categories} 
+              className='question-input' 
+              type="text" 
+              value={answer} 
+              onChange={(e) => handleAnswer(question.id, e.target.value)} 
+              required 
+            />
+          </div>
+        );
+      
       case "bridesmaids":
         return (
-          <div className='question-banner'>
+          <div className='questionnaire-questions'>
             <label 
               className='question-label-wedding-party' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
@@ -398,7 +401,8 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               className='question-label-instructions' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
               >
-                For this section, let's just focus on the wedding party and their plus-one's. If there are other guests that you'd like to add along with these guests, such as kids, we'll add them later! If you want to grant a plus-one to someone and don't know who it will be, just leave the name fields blank, but still fill out the rest.
+
+              For this section, let's focus solely on the wedding party and their plus-ones. If you wish to add other guests, such as children, we'll address them later. If you want to grant a plus-one to someone but don't know who it will be, simply leave the name fields blank while still filling out the rest.            
             </label>
             <Bridesmaids
               categories={categories}
@@ -416,7 +420,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         );
         case "Groomsmen":
         return (
-          <div className='question-banner'>
+          <div className='questionnaire-questions'>
             <label 
               className='question-label-wedding-party' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
@@ -427,8 +431,8 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               className='question-label-instructions' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
             >
-              For this section, let's just focus on the wedding party and their plus-one's. If there are other guests that you'd like to add along with these guests, such as kids, we'll add them later! If you want to grant a plus-one to someone and don't know who it will be, just leave the name fields blank, but still fill out the rest.
-            </label>
+            For this section, let's focus solely on the wedding party and their plus-ones. If you wish to add other guests, such as children, we'll address them later. If you want to grant a plus-one to someone but don't know who it will be, simply leave the name fields blank while still filling out the rest."            
+          </label>
             <Groomsmen 
               categories={categories} 
               className='question-input' 
@@ -445,7 +449,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         );
       case "Everybody Else":
         return (
-          <div className='question-banner'>
+          <div className='questionnaire-questions'>
             <label 
               className='question-label-wedding-party' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
@@ -456,7 +460,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               className='question-label-instructions' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
             >
-              Now let's add everybody else! A best practice could be to go down your 'Category List', add all of the guests that you would put in that list., then start with the next category. For now, you can only hit submit once, so give it your best guess! Don't worry if you forget a few. We can add them in Guest List. 
+                Now let's get starte adding some more important guest! A best practice could be to go down your 'Category List' and add all of the guests that you would categorize under each list. Then, start with the next category. If your guests have young children or you forget a few, we can add them in the next section.
             </label>
             <EverybodyElse
               categories={categories} 
@@ -485,14 +489,14 @@ const submitEverybodyElseData = async (everybodyElseData) => {
                 {renderQuestion(questions[currentPage])}
               </div>
               <div>
-                {currentPage > 0 && (
-                  <Button className="button" variant="primary" onClick={handlePrev}>Prev</Button>
+              {currentPage > 0 && (
+                  <Button className="prev-next-button" variant="primary" onClick={handlePrev}>Prev</Button>
                 )}
                 {currentPage < questions.length - 1 && (
-                  <Button className="button" variant="primary" onClick={handleNext}>Next</Button>
+                  <Button className="prev-next-button" variant="primary" onClick={handleNext}>Next</Button>
                 )}
                 {currentPage === questions.length - 1 && (
-                  <Button className="button" variant="primary" onClick={handleSubmitAllData}>Submit</Button>
+                  <Button className="prev-next-button" variant="primary" onClick={handleSubmitAllData}>Submit</Button>
                 )} 
               </div>     
             </div>
