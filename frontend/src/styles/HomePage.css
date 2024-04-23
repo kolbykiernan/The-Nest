@@ -313,6 +313,7 @@ margin-bottom: 1em;
 .about-us-center{
   display: flex;
   justify-content: center;
+  height: 80vh;
 }
 
 .about-us-container div{
@@ -337,7 +338,7 @@ margin-bottom: 1em;
 /* For tablets */
 @media screen and (min-width: 577px) and (max-width: 992px) {
   .about-us-image {
-    width: 20vw; /* Adjust as needed */
+    width: 17vw; /* Adjust as needed */
     height: auto; /* or set a specific height if needed */
   }
 }
@@ -345,10 +346,18 @@ margin-bottom: 1em;
 /* For computers */
 @media screen and (min-width: 993px) {
   .about-us-image {
-    width: 18.5vw; /* Maintain the original width */
-    height: 22.5vh; /* Maintain the original height */
+    width: 19.5vw; /* Maintain the original width */
+    height: auto; /* Maintain the original height */
   }
 }
+
+@media screen and (min-width: 1100px) {
+  .about-us-image {
+    width: 14vw; /* Maintain the original width */
+    height: auto; /* Maintain the original height */
+  }
+}
+
 
 
 .about-us-text {
