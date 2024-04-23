@@ -76,4 +76,6 @@ Kolby Kiernan - kolbykiernan@gmail.com
 Project Link:[https://github.com/kolbykiernan/wedding-app.git](https://github.com/kolbykiernan/wedding-app.git)
 
 ## Credits
-The Nest Log - created by [Adobe Firefly](https://firefly.adobe.com/)
+* The Nest Logo - created by [Adobe Firefly](https://firefly.adobe.com/)
+* [Google Fonts](https://fonts.google.com/)
+
