@@ -2,7 +2,6 @@
 
 import express from 'express';
 import path from 'path';
-import { createEngine } from 'express-react-views';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
@@ -18,7 +17,6 @@ const app = express();
 
 
 app.set('view engine', 'js');
-app.engine('js', createEngine());
 
 app.use(cors());
 app.use(express.json());
