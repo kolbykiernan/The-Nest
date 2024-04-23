@@ -42,57 +42,61 @@ export default function SignUpForm() {
                             <h1 >Welcome!</h1>
                                 <h3> Join The Nest</h3>
                                 <div className="sign-up-email-password">
-                                    <div>
-                                        <h5>First Name</h5>
-                                        <Form.Control 
-                                            type='text' 
-                                            variant="outline-secondary" 
-                                            className='sign-up-first-name'
-                                            required
-                                            value={user.firstName}
-                                            onChange={e => setUser({ ...user, firstName: e.target.value })}
-                                            id="firstName"
-                                            name="firstName"
-                                        />                               
+                                    <div className="sign-up-email-password-top">
+                                        <div>
+                                            <h5>First Name</h5>
+                                            <Form.Control 
+                                                type='text' 
+                                                variant="outline-secondary" 
+                                                className='sign-up-first-name'
+                                                required
+                                                value={user.firstName}
+                                                onChange={e => setUser({ ...user, firstName: e.target.value })}
+                                                id="firstName"
+                                                name="firstName"
+                                            />                               
+                                        </div>
+                                        <div>
+                                            <h5>Last Name</h5>
+                                            <Form.Control 
+                                                type='text' 
+                                                variant="outline-secondary" 
+                                                className='sign-up-last-name'
+                                                required
+                                                value={user.lastName}
+                                                onChange={e => setUser({ ...user, lastName: e.target.value })}
+                                                id="lastName"
+                                                name="lastName"
+                                            />                               
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h5>Last Name</h5>
-                                        <Form.Control 
-                                            type='text' 
-                                            variant="outline-secondary" 
-                                            className='sign-up-last-name'
-                                            required
-                                            value={user.lastName}
-                                            onChange={e => setUser({ ...user, lastName: e.target.value })}
-                                            id="lastName"
-                                            name="lastName"
-                                        />                               
-                                    </div>
-                                    <div>
-                                        <h5>Email</h5>
-                                        <Form.Control 
-                                            type="email"
-                                            variant="outline-secondary" 
-                                            className='sign-up-email'
-                                            required
-                                            value={user.email}
-                                            onChange={e => setUser({ ...user, email: e.target.value })}
-                                            id="email"
-                                            name="email"    
-                                        />                               
-                                    </div>
-                                    <div>
-                                        <h5>Password</h5>
-                                        <Form.Control 
-                                            variant="outline-secondary" 
-                                            className='sign-up-password'
-                                            type="password"
-                                            required
-                                            value={user.password}
-                                            onChange={e => setUser({ ...user, password: e.target.value })}
-                                            id="password"
-                                            name="password"
-                                        />                           
+                                    <div className="sign-up-email-password-bottom">
+                                        <div>
+                                            <h5>Email</h5>
+                                            <Form.Control 
+                                                type="email"
+                                                variant="outline-secondary" 
+                                                className='sign-up-email'
+                                                required
+                                                value={user.email}
+                                                onChange={e => setUser({ ...user, email: e.target.value })}
+                                                id="email"
+                                                name="email"    
+                                            />                               
+                                        </div>
+                                        <div>
+                                            <h5>Password</h5>
+                                            <Form.Control 
+                                                variant="outline-secondary" 
+                                                className='sign-up-password'
+                                                type="password"
+                                                required
+                                                value={user.password}
+                                                onChange={e => setUser({ ...user, password: e.target.value })}
+                                                id="password"
+                                                name="password"
+                                            />  
+                                        </div>                         
                                     </div>
                                 </div>
                                 <div className='terms'>
