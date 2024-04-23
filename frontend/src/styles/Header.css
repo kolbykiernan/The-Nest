@@ -19,6 +19,7 @@
     padding-bottom: 1.5em;
     font-size: 1.5vh;
     height:7.5vh;
+    width: 100%;
 }
 
 
@@ -28,4 +29,8 @@
     font-weight: 600;
     font-style: normal;
     font-size: 2em;
+  }
+
+  .container-fluid{ padding-left: 0em;
+  padding-right: 0em;
   }

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import HamburgerMenu from '../images/Hamburger_icon.svg.png'
 
-const Sidebar = ({ analysisMessage, desiredAttendance, venueCapacity, setVenueCapacity, handleInputChange, inviteCount, setInviteCount, setDesiredAttendance, costPerPerson, setCostPerPerson, runSortedList}) => {
+const Sidebar = ({ emptyAttendanceErrorMessage, emptyRankingErrorMessage, analysisMessage, desiredAttendance, venueCapacity, setVenueCapacity, handleInputChange, inviteCount, setInviteCount, setDesiredAttendance, costPerPerson, setCostPerPerson, runSortedList}) => {
   const [isExpanded, setIsExpanded] = useState(true); // state to track sidebar visibility
   
   const toggleSidebar = () => {
@@ -26,6 +26,22 @@ const Sidebar = ({ analysisMessage, desiredAttendance, venueCapacity, setVenueCa
       </div>
       {isExpanded && (
         <div className='sidebar-inputs'>
+          {emptyRankingErrorMessage !== null
+            ? (
+                <div className="alert alert-danger" role="alert">
+                    {emptyRankingErrorMessage}
+                </div>
+            )
+            : null
+          }
+          {emptyAttendanceErrorMessage !== null
+            ? (
+                <div className="alert alert-danger" role="alert">
+                    {emptyAttendanceErrorMessage}
+                </div>
+            )
+            : null
+          }
           <div className='sidebar-capacity'>
             <div className='sidebar-capacity-text'>
               <p>What is the capacity of the venue?</p>
@@ -35,18 +51,6 @@ const Sidebar = ({ analysisMessage, desiredAttendance, venueCapacity, setVenueCa
                 type="number"
                 value={venueCapacity}
                 onChange={(e) => handleInputChange(e, setVenueCapacity, 'venueCapacity')}
-              />
-            </div>
-          </div>
-          <div className='sidebar-invites'>
-            <div className='sidebar-invites-text'>
-              How many guests would you like to invite?
-            </div>
-            <div className='sidebar-invites-input'>
-              <Form.Control 
-                type="number"
-                value={inviteCount}
-                onChange={(e) => handleInputChange(e, setInviteCount, 'inviteCount')}
               />
             </div>
           </div>

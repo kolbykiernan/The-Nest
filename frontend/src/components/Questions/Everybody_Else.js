@@ -28,7 +28,6 @@ const selectCategory = (value, index, categoryType) => {
   });
 }
 
-    // Save everybodyElseData to localStorage whenever it changes
     useEffect(() => {
       localStorage.setItem('everybodyElseData', JSON.stringify(everybodyElseData));
 
@@ -80,7 +79,7 @@ const selectCategory = (value, index, categoryType) => {
       handleAnswer(id, { plusOneSelected: value === 'Yes' });
     };
     
-    const handlePlusOneFirstNameChange = (value, id) => {
+    const handlePlusOneFirstNameChange = (value, id, firstName) => {
       const updatedEverybodyElseData = everybodyElseData.map(row =>
         row.id === id ? { ...row, plusOneFirstName: value } : row
       );
@@ -107,7 +106,7 @@ const selectCategory = (value, index, categoryType) => {
 
   const addRowEverybodyElse = () => {
     const newRow = {
-      id: everybodyElseData.length + 1, // Generate a unique ID for the new row
+      id: everybodyElseData.length + 1,
       firstName: '',
       lastName: '',
       selectedCategory: '',
@@ -226,7 +225,7 @@ const selectCategory = (value, index, categoryType) => {
                     type="text" 
                     disabled={!row.plusOneSelected || row.plusOneSelected === 'No'}
                     value={row.plusOneFirstName} 
-                    onChange={(e) => handlePlusOneFirstNameChange(e.target.value, row.id)}
+                    onChange={(e) => handlePlusOneFirstNameChange(e.target.value, row.id, row.firstName)}
                   />
                 </td>
                 <td>
