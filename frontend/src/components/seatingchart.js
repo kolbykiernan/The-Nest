@@ -2,7 +2,7 @@ import React from 'react'
 import '../styles/questionnaire.css';
 import Header from '../default-views/header'
 import Footer from '../default-views/Footer'
-import logo from '../images/Nest-Logo.png'
+import logo from '../images/The-Nest-Logo.png';
 
 
 export default function Seatingchart() {

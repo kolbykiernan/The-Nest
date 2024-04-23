@@ -13,6 +13,7 @@
 5. Contributing
 6. License
 7. Contact
+8. Credits
 
 </details>
 
@@ -73,3 +74,6 @@ This project is licensed under the MIT License
 ## Contact
 Kolby Kiernan - kolbykiernan@gmail.com    
 Project Link:[https://github.com/kolbykiernan/wedding-app.git](https://github.com/kolbykiernan/wedding-app.git)
+
+## Credits
+The Nest Log - created by [Adobe Firefly](https://firefly.adobe.com/)
