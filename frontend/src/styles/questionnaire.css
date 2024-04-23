@@ -600,20 +600,31 @@ td p {
     display:flex;
     justify-content: flex-end;
     padding-right:.75em;
+    padding-top: .5em;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 
+.toggle img{
+    
 }
 
 .sidebar-header{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
     padding-top: .75em;
     padding-bottom: 1.5em;
-    font-size: 1.75vw;
     background-color: #f4f4f4;
     width:100%;
+    position: relative;
 }
 
 .sidebar-header-font{
     padding-right: 2em;
     padding-left: 2em;
+    font-size: calc(.85vw + .45vh);
 }
 
 .analysis-message{
