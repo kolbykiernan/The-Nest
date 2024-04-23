@@ -31,11 +31,15 @@ app.use('/authentication', authenticationRouter);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-app.use(express.static(path.join(__dirname, '..', 'frontend', 'build')));
+app.use(express.static(path.join(__dirname, 'frontend', 'build')));
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Private-Network", "true");
+    next();
+  });
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'frontend', 'build', 'index.html'));
 });
 
 app.listen(process.env.PORT, () => {
