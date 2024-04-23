@@ -587,11 +587,11 @@ td p {
     }
 
     .sidebar.collapsed {
-        width: 6.5%;
+        width: 8.5%;
     }
 
     .sidebar.collapsed + .guestlist-table {
-        width: 93.5%;
+        width: 91.5%;
     }
 }
 
