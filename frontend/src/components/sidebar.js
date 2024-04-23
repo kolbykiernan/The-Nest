@@ -17,11 +17,11 @@ const Sidebar = ({ emptyAttendanceErrorMessage, emptyRankingErrorMessage, analys
           <img src={HamburgerMenu} alt="three line hamburger menu"/>
         </div>
         {isExpanded && (
-          <div>
+        
             <div className='sidebar-header-font'>
-              Click the toggle to switch back and forth between your guest list. Fill out the questions and click 'Run List' to get a custom breakdown.
+              <p>Fill out the questions and click 'Run List' to get a custom breakdown.</p>
             </div>
-          </div>
+ 
         )}
       </div>
       {isExpanded && (
