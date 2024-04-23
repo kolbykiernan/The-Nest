@@ -1,6 +1,4 @@
-
 import express from 'express';
-const router = express.Router();
 import Category from '../models/Category.js';
 import WeddingData from '../models/WeddingData.js';
 import Bridesmaids from '../models/bridesMaids.js';
@@ -8,7 +6,9 @@ import Groomsmen from '../models/groomsMen.js';
 import EverybodyElse from '../models/EverybodyElse.js';
 import Guestlist from '../models/Guestlist.js'
 
-router.post('/weddingdata', async (req, res) => {
+const apiRouter = express.Router();
+
+apiRouter.post('/weddingdata', async (req, res) => {
 try {
 const { id, brideFirstName, brideLastName, brideSelection, groomFirstName, groomLastName, groomSelection } = req.body;
 
@@ -22,7 +22,7 @@ res.status(500).json({ error: 'Internal server error' });
 });
 
 
-router.get('/weddingdata', async (req, res) => {
+apiRouter.get('/weddingdata', async (req, res) => {
 try {
 const weddingData = await WeddingData.findAll();
 
@@ -34,7 +34,7 @@ res.status(500).json({ error: 'Internal server error' });
 });
 
 
-router.post('/categories', async (req, res) => {
+apiRouter.post('/categories', async (req, res) => {
 
 console.log(req.body);
 const { name } = req.body;
@@ -48,7 +48,7 @@ try {
 });
 
 
-router.get('/categories', async (req, res) => {
+apiRouter.get('/categories', async (req, res) => {
 try {
 const categories = await Category.findAll();
 res.json(categories);
@@ -69,7 +69,7 @@ const sortByField = (array, field, order = 'asc') => {
 
 
 
-router.get('/bridesmaids', async (req, res) => {
+apiRouter.get('/bridesmaids', async (req, res) => {
 try {
   const bridesmaids = await Bridesmaids.findAll();
   const sortedBridesmaids = sortByField(bridesmaids, 'id');
@@ -80,7 +80,7 @@ try {
 }
 });
 
-router.post('/bridesmaids', async (req, res) => {
+apiRouter.post('/bridesmaids', async (req, res) => {
 const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 try {
     await Bridesmaids.create({
@@ -105,7 +105,7 @@ try {
 }
 });
 
-router.put('/bridesmaids/:id', async (req, res) => {
+apiRouter.put('/bridesmaids/:id', async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 
@@ -141,7 +141,7 @@ router.put('/bridesmaids/:id', async (req, res) => {
 });
 
 
-router.get('/groomsmen', async (req, res) => {
+apiRouter.get('/groomsmen', async (req, res) => {
 try {
     const groomsmen = await Groomsmen.findAll();
     const sortedGroomsmen = sortByField(groomsmen, 'id');
@@ -153,7 +153,7 @@ try {
 });
 
 
-router.post('/groomsmen', async (req, res) => {
+apiRouter.post('/groomsmen', async (req, res) => {
 const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 try {
     await Groomsmen.create({
@@ -178,7 +178,7 @@ try {
 }
 });
 
-router.put('/groomsmen/:id', async (req, res) => {
+apiRouter.put('/groomsmen/:id', async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 
@@ -216,7 +216,7 @@ router.put('/groomsmen/:id', async (req, res) => {
 });
 
 
-router.get('/everybodyelse', async (req, res) => {
+apiRouter.get('/everybodyelse', async (req, res) => {
   
   try {
 
@@ -229,7 +229,7 @@ router.get('/everybodyelse', async (req, res) => {
   }
 });
 
-router.post('/everybodyelse', async (req, res) => {
+apiRouter.post('/everybodyelse', async (req, res) => {
   const { firstName, lastName, selectedCategory, brideGroomOrMutual, guestValue, plusOneSelected, plusOneFirstName, plusOneLastName, plusOneValue} = req.body;
   try {
       await EverybodyElse.create({
@@ -255,7 +255,7 @@ router.post('/everybodyelse', async (req, res) => {
 });
 
 
-router.put('/everybodyelse/:id', async (req, res) => {
+apiRouter.put('/everybodyelse/:id', async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, selectedCategory, brideGroomOrMutual, guestValue, plusOneSelected, plusOneFirstName, plusOneLastName, plusOneValue } = req.body;
   
@@ -294,7 +294,7 @@ router.put('/everybodyelse/:id', async (req, res) => {
 });
 
 
-router.get('/guestlist', async (req, res) => {
+apiRouter.get('/guestlist', async (req, res) => {
   try {
     // Fetch all guestlist entries from the Guestlist table
     const guestlistEntries = await Guestlist.findAll();
@@ -306,7 +306,7 @@ router.get('/guestlist', async (req, res) => {
   }
 });
 
-router.post('/guestlist', async (req, res) => {
+apiRouter.post('/guestlist', async (req, res) => {
   try {
     const guestlistData = req.body.map((item, index) => ({ ...item, order: index }));
 
@@ -366,7 +366,7 @@ router.post('/guestlist', async (req, res) => {
   }
 });
 
-router.put('/guestlist', async (req, res) => {
+apiRouter.put('/guestlist', async (req, res) => {
   try {
     const guestlistData = req.body.map((item, index) => ({ ...item, order: index }));
 
@@ -414,4 +414,4 @@ router.put('/guestlist', async (req, res) => {
 
 
 
-export default router;
+export default apiRouter;

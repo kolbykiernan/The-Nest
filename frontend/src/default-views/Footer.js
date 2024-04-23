@@ -8,10 +8,10 @@ function Footer () {
        <div className='footer'>
         <div className='footer-links'>
             <div>
-                <a href=""> About Us </a>
+                <a href="/about-us"> About Us </a>
             </div>
             <div>
-                <a href=""> FAQ </a>
+                <a href="/FAQ"> FAQ </a>
             </div>
         </div>
     </div>

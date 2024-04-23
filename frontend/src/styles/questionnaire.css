@@ -39,8 +39,13 @@ body{
 .questionnaire-questions{
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 100%;
     height:100%;
+}
+
+.question-label{
+    width:100%;
 }
 
 .question-input{
@@ -88,19 +93,41 @@ body{
     align-content:stretch;
 }
 
+.bride-groom-container{
+    display:flex;
+    flex-direction: column;
+    align-content: center;
+    height:100%;
+    width:60%;
+}
+
+.bride-groom-error{
+    padding-left: 1em;
+    padding-right: 1em;
+    width: 100%;
+}
+
 .bride-groom-form{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    height:75%;
+    height:100%;
     width:100%;
 }
+
+.bride-groom-inputs{
+    display: flex;
+    flex-direction:row;
+    justify-content: center;
+    width:100%;
+}
+
 
 .bride-groom-spacing{
     display: flex;
     flex-direction: column;
     padding: 1em;
-    width: 30%;
+    width: 100%;
     height:100%;
     justify-content: center;
 }
@@ -140,6 +167,7 @@ body{
 }
 
 .question-label-category{
+    width:100%;
     padding: .5em;
     padding-left: .5em;
     padding-right: .5em;
@@ -231,6 +259,7 @@ body{
 }
 
 .question-label-wedding-party{
+    width: 100%;
     padding-top:1em;
     padding-left: 1.5em;
     padding-right: 1.5em;
@@ -311,24 +340,34 @@ td p {
 }
 
 .guestlist-navbar-tabs{
-    padding: 2em;
+    display:flex;
+    flex-direction: column;
+    width:100%;
+    padding: 1em;
 }
 
 .guestlist-navbar-tabs .nav-item{
     padding-right: .3em;
     padding-left: .3em;
+    
 }
 
 .guestlist-navbar-tabs-scrollable.nav.nav-underline.nav-fill {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     
-   
 }
 
-.scrollable-table tr td{
-    padding-left:1.5em;
+.guestlist-categories-error{
+    width: 100%;
 }
+
+.guestlist-categories-error p{
+    width: 100%;
+
+}
+
+
 
 .scrollable-table-headers {
     background-color: white;
@@ -337,8 +376,6 @@ td p {
 }
 
 .scrollable-table-headers tr th{
-    padding-left:1.5em;
-    padding-bottom:.5em;
     font-size: 1.2vh;
 }
 
@@ -381,10 +418,20 @@ td p {
 
 .add-subtract-row-buttons{
     outline: 1px solid lightgray;
+    margin: 0 5px;
 }
 
 .guestlist-table-rows{
     width:100%;
+    
+}
+
+.button-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    
 }
 
 .able-to-attend {
@@ -518,7 +565,7 @@ td p {
     }
 
     .sidebar.expanded .sidebar-header-font{
-        font-size: calc(1.25vw + 1.15vh); 
+        font-size: calc(1.5vw + 1.15vh); 
     }
 
     .sidebar.expanded  .sidebar-inputs {
@@ -527,7 +574,7 @@ td p {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
-        font-size: 1.5vh;
+        font-size: 1.25vh;
     }
 
     .sidebar.expanded  .analysis-message {
@@ -571,8 +618,11 @@ td p {
 
 .analysis-message{
     padding: 2em;
-    font-size: 1.5vw;
+}
 
+.analysis-message p{
+    font-size: calc(.85vw + .85vh);
+    font-style: italic;
 }
 
 .sidebar-inputs{
@@ -581,7 +631,7 @@ td p {
     align-items: center;
     margin-left: 2em;
     margin-right: 2em;
-    font-size: 1.5vw;
+
 }
 
 .sidebar-capacity{

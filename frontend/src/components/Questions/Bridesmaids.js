@@ -79,9 +79,15 @@ const handlePlusOneLastNameChange = (value, id) => {
 };
 
 const isAlsoInWeddingParty = (value, id) => {
-  const updatedBridesmaidsData = bridesmaidsData.map(row =>
-    row.id === id ? { ...row, selectedRole: value } : row
-  );
+  const updatedBridesmaidsData = bridesmaidsData.map(row => {
+    if (row.id === id) {
+     
+      const updatedRole = row.selectedRole === value ? null : value;
+      return { ...row, selectedRole: updatedRole };
+    } else {
+      return row;
+    }
+  });
   setBridesmaidsData(updatedBridesmaidsData);
   handleAnswer(id, { selectedRole: value });
 };
@@ -97,7 +103,7 @@ const handlePlusOneValueChange = (value, id) => {
 
   const addRowBridesmaids = () => {
     const newRow = {
-      id: bridesmaidsData.length + 1, // Generate a unique ID for the new row
+      id: bridesmaidsData.length + 1,
       firstName: '',
       lastName: '',
       selectedCategory: '',

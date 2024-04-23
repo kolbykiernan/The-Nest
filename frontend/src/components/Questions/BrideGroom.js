@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React from 'react';
 import Form from 'react-bootstrap/Form';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-export default function BrideGroom({ brideFirstName, setBrideFirstName, brideLastName, setBrideLastName, brideSelection, setBrideSelection, groomFirstName, setGroomFirstName, groomLastName, setGroomLastName, groomSelection, setGroomSelection }) {
+export default function BrideGroom({ weddingDataErrorMessage, brideFirstName, setBrideFirstName, brideLastName, setBrideLastName, brideSelection, setBrideSelection, groomFirstName, setGroomFirstName, groomLastName, setGroomLastName, groomSelection, setGroomSelection }) {
 
       
        
@@ -34,7 +33,19 @@ export default function BrideGroom({ brideFirstName, setBrideFirstName, brideLas
 
      
     return (
+      <div className='bride-groom-container'>
+        <div className='bride-groom-error'>
+          {weddingDataErrorMessage !== null
+            ? (
+                <div className="alert alert-danger" role="alert">
+                    {weddingDataErrorMessage}
+                </div>
+            )
+            : null
+          }
+        </div>
         <div className='bride-groom-form'>
+          <div className='bride-groom-inputs'>
             <div className='bride-groom-spacing'>
                 <Form.Control
                     size="lg"
@@ -90,5 +101,7 @@ export default function BrideGroom({ brideFirstName, setBrideFirstName, brideLas
                 </Dropdown>
             </div>
         </div>
-    );
+      </div>
+    </div>
+  );  
 }

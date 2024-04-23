@@ -1,19 +1,20 @@
-import React, { useState, useEffect} from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'; // Import Link component
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
-import HomePage from './HomePage'; 
+import HomePage from '../default-views/HomePage';
 import Questionnaire from './Questionnaire';
 import Guestlist from './Guestlist';
 import Seatingchart from './seatingchart';
 import FAQ from '../default-views/faq';
+import AboutUs from '../default-views/about_us';
 import axios from 'axios';
 import SignUpForm from '../users/SignUpForm';
 import LoginForm from '../users/LoginForm';
+import CurrentUserProvider from '../contexts/CurrentUser';
 
-function App() {
+const App = () => {
   
   const [categories, setCategories] = useState([]);
-
 
   const fetchCategories = async () => {
     try {
@@ -27,8 +28,6 @@ function App() {
   useEffect(() => {
     fetchCategories();
   }, []);
-
-
 
   const [bridesmaidsData, setBridesmaidsData] = useState(() => {
     const storedData = localStorage.getItem('bridesmaidsData');
@@ -77,45 +76,48 @@ function App() {
       plusOneFirstName: '',
       plusOneLastName: '',
       plusOneValue: 1,
-    }))
-});
+    }));
+  });
 
   return (
-    <Router>
-          <div>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/sign-up" element={<SignUpForm />}/>
-          <Route path="/login" element={<LoginForm />}/>
-          <Route 
-            path="/questionnaire" 
-            element={<Questionnaire 
-                      categories={categories} 
-                      fetchCategories={fetchCategories} 
-                      bridesmaidsData={bridesmaidsData}
-                      setBridesmaidsData={setBridesmaidsData}
-                      groomsmenData={groomsmenData}
-                      setGroomsmenData={setGroomsmenData}
-                      everybodyElseData={everybodyElseData}
-                      setEverybodyElseData={setEverybodyElseData}
+    <BrowserRouter>
+      <CurrentUserProvider>
+        <div>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/sign-up" element={<SignUpForm />} />
+            <Route path="/login" element={<LoginForm />} />
+            <Route 
+              path="/questionnaire" 
+              element={<Questionnaire 
+                        categories={categories} 
+                        fetchCategories={fetchCategories} 
+                        bridesmaidsData={bridesmaidsData}
+                        setBridesmaidsData={setBridesmaidsData}
+                        groomsmenData={groomsmenData}
+                        setGroomsmenData={setGroomsmenData}
+                        everybodyElseData={everybodyElseData}
+                        setEverybodyElseData={setEverybodyElseData}
+                        />} />
+            <Route 
+              path="/guestlist" 
+              element={<Guestlist 
+                        categories={categories}
+                        bridesmaidsData={bridesmaidsData}
+                        setBridesmaidsData={setBridesmaidsData}
+                        groomsmenData={groomsmenData}
+                        setGroomsmenData={setGroomsmenData}
+                        everybodyElseData={everybodyElseData}
+                        setEverybodyElseData={setEverybodyElseData} 
                       />} />
-          <Route 
-            path="/guestlist" 
-            element={<Guestlist 
-                      categories={categories}
-                      bridesmaidsData={bridesmaidsData}
-                      setBridesmaidsData={setBridesmaidsData}
-                      groomsmenData={groomsmenData}
-                      setGroomsmenData={setGroomsmenData}
-                      everybodyElseData={everybodyElseData}
-                      setEverybodyElseData={setEverybodyElseData} 
-                    />} />
-          <Route path="/seatingchart" element={<Seatingchart />} />
-          <Route path="/FAQ" element={<FAQ/>} />
-          <Route path="*" element={<Navigate to="/" />} /> 
-        </Routes>
+            <Route path="/seatingchart" element={<Seatingchart />} />
+            <Route path="/FAQ" element={<FAQ/>} />
+            <Route path="/about-us" element={<AboutUs/>} />
+            <Route path="*" element={<Navigate to="/" />} /> 
+          </Routes>
         </div>
-    </Router>
+      </CurrentUserProvider>
+    </BrowserRouter>
   );
 }
 

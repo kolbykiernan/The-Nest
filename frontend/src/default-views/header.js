@@ -1,3 +1,5 @@
+import { useContext } from 'react'
+import { CurrentUser } from '../contexts/CurrentUser'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -5,6 +7,9 @@ import '../styles/Header.css'
 const React = require('react')
 
 function Header() {
+
+    const { currentUser } = useContext(CurrentUser)
+
     return (
         <div className='header'>
             <Navbar className='navbar' style={{ backgroundColor: 'var(--primary-color)' }}>
@@ -13,7 +18,13 @@ function Header() {
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                         <Navbar.Text>
-                            Signed in as: <a href="#login">Mark Otto</a>
+                        {currentUser ? (
+                        <Navbar.Text>
+                            Logged in as {currentUser.firstName} {currentUser.lastName}
+                        </Navbar.Text>
+                    ) : (
+                        <Navbar.Text>Not logged in</Navbar.Text>
+                    )}
                         </Navbar.Text>
                     </Navbar.Collapse>
                 </Container>

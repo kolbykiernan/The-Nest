@@ -11,7 +11,7 @@ import Button from 'react-bootstrap/Button';
 import '../styles/questionnaire.css';
 
 
-const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesmaidsData, groomsmenData, setGroomsmenData, everybodyElseData, setEverybodyElseData}) => {
+const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBridesmaidsData, groomsmenData, setGroomsmenData, everybodyElseData, setEverybodyElseData}) => {
 
 
   const [currentPage, setCurrentPage] = useState(() => {
@@ -25,7 +25,6 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
 
     const [answers, setAnswers] = useState({});
     const [submitted, setSubmitted] = useState(false);
-    // const [existingData, setExistingData] = useState(null);
     const [questions, setQuestions] = useState([
       { id: 1, text: "Let's start with the lovebirds!", type: "brideGroom"},
       { id: 2, text: "Next we're going to categorize how you know your guests!", type: "categoryForm"},
@@ -39,7 +38,7 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
       setCurrentPage(nextIndex);
       if (nextIndex === 0) {
         try {
-          const response = await axios.get('http://localhost:3000/api/weddingdata'); // Replace with your actual endpoint
+          const response = await axios.get('http://localhost:3000/api/weddingdata');
           
           const data = response.data;
           return {
@@ -57,15 +56,29 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
       }
     };
   
-    const handleNext = async () => {
-      const nextIndex = currentPage + 1;
-      setCurrentPage(nextIndex);
-  
-      if (currentPage === 0 && !submitted) {
-        submitWeddingData();
-        setSubmitted(true)
-      }  
-    };
+
+  const [weddingDataErrorMessage, setWeddingDataErrorMessage] = useState(null)
+
+  const handleNext = async () => {
+    const nextIndex = currentPage + 1;
+
+    if (currentPage === 0 && !submitted) {
+      if (
+        brideFirstName.trim() === '' ||
+        brideLastName.trim() === '' ||
+        groomFirstName.trim() === '' ||
+        groomLastName.trim() === ''
+      ) {
+        setWeddingDataErrorMessage('Please fill out all fields');
+        return; 
+      } else {
+      submitWeddingData();
+      setSubmitted(true);
+      setWeddingDataErrorMessage(null);
+    }
+  };
+  setCurrentPage(nextIndex);
+}
   
       const handleAnswer = (questionId, answer) => {
         setAnswers(prevAnswers => ({
@@ -85,13 +98,12 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
       localStorage.setItem(key, JSON.stringify(data));
     };
     
-    // Function to retrieve wedding data from localStorage
+
     const getFromLocalStorage = (key) => {
       const data = localStorage.getItem(key);
       return data ? JSON.parse(data) : null;
     };
-    
-    // Initialize wedding data from localStorage on component mount
+
     useEffect(() => {
       const savedWeddingData = getFromLocalStorage('weddingData');
       if (savedWeddingData) {
@@ -107,7 +119,7 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
     
     const submitWeddingData = async () => {
       try {
-        // Update the answers before submitting the form data
+
         handleAnswer('brideFirstName', brideFirstName);
         handleAnswer('brideLastName', brideLastName);
         handleAnswer('brideSelection', brideSelection);
@@ -136,20 +148,20 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
     
 
     useEffect(() => {
-      // Fetch bride's first name
+
       const fetchBrideData = async () => {
         try {
-          const response = await axios.get('http://localhost:3000/api/weddingdata'); // Replace with your actual endpoint
+          const response = await axios.get('http://localhost:3000/api/weddingdata');
           return response.data.brideFirstName;
         } catch (error) {
           console.error('Error fetching bride first name:', error);
         }
       };
     
-      // Fetch groom's first name
+
       const fetchGroomData = async () => {
         try {
-          const response = await axios.get('http://localhost:3000/api/weddingdata'); // Replace with your actual endpoint
+          const response = await axios.get('http://localhost:3000/api/weddingdata');
           return response.data.groomFirstName;
         } catch (error) {
           console.error('Error fetching groom first name:', error);
@@ -161,7 +173,7 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
     }, []);
     
     useEffect(() => {
-      // Update the text of question #3 to include brideFirstName
+
       setQuestions(prevQuestions => {
         const updatedQuestions = [...prevQuestions];
         const bridesmaidsQuestion = updatedQuestions.find(q => q.id === 3);
@@ -173,7 +185,7 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
     }, [brideFirstName]);
     
     useEffect(() => {
-      // Update the text of question #4 to include groomFirstName
+
       setQuestions(prevQuestions => {
         const updatedQuestions = [...prevQuestions];
         const groomsmenQuestion = updatedQuestions.find(q => q.id === 4);
@@ -186,7 +198,7 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
 
   
       useEffect(() => {
-        // Update the answers whenever inputs change
+
         handleAnswer('brideFirstName', brideFirstName);
         handleAnswer('brideLastName', brideLastName);
         handleAnswer('brideSelection', brideSelection);
@@ -207,10 +219,10 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
     const submitBridesmaidsData = async (bridesmaidsData) => {
       try {
     const requests = bridesmaidsData.map(async (row) => {
-      // Check if firstName is empty
+
       if (!row.firstName.trim()) {
         console.log('Skipping row', row.id, 'because firstName is empty');
-        return null; // Skip this row if firstName is empty
+        return null; 
       }
 
       const formData = {
@@ -240,10 +252,10 @@ const Questionnaire = ({categories, fetchCategories, bridesmaidsData, setBridesm
 const submitGroomsmenData = async (groomsmenData) => {
   try {
     const requests = groomsmenData.map(async (row) => {
-      // Check if firstName is empty
+
       if (!row.firstName.trim()) {
         console.log('Skipping row', row.id, 'because firstName is empty');
-        return null; // Skip this row if firstName is empty
+        return null; 
       }
 
       const formData = {
@@ -273,10 +285,10 @@ const submitGroomsmenData = async (groomsmenData) => {
 const submitEverybodyElseData = async (everybodyElseData) => {
   try {
     const requests = everybodyElseData.map(async (row) => {
-      // Check if firstName is empty
+
       if (!row.firstName.trim()) {
         console.log('Skipping row', row.id, 'because firstName is empty');
-        return null; // Skip this row if firstName is empty
+        return null; 
       }
 
       const formData = {
@@ -304,27 +316,39 @@ const submitEverybodyElseData = async (everybodyElseData) => {
   }
 };
 
-    
+    const [submitAllData, setSubmitAllData] = useState(false);
     const redirectToGuestList = () => {
       window.location.href = '/guestlist';
     };
     
     const handleSubmitAllData = async () => {
       try {
-          if (!submitted) {
-              await submitBridesmaidsData(bridesmaidsData);
-              await submitGroomsmenData(groomsmenData);
-              await submitEverybodyElseData(everybodyElseData);
-              
-              setSubmitted(true);
-              redirectToGuestList();
-          } else {
-              console.log('Data already submitted. Cannot submit again.');
+        if (!submitAllData) {
+          const submitFunctions = [];
+    
+          if (bridesmaidsData.some(row => row.firstName.trim())) {
+            submitFunctions.push(() => submitBridesmaidsData(bridesmaidsData));
           }
+    
+          if (groomsmenData.some(row => row.firstName.trim())) {
+            submitFunctions.push(() => submitGroomsmenData(groomsmenData));
+          }
+    
+          if (everybodyElseData.some(row => row.firstName.trim())) {
+            submitFunctions.push(() => submitEverybodyElseData(everybodyElseData));
+          }
+    
+          await Promise.all(submitFunctions.map(submitFunction => submitFunction()));
+    
+          setSubmitAllData(true);
+          redirectToGuestList();
+        } else {
+          console.log('Data already submitted. Cannot submit again.');
+        }
       } catch (error) {
-          console.error('Error submitting all data:', error);
+        console.error('Error submitting all data:', error);
       }
-  };
+    };
      
     
 
@@ -361,6 +385,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               setGroomLastName={setGroomLastName}
               groomSelection={groomSelection}
               setGroomSelection={setGroomSelection}
+              weddingDataErrorMessage={weddingDataErrorMessage}
               required
             />
           </div>
@@ -431,7 +456,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               className='question-label-instructions' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
             >
-            For this section, let's focus solely on the wedding party and their plus-ones. If you wish to add other guests, such as children, we'll address them later. If you want to grant a plus-one to someone but don't know who it will be, simply leave the name fields blank while still filling out the rest."            
+            For this section, let's focus solely on the wedding party and their plus-ones. If you wish to add other guests, such as children, we'll address them later. If you want to grant a plus-one to someone but don't know who it will be, simply leave the name fields blank while still filling out the rest.            
           </label>
             <Groomsmen 
               categories={categories} 
@@ -460,7 +485,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               className='question-label-instructions' 
               style={{ backgroundColor: 'var(--secondary-color)'}}
             >
-                Now let's get starte adding some more important guest! A best practice could be to go down your 'Category List' and add all of the guests that you would categorize under each list. Then, start with the next category. If your guests have young children or you forget a few, we can add them in the next section.
+                Now let's get start adding the rest of your guests! A best practice could be to go down your 'Category List' and add all of the guests that you would categorize under each list. Then, start with the next category. If your guests have young children or you forget a few, you can put them in their own row or we can add them in the next section.
             </label>
             <EverybodyElse
               categories={categories} 

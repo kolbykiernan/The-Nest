@@ -20,18 +20,21 @@ export default function Guestlist({ categories }) {
   const [initialDataFetched, setInitialDataFetched] = useState(false);
   const [venueCapacity, setVenueCapacity] = useState('');
   const [desiredAttendance, setDesiredAttendance] = useState('');
-  const [inviteCount, setInviteCount] = useState('');
   const [costPerPerson, setCostPerPerson] = useState('');
   const [markedList, setMarkedList] = useState(null);
   
   
   const renderCategories = () => {
     if (!categories || categories.length === 0) {
-      return <div>Please fill out and submit the Questionnaire first.</div>;
-    }
+      return (
+        <div className="alert alert-danger" role="alert" id="guestlist-categories-error" >
+          Please return to the Questionnaire and create categories to fully optimize creating your guestlist.
+        </div>
+      );
+    } else {
     
     return (
-      <>
+      <Nav >
         <Nav.Item>
           <Nav.Link onClick={() => setSelectedCategory('Total')} className={selectedCategory === 'Total' ? 'active' : ''}>Total</Nav.Link>
         </Nav.Item>
@@ -40,44 +43,57 @@ export default function Guestlist({ categories }) {
           <Nav.Link onClick={() => setSelectedCategory(category.name)} className={selectedCategory === category.name ? 'active' : ''}>{category.name}</Nav.Link>
         </Nav.Item>
          ))}
-      </>
+      </Nav>
     );
   };
+}
   
   
   
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const storedData = localStorage.getItem('editableData');
-        if (storedData) {
-          setGuestlistData(JSON.parse(storedData));
-        } else {
-          const bridesmaidsResponse = await axios.get('http://localhost:3000/api/bridesmaids');
-          const groomsmenResponse = await axios.get('http://localhost:3000/api/groomsmen');
-          const everybodyElseResponse = await axios.get('http://localhost:3000/api/everybodyelse');
-    
-          const combinedData = [
-            ...bridesmaidsResponse.data,
-            ...groomsmenResponse.data,
-            ...everybodyElseResponse.data
-          ];
-    
-          localStorage.setItem('editableData', JSON.stringify(combinedData));
-          setGuestlistData(combinedData);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
-        setInitialDataFetched(true);
-        setLoading(false);
-      }
-    };
-  
-    if (!initialDataFetched) {
-      fetchData();
+useEffect(() => {
+  const fetchDataFromServer = async () => {
+    try {
+      const bridesmaidsResponse = await axios.get('http://localhost:3000/api/bridesmaids');
+      const groomsmenResponse = await axios.get('http://localhost:3000/api/groomsmen');
+      const everybodyElseResponse = await axios.get('http://localhost:3000/api/everybodyelse');
+
+      const combinedData = [
+        ...bridesmaidsResponse.data,
+        ...groomsmenResponse.data,
+        ...everybodyElseResponse.data
+      ];
+
+      setGuestlistData(combinedData);
+      localStorage.setItem('editableData', JSON.stringify(combinedData));
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    } finally {
+      setInitialDataFetched(true);
+      setLoading(false);
     }
-  }, [initialDataFetched]);
+  };
+
+  const fetchDataFromLocalStorage = () => {
+    const storedData = localStorage.getItem('editableData');
+    if (storedData) {
+      setGuestlistData(JSON.parse(storedData));
+    }
+    setInitialDataFetched(true);
+    setLoading(false);
+  };
+
+  if (!initialDataFetched) {
+    // Check if data is available in localStorage, if not, fetch from the server
+    if (!localStorage.getItem('editableData')) {
+      fetchDataFromServer();
+    } else {
+      fetchDataFromLocalStorage();
+    }
+  }
+}, [initialDataFetched]);
+
+
+
   
   const handleEditField = (index, field, value) => {
     if (!guestlistData) return;
@@ -157,7 +173,7 @@ const handleAddRow = (index) => {
     ...guestlistData.slice(index + 1)
   ];
   setGuestlistData(updatedData);
-  setRowIndexOffset(rowIndexOffset); // Increment row index offset
+  setRowIndexOffset(rowIndexOffset); 
 };
 
 
@@ -165,7 +181,7 @@ const handleAddRow = (index) => {
 const handleDeleteRow = (index, dynamicallyAdded) => {
   if (dynamicallyAdded) {
     const updatedData = [...guestlistData];
-    updatedData.splice(index, 1); // Remove the row at the given index
+    updatedData.splice(index, 1); 
     setGuestlistData(updatedData);
 
     localStorage.setItem('editableData', JSON.stringify(updatedData));
@@ -196,15 +212,13 @@ const renderRowsForCategory = () => {
   const rows = [];
 
   const dataToUse = markedList ? markedList : guestlistData;
-  console.log("Rendering data:", dataToUse);
 
   if (dataToUse) {
     dataToUse.forEach((item, index) => {
       if (selectedCategory === 'Total' || item.selectedCategory === selectedCategory) {
-        console.log('Background class:', item.backgroundClass);
 
         rows.push(renderRowItem(item, index, currentRowIndex));
-        currentRowIndex += getRowCount(item); // Increment currentRowIndex by the number of rows rendered for the current item
+        currentRowIndex += getRowCount(item); 
       }
     });
   }
@@ -223,7 +237,7 @@ const renderRowItem = (item, index, currentRowIndex) => {
           <td>{renderEditableField(item.brideGroomOrMutual, index, 'brideGroomOrMutual', item)}</td>
           <td>{renderEditableField(item.selectedCategory, index, 'selectedCategory', item)}</td>
           <td>{renderEditableField(item.guestValue , index, 'guestValue', item)}</td>
-          <td>
+          <td className="button-container">
               <Button className='add-subtract-row-buttons' onClick={() => handleAddRow(index)}>+</Button>
               {item.dynamicallyAdded && (
               <Button className='add-subtract-row-buttons' onClick={() => handleDeleteRow(index, true)}>-</Button>
@@ -245,7 +259,7 @@ const renderRowItem = (item, index, currentRowIndex) => {
             <td>{renderEditableField(item.brideGroomOrMutual || 'Wedding Party +1', index, 'brideGroomOrMutual')}</td>
             <td>{renderEditableField(item.selectedCategory, index, 'selectedCategory')}</td>
             <td>{renderEditableField(item.plusOneValue, index, 'plusOneValue')}</td> 
-            <td>
+            <td className="button-container">
               <Button className='add-subtract-row-buttons' onClick={() => handleAddRow(index)}>+</Button>
               {item.dynamicallyAdded && (
               <Button className='add-subtract-row-buttons' onClick={() => handleDeleteRow(index, true)}>-</Button>
@@ -268,12 +282,43 @@ const renderRowItem = (item, index, currentRowIndex) => {
     return rowCount;
   };
 
-const [submittedOnce, setSubmittedOnce] = useState(false);
 const [analysisMessage, setAnalysisMessage] = useState('');
+const [submittedOnce, setSubmittedOnce] = useState(false);
+
+useEffect(() => {
+  const storedSubmittedOnce = localStorage.getItem('submittedOnce');
+  if (storedSubmittedOnce) {
+    setSubmittedOnce(JSON.parse(storedSubmittedOnce));
+  } else {
+    // If submittedOnce is not in local storage, initialize it to false
+    localStorage.setItem('submittedOnce', JSON.stringify(false));
+  }
+}, []);
+
+const [emptyRankingErrorMessage, setEmptyRankingErrorMessage] = useState(null)
+const [emptyAttendanceErrorMessage, setEmptyAttendanceErrorMessage] = useState(null);
+const [venueCapacityMessage, setVenueCapacityMessage] = useState(null)
+
 
 const runSortedList = async () => {
   try {
     const desiredAttendanceCount = parseInt(desiredAttendance);
+
+    if (!desiredAttendance || isNaN(desiredAttendanceCount)) {
+      setEmptyAttendanceErrorMessage("Please enter the desired attendance count before running the list!");
+      return;
+    } else {
+      setEmptyAttendanceErrorMessage(null);
+    }
+
+    const hasEmptyValues = guestlistData.some(item => item.guestValue === "");
+
+    if (hasEmptyValues) {
+      setEmptyRankingErrorMessage("It looks like there are some guests who don't have a 'Ranking'. Please make sure this is filled out before running the list!");
+      return; 
+    } else {
+      setEmptyRankingErrorMessage(null); 
+    }
 
     const newData = [];
     
@@ -312,30 +357,42 @@ const runSortedList = async () => {
 
     setGuestlistData(newData);
 
-    const response = !submittedOnce
-      ? await axios.post('http://localhost:3000/api/guestlist', newData)
-      : await axios.put('http://localhost:3000/api/guestlist', guestlistData);
+    if (!submittedOnce) {
+      // If not submitted once, send a POST request
+      const response = await axios.post('http://localhost:3000/api/guestlist', newData);
+      console.log('Guestlist data submitted:', response.data);
+      
+      // Set submittedOnce to true and store it in local storage
+      setSubmittedOnce(true);
+      localStorage.setItem('submittedOnce', JSON.stringify(true));
+    } else {
+      // If already submitted once, send a PUT request
+      const response = await axios.put('http://localhost:3000/api/guestlist', guestlistData);
+      console.log('Guestlist data updated:', response.data);
+    }
 
-    console.log(submittedOnce ? 'Guestlist data updated:' : 'Guestlist data submitted:', response.data);
-
-    setSubmittedOnce(true);
     const sortedResponse = await axios.get('http://localhost:3000/api/guestlist?sortBy=guestValue&order=desc');
     const sortedGuestlist = sortedResponse.data;
-
-    // Calculate backgroundClass based on the updated guestlistData
+    
+    
     const updatedGuestlistData = sortedGuestlist.map((guest, index) => {
       const adjustedIndex = index + 1;
       const backgroundClass = adjustedIndex <= desiredAttendanceCount ? 'able-to-attend' : 'unable-to-attend';
       return { ...guest, backgroundClass };
     });
 
-    // Update the guestlist data state with backgroundClass
     setGuestlistData(updatedGuestlistData);
-
-    // Set analysis message based on the desired attendance count
+    localStorage.setItem('guestlistData', JSON.stringify(updatedGuestlistData));
+    
+    if (venueCapacity > desiredAttendanceCount && venueCapacity > sortedGuestlist.length) {
+      setVenueCapacityMessage("However, your venue is able to accommodate all the guests in your current guest list in case you're willing to adjust your desired attendance.");
+    } else {
+      setVenueCapacityMessage(null);
+    }
+    
     const analysisMessage = desiredAttendanceCount >= sortedGuestlist.length ?
-      "Based on the number of guests you'd like to attend, you can invite everybody on your list!" :
-      `Based on the number of guests you'd like to attend, ${sortedGuestlist.length - desiredAttendanceCount} guests will not be able to come. You can continue to make adjustments to help manage your guestlist!`;
+      `Based on the number of guests you'd like to attend, you can invite everybody on your list. ${venueCapacityMessage ? venueCapacityMessage : ''}. You can continue to make adjustments to help manage your guestlist! ` :
+      `Based on the number of guests you'd like to attend, ${sortedGuestlist.length - desiredAttendanceCount} guests will not be able to come. ${venueCapacityMessage ? venueCapacityMessage : ''} You can continue to make adjustments to help manage your guestlist! `;
 
     setAnalysisMessage(analysisMessage);
   } catch (error) {
@@ -343,7 +400,12 @@ const runSortedList = async () => {
   }
 };
 
-
+useEffect(() => {
+  const storedGuestlistData = localStorage.getItem('guestlistData');
+  if (storedGuestlistData) {
+    setGuestlistData(JSON.parse(storedGuestlistData));
+  }
+}, []);
 
 const handleInputChange = (event, setter, key) => {
   const { value } = event.target;
@@ -357,9 +419,6 @@ useEffect(() => {
 
     const storedDesiredAttendance = localStorage.getItem('desiredAttendance');
     if (storedDesiredAttendance) setDesiredAttendance(storedDesiredAttendance);
-
-    const storedInviteCount = localStorage.getItem('inviteCount');
-    if (storedInviteCount) setInviteCount(storedInviteCount);
 
     const storedCostPerPerson = localStorage.getItem('costPerPerson');
     if (storedCostPerPerson) setCostPerPerson(storedCostPerPerson);
@@ -379,11 +438,11 @@ useEffect(() => {
             setDesiredAttendance={setDesiredAttendance}
             venueCapacity={venueCapacity}
             setVenueCapacity={setVenueCapacity}
-            inviteCount={inviteCount}
-            setInviteCount={setInviteCount}
             costPerPerson={costPerPerson}
             setCostPerPerson={setCostPerPerson}
             analysisMessage={analysisMessage} 
+            emptyRankingErrorMessage={emptyRankingErrorMessage}
+            emptyAttendanceErrorMessage={emptyAttendanceErrorMessage}
           />
         <div className="guestlist-table">
 
@@ -396,7 +455,7 @@ useEffect(() => {
 
                 <thead className='scrollable-table-headers'>
                   <tr className='scrollable-table-headers-columns'>
-                    <th>#</th>
+                    <th className='index-number'>#</th>
                     <th>First Name</th>
                     <th>Last Name</th>
                     <th>Bride / Groom / Mutual</th>
