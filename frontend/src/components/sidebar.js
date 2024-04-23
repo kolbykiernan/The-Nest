@@ -19,7 +19,7 @@ const Sidebar = ({ emptyAttendanceErrorMessage, emptyRankingErrorMessage, analys
         {isExpanded && (
         
             <div className='sidebar-header-font'>
-              <p>Fill out the questions and click 'Run List' to get a custom breakdown.</p>
+              <p>Click the hamburger icon to toggle back and forth with your guestlist. Fill out the questions and click 'Run List' to get a custom breakdown.</p>
             </div>
  
         )}

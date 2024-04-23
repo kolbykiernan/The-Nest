@@ -98,12 +98,10 @@ body{
     flex-direction: column;
     align-content: center;
     height:100%;
-    width:60%;
+    width:80%;
 }
 
 .bride-groom-error{
-    padding-left: 1em;
-    padding-right: 1em;
     width: 100%;
 }
 
@@ -118,7 +116,7 @@ body{
 .bride-groom-inputs{
     display: flex;
     flex-direction:row;
-    justify-content: center;
+    justify-content: space-between;
     width:100%;
 }
 
@@ -244,7 +242,8 @@ body{
     padding-right:1em;
     padding-left:1em;
     height: 57.5vh;
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
     position: relative;
 }
 
