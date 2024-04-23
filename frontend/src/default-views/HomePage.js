@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { CurrentUser } from '../contexts/CurrentUser';
 import '../styles/HomePage.css';
-import logo from '../images/Nest-Logo.png';
+import logo from '../images/The-Nest-Logo.png';
 
 const HomePage = () => {
   const { currentUser } = useContext(CurrentUser);
