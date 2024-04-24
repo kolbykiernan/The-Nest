@@ -20,7 +20,7 @@ export default function SignUpForm() {
 	async function handleSubmit(e) {
 		e.preventDefault()
 
-		await fetch(`http://localhost:3000/users/`, {
+		await fetch(`/users/`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import HamburgerMenu from '../images/Hamburger_icon.svg.png'
+import HamburgerMenu from '../images/Hamburger-icon.png'
 
 const Sidebar = ({ emptyAttendanceErrorMessage, emptyRankingErrorMessage, analysisMessage, desiredAttendance, venueCapacity, setVenueCapacity, handleInputChange, inviteCount, setInviteCount, setDesiredAttendance, costPerPerson, setCostPerPerson, runSortedList}) => {
   const [isExpanded, setIsExpanded] = useState(true); // state to track sidebar visibility

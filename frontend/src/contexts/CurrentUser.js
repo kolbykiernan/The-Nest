@@ -10,7 +10,7 @@ function CurrentUserProvider({ children }) {
             try {
                 const token = localStorage.getItem('token');
                 if (token) {
-                    const response = await fetch('http://localhost:3000/authentication/profile', {
+                    const response = await fetch('/authentication/profile', {
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('token')}`
                         }

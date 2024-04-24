@@ -15,7 +15,7 @@ const CategoryForm = ({categories, fetchCategories}) => {
   const handleFormSubmit = async () => {
 
     try {
-      await axios.post('http://localhost:3000/api/categories', { name: categoryName });
+      await axios.post('/api/categories', { name: categoryName });
       fetchCategories();
       setCategoryName('');
     } catch (error) {
