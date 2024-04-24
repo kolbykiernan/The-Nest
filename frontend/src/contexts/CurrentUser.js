@@ -10,25 +10,25 @@ function CurrentUserProvider({ children }) {
             try {
                 const token = localStorage.getItem('token');
                 if (token) {
-                    const response = await fetch('/api/authentication/profile', {
+                    const response = await fetch(`${process.env.REACT_APP_BACKEND}/api/authentication/profile`, {
                         headers: {
-                            'Authorization': `Bearer ${localStorage.getItem('token')}`
+                            'Authorization': `Bearer ${token}` 
                         }
                     });
-    
+
                     if (!response.ok) {
                         throw new Error('Failed to fetch user data');
                     }
-    
-                    const user = await response.json();
-                    setCurrentUser(user); 
+
+                    const user = await response.json(); // Parse JSON here
+                    setCurrentUser(user);
                     localStorage.setItem('currentUser', JSON.stringify(user));
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
         };
-    
+
         getLoggedInUser();
     }, []);
 
@@ -38,5 +38,7 @@ function CurrentUserProvider({ children }) {
         </CurrentUser.Provider>
     );
 }
+
+
 
 export default CurrentUserProvider;
