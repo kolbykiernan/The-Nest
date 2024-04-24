@@ -25,7 +25,7 @@ export default function LoginForm() {
       e.preventDefault();
    
         try{
-        const response = await fetch(`/api/authentication/`, {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND || ''}/api/authentication/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

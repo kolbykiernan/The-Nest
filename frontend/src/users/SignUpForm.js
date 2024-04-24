@@ -20,7 +20,7 @@ export default function SignUpForm() {
 	async function handleSubmit(e) {
 		e.preventDefault()
 
-		await fetch(`/api/users`, {
+		await fetch(`${process.env.REACT_APP_BACKEND || ''}/api/users`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
