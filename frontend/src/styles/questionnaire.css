@@ -42,6 +42,7 @@ body{
     align-items: center;
     width: 100%;
     height:100%;
+    overflow-y: auto;
 }
 
 .question-label{
@@ -98,7 +99,13 @@ body{
     flex-direction: column;
     align-content: center;
     height:100%;
-    width:80%;
+    width:90%;
+}
+
+@media (min-width: 768px) { /* Adjust the breakpoint as needed */
+    .bride-groom-container {
+        width: 60%; /* Width for "normal" view */
+    }
 }
 
 .bride-groom-error{
@@ -125,9 +132,10 @@ body{
     display: flex;
     flex-direction: column;
     padding: 1em;
-    width: 100%;
+    width: 95%;
     height:100%;
     justify-content: center;
+    padding: .5em;
 }
 
 .bride-groom-dropdown{
@@ -214,9 +222,14 @@ body{
 
 .category-dropdown{
    display: flex;
+   justify-content: center;
    border-color: lightgray;
-   width:3.5vh;
-   height: 5.6vh;
+   width:5.5vh;
+   height: 5.75vh;
+}
+
+.category-dropdown button{
+    border-color: lightgray;
 }
 
 .dropdown-menu.show.dropdown-menu-end{
@@ -238,23 +251,36 @@ body{
 }
 
 
+
+
 .wedding-party-form{
-    padding-right:1em;
-    padding-left:1em;
-    height: 57.5vh;
+    padding-right:.1em;
+    padding-left:.1em;
+    /* height: 57.5vh; */
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: auto;
     position: relative;
+    flex-wrap: nowrap;
+    width:100%;
 }
 
-.wedding-party-form tbody{
-    height:90%;
+.wedding-party-form table{
+    width: max-content;
+    min-width: 100%;
 }
+
+.row-fluid{
+    height:90%;
+    overflow-y: auto; 
+}
+
+
 
 
 .question-label-instructions{
     font-size: .5em;
     padding: 1em;
+    width: 100%;
 }
 
 .question-label-wedding-party{
@@ -271,6 +297,7 @@ body{
 .wedding-party-form td{
     padding-top:.5em;
     padding-bottom: .5em;
+    
 }
 
 .table-head {
@@ -290,9 +317,7 @@ td p {
     margin: 0em;
 }
 
-.wedding-party-columns{
-    white-space: nowrap;
-}
+
 
 .form-check{
     margin: 0em;
@@ -307,13 +332,7 @@ td p {
     border-color: black;
 }
 
-.row-fluid{
-    overflow: auto; 
-}
 
-.row-fluid th{
-    white-space: nowrap;
-}
 
 
 
@@ -346,8 +365,9 @@ td p {
 }
 
 .guestlist-navbar-tabs .nav-item{
-    padding-right: .3em;
-    padding-left: .3em;
+    padding-right: 1em;
+    padding-left: 1em;
+    padding-bottom:.25em;
     
 }
 
@@ -486,6 +506,9 @@ td p {
     color: #000 !important; 
 }
 
+
+
+
 .sidebar {
     border: 1px solid lightgray;    
     box-sizing: border-box;
@@ -562,6 +585,10 @@ td p {
     .sidebar.expanded  .sidebar-header {
         height: 15vh;
     }
+    
+    .sidebar.expanded  .sidebar-header p {
+        margin-bottom:0em;
+    }
 
     .sidebar.expanded .sidebar-header-font{
         font-size: calc(1.5vw + 1.15vh); 
@@ -585,15 +612,44 @@ td p {
         height: 12.5vh;
     }
 
-    .sidebar.collapsed {
-        width: 8.5%;
+    /* .sidebar.collapsed {
+        width: 12.5%;
     }
 
     .sidebar.collapsed + .guestlist-table {
-        width: 91.5%;
+        width: 87.5%;
+    } */
+}
+
+@media (max-width: 480px) {
+    .sidebar.collapsed {
+        width: 12.5%;
+    }
+
+    .sidebar.collapsed + .guestlist-table {
+        width: 87.5%;
     }
 }
 
+@media (min-width: 481px) and (max-width: 768px) {
+    .sidebar.collapsed {
+        width: 10%;
+    }
+
+    .sidebar.collapsed + .guestlist-table {
+        width: 90%;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 881px) {
+    .sidebar.collapsed {
+        width: 7.5%;
+    }
+
+    .sidebar.collapsed + .guestlist-table {
+        width: 92.5%;
+    }
+}
 
 .toggle{
     display:flex;
