@@ -4,11 +4,12 @@ import WeddingData from '../models/WeddingData.js';
 import Bridesmaids from '../models/bridesMaids.js';
 import Groomsmen from '../models/groomsMen.js';
 import EverybodyElse from '../models/EverybodyElse.js';
+import User from '../models/user.js';
 import Guestlist from '../models/Guestlist.js'
 
-const apiRouter = express.Router();
+const router = express.Router();
 
-apiRouter.post('/weddingdata', async (req, res) => {
+router.post('/weddingdata', async (req, res) => {
 try {
 const { id, brideFirstName, brideLastName, brideSelection, groomFirstName, groomLastName, groomSelection } = req.body;
 
@@ -22,7 +23,7 @@ res.status(500).json({ error: 'Internal server error' });
 });
 
 
-apiRouter.get('/weddingdata', async (req, res) => {
+router.get('/weddingdata', async (req, res) => {
 try {
 const weddingData = await WeddingData.findAll();
 
@@ -34,7 +35,7 @@ res.status(500).json({ error: 'Internal server error' });
 });
 
 
-apiRouter.post('/categories', async (req, res) => {
+router.post('/categories', async (req, res) => {
 
 console.log(req.body);
 const { name } = req.body;
@@ -48,7 +49,7 @@ try {
 });
 
 
-apiRouter.get('/categories', async (req, res) => {
+router.get('/categories', async (req, res) => {
 try {
 const categories = await Category.findAll();
 res.json(categories);
@@ -69,7 +70,7 @@ const sortByField = (array, field, order = 'asc') => {
 
 
 
-apiRouter.get('/bridesmaids', async (req, res) => {
+router.get('/bridesmaids', async (req, res) => {
 try {
   const bridesmaids = await Bridesmaids.findAll();
   const sortedBridesmaids = sortByField(bridesmaids, 'id');
@@ -80,7 +81,7 @@ try {
 }
 });
 
-apiRouter.post('/bridesmaids', async (req, res) => {
+router.post('/bridesmaids', async (req, res) => {
 const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 try {
     await Bridesmaids.create({
@@ -105,7 +106,7 @@ try {
 }
 });
 
-apiRouter.put('/bridesmaids/:id', async (req, res) => {
+router.put('/bridesmaids/:id', async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 
@@ -141,7 +142,7 @@ apiRouter.put('/bridesmaids/:id', async (req, res) => {
 });
 
 
-apiRouter.get('/groomsmen', async (req, res) => {
+router.get('/groomsmen', async (req, res) => {
 try {
     const groomsmen = await Groomsmen.findAll();
     const sortedGroomsmen = sortByField(groomsmen, 'id');
@@ -153,7 +154,7 @@ try {
 });
 
 
-apiRouter.post('/groomsmen', async (req, res) => {
+router.post('/groomsmen', async (req, res) => {
 const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 try {
     await Groomsmen.create({
@@ -178,7 +179,7 @@ try {
 }
 });
 
-apiRouter.put('/groomsmen/:id', async (req, res) => {
+router.put('/groomsmen/:id', async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 
@@ -216,7 +217,7 @@ apiRouter.put('/groomsmen/:id', async (req, res) => {
 });
 
 
-apiRouter.get('/everybodyelse', async (req, res) => {
+router.get('/everybodyelse', async (req, res) => {
   
   try {
 
@@ -229,7 +230,7 @@ apiRouter.get('/everybodyelse', async (req, res) => {
   }
 });
 
-apiRouter.post('/everybodyelse', async (req, res) => {
+router.post('/everybodyelse', async (req, res) => {
   const { firstName, lastName, selectedCategory, brideGroomOrMutual, guestValue, plusOneSelected, plusOneFirstName, plusOneLastName, plusOneValue} = req.body;
   try {
       await EverybodyElse.create({
@@ -255,7 +256,7 @@ apiRouter.post('/everybodyelse', async (req, res) => {
 });
 
 
-apiRouter.put('/everybodyelse/:id', async (req, res) => {
+router.put('/everybodyelse/:id', async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, selectedCategory, brideGroomOrMutual, guestValue, plusOneSelected, plusOneFirstName, plusOneLastName, plusOneValue } = req.body;
   
@@ -294,7 +295,7 @@ apiRouter.put('/everybodyelse/:id', async (req, res) => {
 });
 
 
-apiRouter.get('/guestlist', async (req, res) => {
+router.get('/guestlist', async (req, res) => {
   try {
     // Fetch all guestlist entries from the Guestlist table
     const guestlistEntries = await Guestlist.findAll();
@@ -306,7 +307,7 @@ apiRouter.get('/guestlist', async (req, res) => {
   }
 });
 
-apiRouter.post('/guestlist', async (req, res) => {
+router.post('/guestlist', async (req, res) => {
   try {
     const guestlistData = req.body.map((item, index) => ({ ...item, order: index }));
 
@@ -366,7 +367,7 @@ apiRouter.post('/guestlist', async (req, res) => {
   }
 });
 
-apiRouter.put('/guestlist', async (req, res) => {
+router.put('/guestlist', async (req, res) => {
   try {
     const guestlistData = req.body.map((item, index) => ({ ...item, order: index }));
 
@@ -413,5 +414,59 @@ apiRouter.put('/guestlist', async (req, res) => {
 
 
 
+router.post('/users', async (req, res) => {
+  let { password, ...rest } = req.body;
+  const user = await User.create({
+      ...rest,
+      passwordDigest: await bcrypt.hash(password, 10)
+  })
+  res.json(user)
+})
 
-export default apiRouter;
+
+router.get('/users', async (req, res) => {
+  const users = await User.findAll()
+  res.json(users)
+})
+
+
+router.post('/authentication/', async (req, res) => {
+    
+  let user = await User.findOne({
+      where: { email: req.body.email }
+  })
+
+  if (!user || !await bcrypt.compare(req.body.password, user.passwordDigest)) {
+      res.status(404).json({ 
+          message: `Could not find a user with the provided username and password` 
+      })
+  } else {   
+      const token = jwt.sign( { id: user.userId }, process.env.JWT_SECRET)
+      res.json({ user: user, token: token });
+  }
+})
+
+router.get('/authentication/profile', async (req, res) => {
+  try {
+
+      const [authenticationMethod, token] = req.headers.authorization.split(' ')
+
+      if (authenticationMethod == 'Bearer') {
+          const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+
+          const { id } = decodedToken;
+
+          let user = await User.findOne({
+              where: {
+                  userId: id
+              }
+          })
+          res.json(user)
+      }
+  } catch (error) {
+      console.error("An error occurred:", error);
+      res.status(500).json({ message: "An error occurred" });
+  }
+});
+
+export default router;

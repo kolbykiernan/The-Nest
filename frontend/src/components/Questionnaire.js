@@ -38,7 +38,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
       setCurrentPage(nextIndex);
       if (nextIndex === 0) {
         try {
-          const response = await axios.get('/weddingdata');
+          const response = await axios.get('http://localhost:3000/api/weddingdata');
           
           const data = response.data;
           return {
@@ -136,7 +136,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
           groomSelection: answers['groomSelection']
         };
     
-        const response = await axios.post('/weddingdata', formData);
+        const response = await axios.post('http://localhost:3000/api/weddingdata', formData);
         console.log('Form submitted successfully:', response.data);
         setSubmitted(true);
 
@@ -151,7 +151,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
 
       const fetchBrideData = async () => {
         try {
-          const response = await axios.get('/weddingdata');
+          const response = await axios.get('http://localhost:3000/api/weddingdata');
           return response.data.brideFirstName;
         } catch (error) {
           console.error('Error fetching bride first name:', error);
@@ -161,7 +161,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
 
       const fetchGroomData = async () => {
         try {
-          const response = await axios.get('/weddingdata');
+          const response = await axios.get('http://localhost:3000/api/weddingdata');
           return response.data.groomFirstName;
         } catch (error) {
           console.error('Error fetching groom first name:', error);
@@ -235,7 +235,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
         selectedRole: row.selectedRole,
         plusOneValue: row.plusOneValue
       };
-      return axios.post('/bridesmaids', formData);
+      return axios.post('http://localhost:3000/api/bridesmaids', formData);
     });
 
     const responses = await Promise.all(requests);
@@ -268,7 +268,7 @@ const submitGroomsmenData = async (groomsmenData) => {
         selectedRole: row.selectedRole,
         plusOneValue: row.plusOneValue
       };
-      return axios.post('/groomsmen', formData);
+      return axios.post('http://localhost:3000/api/groomsmen', formData);
     });
 
     const responses = await Promise.all(requests);
@@ -302,7 +302,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         plusOneLastName: row.plusOneLastName,
         plusOneValue: row.plusOneValue,
       };
-      return axios.post('/everybodyelse', formData);
+      return axios.post('http://localhost:3000/api/everybodyelse', formData);
     });
 
     const responses = await Promise.all(requests);

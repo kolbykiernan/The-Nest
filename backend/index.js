@@ -8,9 +8,9 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 dotenv.config();
 
-import apiRouter from './controllers/api.js';
-import usersRouter from './controllers/users.js';
-import authenticationRouter from './controllers/authentication.js';
+import router from './controllers/api.js';
+// import usersRouter from './controllers/users.js';
+// import authenticationRouter from './controllers/authentication.js';
 import defineCurrentUser from './middleware/defineCurrentUser.js'
 
 const app = express();
@@ -21,9 +21,9 @@ app.set('view engine', 'js');
 app.use(cors());
 app.use(express.json());
 app.use(defineCurrentUser)
-app.use('/api', apiRouter);
-app.use('/users', usersRouter);
-app.use('/authentication', authenticationRouter);
+app.use('/api', router);    
+// app.use('/users', usersRouter);
+// app.use('/authentication', authenticationRouter);
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Private-Network", "true");
     next();
