@@ -445,14 +445,10 @@ useEffect(() => {
             emptyAttendanceErrorMessage={emptyAttendanceErrorMessage}
           />
         <div className="guestlist-table">
-
-            
-              <Nav fill variant="underline" className='guestlist-navbar-tabs'>
-                {renderCategories()}
-              </Nav>
-           
+            <Nav fill variant="underline" className='guestlist-navbar-tabs' responsive="sm">
+              {renderCategories()}
+            </Nav>
               <table responsive="sm" className='guestlist-table-rows'>
-
                 <thead className='scrollable-table-headers'>
                   <tr className='scrollable-table-headers-columns'>
                     <th className='index-number'>#</th>

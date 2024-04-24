@@ -120,8 +120,7 @@ const handlePlusOneValueChange = (value, id) => {
 
   return (
     <div className='wedding-party-form'>
-      <div className="wedding-party-columns">
-        <Table responsive="sm">
+        <Table responsive="sm" >
           <thead className='table-head'>
             <tr>
               <th>#</th>
@@ -235,7 +234,6 @@ const handlePlusOneValueChange = (value, id) => {
         <div>
           <Button className='add-row-button' onClick={addRowBridesmaids}>Add Row</Button>
         </div>
-      </div>
     </div>
   );
 }
