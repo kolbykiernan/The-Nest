@@ -448,25 +448,33 @@ router.post('/authentication/', async (req, res) => {
 
 router.get('/authentication/profile', async (req, res) => {
   try {
+      const authHeader = req.headers.authorization;
 
-      const [authenticationMethod, token] = req.headers.authorization.split(' ')
-
-      if (authenticationMethod == 'Bearer') {
-          const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-
-          const { id } = decodedToken;
-
-          let user = await User.findOne({
-              where: {
-                  userId: id
-              }
-          })
-          res.json(user)
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+          return res.status(401).json({ message: 'Unauthorized: Missing or invalid Authorization header' });
       }
+
+      const token = authHeader.split(' ')[1];
+
+      const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+
+      const { id } = decodedToken;
+
+      let user = await User.findOne({
+          where: {
+              userId: id
+          }
+      })
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      res.json(user)
   } catch (error) {
       console.error("An error occurred:", error);
       res.status(500).json({ message: error.message });
   }
 });
+
 
 export default router;
