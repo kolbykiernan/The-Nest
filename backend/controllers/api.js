@@ -18,7 +18,7 @@ const weddingData = await WeddingData.create({ id, brideFirstName, brideLastName
 res.status(201).json(weddingData);
 } catch (error) {
 console.error(error);
-res.status(500).json({ error: 'Internal server error' });
+res.status(500).json({ error: error.message });
 }
 });
 
@@ -30,7 +30,7 @@ const weddingData = await WeddingData.findAll();
 res.status(200).json(weddingData);
 } catch (error) {
 console.error(error);
-res.status(500).json({ error: 'Internal server error' });
+res.status(500).json({ error: error.message });
 }
 });
 
@@ -44,7 +44,7 @@ try {
   res.status(201).json(newCategory);
 } catch (error) {
   console.error('Error adding category:', error);
-  res.status(500).json({ error: 'Internal server error' });
+  res.status(500).json({ error: error.message });
 }
 });
 
@@ -55,7 +55,7 @@ const categories = await Category.findAll();
 res.json(categories);
 } catch (error) {
 console.error('Error fetching categories:', error);
-res.status(500).json({ error: 'Internal server error' });
+res.status(500).json({ error: error.message });
 }
 });
 
@@ -77,7 +77,7 @@ try {
   res.json(sortedBridesmaids);
 } catch (error) {
     console.error('Error fetching bridesmaids:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error.message });
 }
 });
 
@@ -102,7 +102,7 @@ try {
     res.status(201).json(sortedBridesmaids);
 } catch (error) {
     console.error('Error creating bridesmaid:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error.message });
 }
 });
 
@@ -137,7 +137,7 @@ router.put('/bridesmaids/:id', async (req, res) => {
     res.json(sortedBridesmaids);
   } catch (error) {
     console.error('Error updating bridesmaid:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -149,7 +149,7 @@ try {
     res.json(sortedGroomsmen);
 } catch (error) {
     console.error('Error fetching groomsmen:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error.message });
 }
 });
 
@@ -175,7 +175,7 @@ try {
     res.status(201).json(sortedGroomsmen);
 } catch (error) {
     console.error('Error creating groomsman:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error.message });
 }
 });
 
@@ -212,7 +212,7 @@ router.put('/groomsmen/:id', async (req, res) => {
 
   } catch (error) {
     console.error('Error updating groomsman:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -226,7 +226,7 @@ router.get('/everybodyelse', async (req, res) => {
     res.json(sortedGuests);
   } catch (error) {
     console.error('Error fetching guests:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -251,7 +251,7 @@ router.post('/everybodyelse', async (req, res) => {
       res.status(201).json(sortedGuests);
   } catch (error) {
       console.error('Error creating guest:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ error: error.message });
   }
 });
 
@@ -290,7 +290,7 @@ router.put('/everybodyelse/:id', async (req, res) => {
     res.json(sortedGuests);
   } catch (error) {
     console.error('Error updating guest:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -303,7 +303,7 @@ router.get('/guestlist', async (req, res) => {
     res.status(200).json(sortedGuestlist);
   } catch (error) {
     console.error('Error fetching guestlist data:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -363,7 +363,7 @@ router.post('/guestlist', async (req, res) => {
     res.status(201).json(sortedEntries);
   } catch (error) {
     console.error('Error creating guestlist entries:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -408,7 +408,7 @@ router.put('/guestlist', async (req, res) => {
     res.status(200).json(sortedEntries);
   } catch (error) {
     console.error('Error updating guestlist entries:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: error.message });
   }
 });
 
