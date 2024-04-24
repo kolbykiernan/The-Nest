@@ -3,17 +3,17 @@
   "name": "The Nest",
   "icons": [
     {
-      "src": "./The-Nest-Logo.png",
+      "src": "The-Nest-Logo.png",
       "sizes": "180x180",
       "type": "image/png"
     },
     {
-      "src": "./The-Nest-Logo.png",
+      "src": "The-Nest-Logo.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "./The-Nest-Logo.png",
+      "src": "The-Nest-Logo.png",
       "type": "image/png",
       "sizes": "512x512"
     }
