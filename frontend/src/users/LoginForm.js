@@ -26,30 +26,31 @@ export default function LoginForm() {
     async function handleSubmit(e) {
       e.preventDefault();
    
-    try{
-    const response = await fetch(`/authentication/`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    })
+        try{
+        const response = await fetch(`/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(credentials)
+        })
 
-    const data = await response.json()
+        const data = await response.json()
 
-    if (response.status === 200) {
-        setCurrentUser(data.user);
-        localStorage.setItem('token', data.token)
-        console.log(data.token)
-        navigate(`/questionnaire`)
-    } else {
-        setErrorMessage(data.message)
+        if (response.status === 200) {
+            setCurrentUser(data.user);
+            localStorage.setItem('token', data.token)
+            console.log(data.token)
+            navigate(`/questionnaire`)
+        } else {
+            setErrorMessage(data.message)
+        }
+      } catch (error) {
+          console.error("An error occurred:", error);
+          setErrorMessage("An error occurred, please try again");
+      }
     }
-} catch (error) {
-    console.error("An error occurred:", error);
-    setErrorMessage("An error occurred, please try again");
-    }
-}
+
   return (
     <div className="body" style={{ backgroundColor: 'var(--primary-color)', width: '100%', height: '100vh' }}>
       <div className="header-link">
