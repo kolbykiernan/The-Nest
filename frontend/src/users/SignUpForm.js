@@ -20,7 +20,7 @@ export default function SignUpForm() {
 	async function handleSubmit(e) {
 		e.preventDefault()
 
-		await fetch(`/`, {
+		await fetch(`/api/users`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

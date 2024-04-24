@@ -465,7 +465,7 @@ router.get('/authentication/profile', async (req, res) => {
       }
   } catch (error) {
       console.error("An error occurred:", error);
-      res.status(500).json({ message: "An error occurred" });
+      res.status(500).json({ message: error.message });
   }
 });
 
