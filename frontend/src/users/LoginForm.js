@@ -21,13 +21,11 @@ export default function LoginForm() {
 
     const [errorMessage, setErrorMessage] = useState(null)
 
-      
-  
     async function handleSubmit(e) {
       e.preventDefault();
    
         try{
-        const response = await fetch(`/`, {
+        const response = await fetch(`/api/authentication/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
