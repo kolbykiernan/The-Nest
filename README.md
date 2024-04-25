@@ -4,10 +4,10 @@
 <summary>Table of Contents</summary>
 
 1. [About The Project](#About The Project)
-    * Built With[Built With](##Built With)
+    * Built With[Built With](#Built With)
 2. [Getting Started](#Getting Started)
-    * [Prerequisites](##Prerequisites)
-    * [Installation](##installation)
+    * [Prerequisites](#Prerequisites)
+    * [Installation](#installation)
 3. [Usage](#usage)
 4. [Roadmap](#Roadmap)
 5. [Contributing](#contributing)
