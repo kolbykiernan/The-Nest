@@ -1,6 +1,6 @@
-import { Sequelize, DataTypes } from 'sequelize';
+import sequelize from "./connection.js";
 
-const sequelize = new Sequelize('postgres://postgres:P3aceonurt%23@localhost:5432/wedding_app');
+import { Sequelize, DataTypes } from 'sequelize';
 
 const Bridesmaids = sequelize.define('Bridesmaids', {
     id: {
