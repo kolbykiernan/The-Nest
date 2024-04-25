@@ -1,7 +1,5 @@
-// Category.js
+import sequelize from "./connection.js";
 import { Sequelize, DataTypes } from 'sequelize';
-
-const sequelize = new Sequelize('postgres://postgres:P3aceonurt%23@localhost:5432/wedding_app');
 
 const Category = sequelize.define('Category', {
   id: {
