@@ -49,7 +49,7 @@ To start, run:
     cd backend -> npm install --> node index.js      
 
 ## Usage
-Users will sign up, log in, or choose the demo version to get started. Users will fill out info about their wedding details, create categories, and then fill out weedin party and other guests. After this section users will be directed to a guestlist, where they can further make edits to their guest list, then fill out info about their wedding venue, how many people they want to have come, and the cost per person. Based on guest valules assigned, this will return a list with those that do an don't make the cut for attending the wedding. Down the road, this info will be able to return a seating chart.
+Users will sign up, log in, or choose the demo version to get started. Users will create categories and then fill out wedding party and other guests. After this section users will be directed to a guestlist, where they can further make edits to their guest list, then fill out info about their wedding venue, how many people they want to have come, and the cost per person. Based on guest values assigned, this will return a list with guests that should and shouldn't attend the wedding. Down the road, this info will be able to return a seating chart.
 
 ## Roadmap
 * Seating Chart functionality   
