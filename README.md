@@ -43,10 +43,10 @@ To start, run:
 1. Clone the repo
     git clone [https://github.com/kolbykiernan/wedding-app.git](https://github.com/kolbykiernan/wedding-app.git)
 
-2. Install NPM packages      
-    main folder -> npm install       
-    cd frontend -> npm install --> mpm start
-    cd backend -> npm install --> node index.js      
+2. Install NPM packages        
+    main folder -> npm install         
+    cd frontend -> npm install --> mpm start    
+    cd backend -> npm install --> node index.js        
 
 ## Usage
 Users will sign up, log in, or choose the demo version to get started. Users will create categories and then fill out wedding party and other guests. After this section users will be directed to a guestlist, where they can further make edits to their guest list, then fill out info about their wedding venue, how many people they want to have come, and the cost per person. Based on guest values assigned, this will return a list with guests that should and shouldn't attend the wedding. Down the road, this info will be able to return a seating chart.
