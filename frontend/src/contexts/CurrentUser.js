@@ -15,14 +15,19 @@ function CurrentUserProvider({ children }) {
                             'Authorization': `Bearer ${token}` 
                         }
                     });
-
+        
                     if (!response.ok) {
-                        throw new Error('Failed to fetch user data');
+                        throw new Error('Failed to fetch user data');  
                     }
-
-                    const user = await response.json(); // Parse JSON here
-                    setCurrentUser(user);
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+        
+                    const contentType = response.headers.get('content-type');
+                    if (contentType && contentType.includes('application/json')) {
+                        const user = await response.json(); // Parse JSON here
+                        setCurrentUser(user);
+                        localStorage.setItem('currentUser', JSON.stringify(user));
+                    } else {
+                        throw new Error('Response is not JSON');
+                    }
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
