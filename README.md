@@ -3,17 +3,17 @@
 <details>
 <summary>Table of Contents</summary>
 
-1. [About The Project](#About The Project)
-    * Built With[Built With](#Built With)
-2. [Getting Started](#Getting Started)
-    * [Prerequisites](#Prerequisites)
+1. [About The Project](#about-the-project)
+    * [Built With](#built-with)
+2. [Getting Started](#getting-started)
+    * [Prerequisites](#prerequisites)
     * [Installation](#installation)
 3. [Usage](#usage)
-4. [Roadmap](#Roadmap)
+4. [Roadmap](#roadmap)
 5. [Contributing](#contributing)
 6. [License](#license)
-7. [Contact](#Contact)
-8. [Credits](#Credits)
+7. [Contact](#contact)
+8. [Credits](#credits)
 
 
 </details>
