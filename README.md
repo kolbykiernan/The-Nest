@@ -3,17 +3,18 @@
 <details>
 <summary>Table of Contents</summary>
 
-1. About The Project
-    * Built With
-2. Getting Started
-    * Prerequisites
-    * Installation
-3. Usage
-4. Roadmap
-5. Contributing
-6. License
-7. Contact
-8. Credits
+1. [About The Project](#About The Project)
+    * Built With[Built With](##Built With)
+2. [Getting Started](#Getting Started)
+    * [Prerequisites](##Prerequisites)
+    * [Installation](##installation)
+3. [Usage](#usage)
+4. [Roadmap](#Roadmap)
+5. [Contributing](#contributing)
+6. [License](#license)
+7. [Contact](#Contact)
+8. [Credits](#Credits)
+
 
 </details>
 
@@ -44,8 +45,8 @@ To start, run:
 
 2. Install NPM packages      
     main folder -> npm install       
-    cd frontend -> npm install      
-    cd backend -> npm install       
+    cd frontend -> npm install --> mpm start
+    cd backend -> npm install --> node index.js      
 
 ## Usage
 Users will sign up, log in, or choose the demo version to get started. Users will fill out info about their wedding details, create categories, and then fill out weedin party and other guests. After this section users will be directed to a guestlist, where they can further make edits to their guest list, then fill out info about their wedding venue, how many people they want to have come, and the cost per person. Based on guest valules assigned, this will return a list with those that do an don't make the cut for attending the wedding. Down the road, this info will be able to return a seating chart.
