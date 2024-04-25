@@ -45,7 +45,7 @@ To start, run:
 
 2. Install NPM packages        
     main folder -> npm install         
-    cd frontend -> npm install --> mpm start    
+    cd frontend -> npm install --> npm start    
     cd backend -> npm install --> node index.js        
 
 ## Usage
