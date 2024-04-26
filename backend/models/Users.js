@@ -2,9 +2,9 @@ import { Model, DataTypes } from 'sequelize';
 
 export default (sequelize) => {
 
-    class User extends Model {};
+    class Users extends Model {};
 
-    User.init({
+    Users.init({
     userId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -15,11 +15,12 @@ export default (sequelize) => {
     },
     lastName: {
         type: DataTypes.STRING,
-    },email: {
+    },
+    email: {
       type: DataTypes.STRING,
     },
     passwordDigest: {
-        type: DataTypes.STRING,
+      type: DataTypes.STRING,
     },
     createdAt: {
       type: DataTypes.DATE,
@@ -31,9 +32,9 @@ export default (sequelize) => {
     }
   } ,{
     sequelize,
-    modelName: 'User',
+    modelName: 'Users',
     tableName: 'Users',
 })
 
-return User;
+return Users;
 }
