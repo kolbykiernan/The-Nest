@@ -2,7 +2,7 @@ import express from 'express';
 import weddingData from './WeddingData.js'
 import bridesmaid from './Bridesmaids.js'
 import category from './Categories.js'
-import groomsman from './groomsMen.js'
+import groomsman from './Groomsmen.js'
 import guest from './Guest.js'
 import guestlist from './Guestlist.js'
 import authentication from './Authentication.js'
