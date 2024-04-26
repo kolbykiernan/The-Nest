@@ -1,12 +1,12 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
-import Users from '../models/Users.js'
+import User from '../models/User.js'
 
 const user = express.Router();
 
 user.post('/', async (req, res) => {
     let { password, ...rest } = req.body;
-    const user = await Users.create({
+    const user = await User.create({
         ...rest,
         passwordDigest: await bcrypt.hash(password, 10)
     })
@@ -15,7 +15,7 @@ user.post('/', async (req, res) => {
 
 
 user.get('/', async (req, res) => {
-    const users = await Users.findAll()
+    const users = await User.findAll()
     res.json(users)
 })
 

@@ -2,9 +2,9 @@ import { Model, DataTypes } from 'sequelize';
 
 export default (sequelize) => {
 
-    class Users extends Model {};
+    class User extends Model {};
 
-    Users.init({
+    User.init({
     userId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -32,9 +32,9 @@ export default (sequelize) => {
     }
   } ,{
     sequelize,
-    modelName: 'Users',
+    modelName: 'User',
     tableName: 'Users',
 })
 
-return Users;
+return User;
 }
