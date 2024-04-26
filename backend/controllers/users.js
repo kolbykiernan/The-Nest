@@ -1,11 +1,10 @@
 import express from 'express';
+import bcrypt from 'bcryptjs';
 import User from '../models/User.js';
-import bcrypt from 'bcryptjs'
 
 const user = express.Router();
 
-
-user.post('/', async (req, res) => {
+user.post('/users', async (req, res) => {
     let { password, ...rest } = req.body;
     const user = await User.create({
         ...rest,
@@ -15,7 +14,7 @@ user.post('/', async (req, res) => {
 })
 
 
-user.get('/', async (req, res) => {
+user.get('/users', async (req, res) => {
     const users = await User.findAll()
     res.json(users)
 })

@@ -5,7 +5,7 @@ import category from './Categories.js'
 import groomsman from './Groomsmen.js'
 import guest from './Guest.js'
 import guestlist from './Guestlist.js'
-import authentication from './Authentication.js'
+import authentication from './authentication.js';
 import user from './Users.js'
 
 const api = express.Router();
