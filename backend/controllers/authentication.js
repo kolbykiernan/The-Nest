@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken"
 
 const authentication = express.Router();
 
-authentication.post('/authentication', async (req, res) => {
+authentication.post('/', async (req, res) => {
     
     let user = await Users.findOne({
         where: { email: req.body.email }
@@ -21,7 +21,7 @@ authentication.post('/authentication', async (req, res) => {
     }
 })
   
-authentication.get('/authentication/profile', async (req, res) => {
+authentication.get('/profile', async (req, res) => {
     try {
         const authHeader = req.headers.authorization;
 

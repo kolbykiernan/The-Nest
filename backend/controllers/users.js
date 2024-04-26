@@ -4,7 +4,7 @@ import Users from '../models/Users.js';
 
 const user = express.Router();
 
-user.post('/users', async (req, res) => {
+user.post('/', async (req, res) => {
     let { password, ...rest } = req.body;
     const user = await Users.create({
         ...rest,
@@ -14,7 +14,7 @@ user.post('/users', async (req, res) => {
 })
 
 
-user.get('/users', async (req, res) => {
+user.get('/', async (req, res) => {
     const users = await Users.findAll()
     res.json(users)
 })
