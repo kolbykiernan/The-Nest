@@ -1,7 +1,10 @@
-import sequelize from "./connection.js";
-import { Sequelize, DataTypes } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
-const User = sequelize.define('User', {
+export default (sequelize) => {
+
+    class Users extends Model {};
+
+    Users.init({
     userId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -20,12 +23,17 @@ const User = sequelize.define('User', {
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     },
     updatedAt: {
       type: DataTypes.DATE,
-      defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     }
-  })
+  } ,{
+    sequelize,
+    modelName: 'User',
+    tableName: 'Users',
+})
 
-export default User;
+return Users;
+}

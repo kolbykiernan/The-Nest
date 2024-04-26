@@ -1,7 +1,10 @@
-import sequelize from "./connection.js";
-import { Sequelize, DataTypes } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
-const EverybodyElse = sequelize.define('EverybodyElse', {
+export default (sequelize) => {
+
+    class EverybodyElse extends Model {};
+
+    EverybodyElse.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -42,13 +45,18 @@ const EverybodyElse = sequelize.define('EverybodyElse', {
     },
     createdAt: {
         type: DataTypes.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     },
     updatedAt: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
     }
+} ,{
+    sequelize,
+    modelName: 'EverybodyElse',
+    tableName: 'EverybodyElses'
 })
 
-export default EverybodyElse;
+return EverybodyElse;
+}

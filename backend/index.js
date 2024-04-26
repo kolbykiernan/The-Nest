@@ -7,7 +7,7 @@ import dotenv from "dotenv";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 dotenv.config();
-import sequelize from "./models/connection.js";
+// import sequelize from "./models/index.js";
 import router from "./controllers/api.js";
 import defineCurrentUser from "./middleware/defineCurrentUser.js";
 
@@ -34,13 +34,8 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "frontend", "build", "index.html"));
 });
 
-app.listen(process.env.PORT, async () => {
-  try {
-    await sequelize.sync();
-  } catch (e) {
-    console.log("database cant sync");
-  }
-  console.log(`Server is running on port ${process.env.PORT}`);
-});
+app.listen(process.env.PORT, () => {
+  console.log(`Listening on ${process.env.PORT}`)
+})
 
 export default app;

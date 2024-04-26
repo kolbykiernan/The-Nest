@@ -1,7 +1,10 @@
-import sequelize from "./connection.js";
-import { Sequelize, DataTypes } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
-const Category = sequelize.define('Category', {
+export default (sequelize) => {
+
+    class Category extends Model {};
+
+    Category.init({
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -14,13 +17,18 @@ const Category = sequelize.define('Category', {
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+    defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
   },
   updatedAt: {
     type: DataTypes.DATE,
     allowNull: false,
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+    defaultValue: sequelize.literal('CURRENT_TIMESTAMP')
   }
-});
+} ,{
+  sequelize,
+  modelName: 'Category',
+  tableName: 'Categories',
+})
 
-export default Category;
+return Category;
+}

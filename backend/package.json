@@ -21,7 +21,8 @@
     "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3",
     "react": "^18.2.0",
-    "sequelize": "^6.37.1"
+    "sequelize": "^6.37.1",
+    "umzug": "^3.8.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
