@@ -37,7 +37,7 @@ export default (sequelize) => {
 } ,{
     sequelize,
     modelName: 'Guestlist',
-    tableName: 'Guestlists',
+    tableName: 'Guestlist',
 })
 
 return Guestlist;

@@ -2,5 +2,6 @@
   "dependencies": {
     "sequelize": "^6.37.3",
     "umzug": "^3.8.0"
-  }
+  },
+  "type": "module"
 }

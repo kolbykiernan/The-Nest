@@ -1,12 +1,11 @@
 import express from 'express';
-import User from '../models/user.js';
+import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken"
 
-const authenticationRouter = express.Router();
+const authentication = express.Router();
 
-
-authenticationRouter.post('/', async (req, res) => {
+authentication.post('/', async (req, res) => {
     
     let user = await User.findOne({
         where: { email: req.body.email }
@@ -22,7 +21,7 @@ authenticationRouter.post('/', async (req, res) => {
     }
 })
   
-authenticationRouter.get('/profile', async (req, res) => {
+authentication.get('/profile', async (req, res) => {
     try {
         const authHeader = req.headers.authorization;
 
@@ -56,4 +55,4 @@ authenticationRouter.get('/profile', async (req, res) => {
 
 
 
-export default authenticationRouter;
+export default authentication;

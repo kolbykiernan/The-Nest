@@ -55,7 +55,7 @@ useEffect(() => {
     try {
       const bridesmaidsResponse = await axios.get(`${process.env.REACT_APP_BACKEND || ''}/api/bridesmaids`);
       const groomsmenResponse = await axios.get(`${process.env.REACT_APP_BACKEND || ''}/api/groomsmen`);
-      const everybodyElseResponse = await axios.get(`${process.env.REACT_APP_BACKEND || ''}/api/everybodyelse`);
+      const everybodyElseResponse = await axios.get(`${process.env.REACT_APP_BACKEND || ''}/api/guests`);
 
       const combinedData = [
         ...bridesmaidsResponse.data,

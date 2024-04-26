@@ -1,7 +1,8 @@
-'use strict';
-export default {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('EverybodyElses', {
+require = require('esm')(module);
+
+module.exports = {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.createTable('Bridesmaids', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -19,14 +20,6 @@ export default {
         type: Sequelize.STRING,
         allowNull: false,
     },
-    brideGroomOrMutual: {
-        type: Sequelize.STRING,
-        allowNull: false,
-    },
-    guestValue: {
-        type: Sequelize.DECIMAL,
-        allowNull: false,
-    },
     plusOneSelected: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -35,6 +28,9 @@ export default {
         type: Sequelize.STRING,
     },
     plusOneLastName: {
+        type: Sequelize.STRING,
+    },
+    isAlsoInWeddingParty: {
         type: Sequelize.STRING,
     },
     plusOneValue: {
@@ -52,7 +48,7 @@ export default {
   });
 },
 
-down: async (queryInterface, Sequelize) => {
-  await queryInterface.dropTable('EverybodyElses');
+async down (queryInterface, Sequelize) {
+  await queryInterface.dropTable('Bridesmaids');
 }
 };

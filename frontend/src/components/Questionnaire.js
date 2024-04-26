@@ -302,7 +302,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         plusOneLastName: row.plusOneLastName,
         plusOneValue: row.plusOneValue,
       };
-      return axios.post(`${process.env.REACT_APP_BACKEND || ''}/api/everybodyelse`, formData);
+      return axios.post(`${process.env.REACT_APP_BACKEND || ''}/api/guests`, formData);
     });
 
     const responses = await Promise.all(requests);

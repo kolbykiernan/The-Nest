@@ -1,6 +1,7 @@
-'use strict';
-export default {
-  up: async (queryInterface, Sequelize) => {
+require = require('esm')(module);
+
+module.exports = {
+  async up (queryInterface, Sequelize) {
     await queryInterface.createTable('Users', {
       userId: {
         type: Sequelize.INTEGER,
@@ -30,7 +31,7 @@ export default {
   });
 },
 
-down: async (queryInterface, Sequelize) => {
+async down (queryInterface, Sequelize) {
   await queryInterface.dropTable('Users');
 }
 };

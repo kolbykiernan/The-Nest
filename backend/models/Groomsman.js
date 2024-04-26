@@ -2,9 +2,9 @@ import { Model, DataTypes } from 'sequelize';
 
 export default (sequelize) => {
 
-    class EverybodyElse extends Model {};
+    class Groomsman extends Model {};
 
-    EverybodyElse.init({
+    Groomsman.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -22,14 +22,6 @@ export default (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    brideGroomOrMutual: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    guestValue: {
-        type: DataTypes.DECIMAL,
-        allowNull: false,
-    },
     plusOneSelected: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -38,6 +30,9 @@ export default (sequelize) => {
         type: DataTypes.STRING,
     },
     plusOneLastName: {
+        type: DataTypes.STRING,
+    },
+    isAlsoInWeddingParty: {
         type: DataTypes.STRING,
     },
     plusOneValue: {
@@ -54,9 +49,9 @@ export default (sequelize) => {
     }
 } ,{
     sequelize,
-    modelName: 'EverybodyElse',
-    tableName: 'EverybodyElses'
+    modelName: 'Groomsman',
+    tableName: 'Groomsmen',
 })
 
-return EverybodyElse;
+return Groomsman;
 }
