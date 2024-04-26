@@ -22,7 +22,7 @@ function CurrentUserProvider({ children }) {
         
                     const contentType = response.headers.get('content-type');
                     if (contentType && contentType.includes('application/json')) {
-                        const user = await response.json(); // Parse JSON here
+                        const user = await response.json(); 
                         setCurrentUser(user);
                         localStorage.setItem('currentUser', JSON.stringify(user));
                     } else {
