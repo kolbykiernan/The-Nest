@@ -21,6 +21,7 @@ function CurrentUserProvider({ children }) {
                     }
         
                     const contentType = response.headers.get('content-type');
+                    console.log('Content-Type:', contentType);
                     if (contentType && contentType.includes('application/json')) {
                         const user = await response.json(); 
                         setCurrentUser(user);

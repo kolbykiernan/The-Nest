@@ -1,4 +1,4 @@
-import User from '../models/user.js';
+import Users from '../models/Users.js';
 import jwt from "jsonwebtoken";
 
 // Middleware to define current user
@@ -9,7 +9,7 @@ async function defineCurrentUser(req, res, next){
             const token = authHeader.split(' ')[1];
             const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
             const { id } = decodedToken;
-            const user = await User.findOne({ 
+            const user = await Users.findOne({ 
                 where: {
                     userId: id
                 }

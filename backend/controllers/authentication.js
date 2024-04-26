@@ -1,5 +1,5 @@
 import express from 'express';
-import User from '../models/User.js';
+import Users from '../models/Users.js';
 import bcrypt from 'bcryptjs';
 import jwt from "jsonwebtoken"
 
@@ -7,7 +7,7 @@ const authentication = express.Router();
 
 authentication.post('/authentication', async (req, res) => {
     
-    let user = await User.findOne({
+    let user = await Users.findOne({
         where: { email: req.body.email }
     })
 
@@ -38,7 +38,7 @@ authentication.get('/authentication/profile', async (req, res) => {
 
         const { id } = decodedToken;
 
-        const user = await User.findOne({
+        const user = await Users.findOne({
             where: { userId: id }
         });
 
