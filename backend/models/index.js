@@ -1,17 +1,19 @@
 import fs from 'fs';
 import path from 'path';
-
+import config from '../config/config.json'
 import Sequelize from 'sequelize';
-import configModule from '../config/config.js'; 
 
 const __filename = path.basename(import.meta.url);
 const __dirname = path.dirname(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = configModule[env]; 
+const config = require(__dirname + '/../config/config.js')[env];
 
 
 
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
+const sequelize = new Sequelize(config.database, config.username, config.password, config, {
+  host: config.host,
+  dialect: 'postgres',
+});
 
 
 const db = {};

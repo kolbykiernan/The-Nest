@@ -20,7 +20,7 @@ export default function SignUpForm() {
 	async function handleSubmit(e) {
 		e.preventDefault()
 
-		await fetch(`${process.env.REACT_APP_BACKEND || ''}/api/users`, {
+		await fetch(`https://welcome-to-the-nest.onrender.com/api/users`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
