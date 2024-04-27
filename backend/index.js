@@ -1,41 +1,45 @@
-// Backend index.js
-
 import express from "express";
 import path from "path";
 import cors from "cors";
-import dotenv from "dotenv";
+import dotenv from 'dotenv'
 import { fileURLToPath } from "url";
 import { dirname } from "path";
-dotenv.config();
 import Sequelize from "sequelize";
+dotenv.config();
 import apiController from './controllers/index.js'
 import defineCurrentUser from "./middleware/defineCurrentUser.js";
 
-const app = express();
+const app = express();      
 
 app.set("view engine", "js");
 app.use(cors());
 app.use(express.json());
 app.use(defineCurrentUser);
+
 app.use('/api', apiController)
 
-
-// SEQUELIZE CONNECTION
-const sequelize = new Sequelize(process.env.DB_URI) 
+const sequelize = new Sequelize({
+  host: process.env.DB_HOST,  
+  port: process.env.DB_PORT,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+  dialect: 'postgres',
+});
 
 try {
     sequelize.authenticate() 
-    console.log(`Connected with Sequelize at ${process.env.DB_URI}`) 
-} catch(error) {
+    console.log(`Connected with Sequelize at ${process.env.DB_URL}`)    
+} catch(error) { 
     console.log(`Unable to connect to PG: ${error}`) 
 }
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Private-Network", "true");
-  next();
+  next(); 
 });
 
-const __filename = fileURLToPath(import.meta.url);
+const __filename = fileURLToPath(import.meta.url); 
 const __dirname = dirname(__filename);
 
 

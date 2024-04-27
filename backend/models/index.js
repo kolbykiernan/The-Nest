@@ -1,20 +1,19 @@
-import fs from 'fs';
-import path from 'path';
-import config from '../config/config.json'
-import Sequelize from 'sequelize';
+'use strict';
 
-const __filename = path.basename(import.meta.url);
-const __dirname = path.dirname(__filename);
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const process = require('process');
+const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.js')[env];
 
-
-
-const sequelize = new Sequelize(config.database, config.username, config.password, config, {
-  host: config.host,
-  dialect: 'postgres',
-});
-
+let sequelize;
+if (config.use_env_variable) {
+  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+} else {
+  sequelize = new Sequelize(config.database, config.username, config.password, config);
+}
 
 const db = {};
 
@@ -27,13 +26,14 @@ fs.readdirSync(__dirname)
     db[model.name] = model;
   });
 
-Object.keys(db).forEach(modelName => {
+Object.keys(db).forEach(modelName => { 
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }
 });
 
 db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+db.Sequelize = Sequelize; 
 
-export default db;
+module.exports = db;
+  

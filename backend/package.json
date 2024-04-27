@@ -1,12 +1,13 @@
 {
   "name": "wedding-app",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "type": "module",
+  
   "scripts": {
     "start": "npx nodemon index.js",
     "build": "npm i",
+    "build:config": "babel config.json --out-file config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -27,6 +28,10 @@
     "umzug": "^3.8.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.24.1",
+    "@babel/core": "^7.24.4",
+    "@babel/preset-env": "^7.24.4",
     "nodemon": "^3.1.0"
-  }
+  },
+  "description": ""
 }
