@@ -13,7 +13,7 @@ const sortByField = (array, field, order = 'asc') => {
 
 
 
-guest.get('/guests', async (req, res) => {
+guest.get('/', async (req, res) => {
   
     try {
   
@@ -26,7 +26,7 @@ guest.get('/guests', async (req, res) => {
     }
   });
   
-guest.post('/guests', async (req, res) => {
+guest.post('/', async (req, res) => {
   const { firstName, lastName, selectedCategory, brideGroomOrMutual, guestValue, plusOneSelected, plusOneFirstName, plusOneLastName, plusOneValue} = req.body;
   try {
       await Guest.create({
@@ -52,7 +52,7 @@ guest.post('/guests', async (req, res) => {
 });
 
   
-guest.put('/guests/:id', async (req, res) => {
+guest.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, selectedCategory, brideGroomOrMutual, guestValue, plusOneSelected, plusOneFirstName, plusOneLastName, plusOneValue } = req.body;
   

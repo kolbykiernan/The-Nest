@@ -3,7 +3,7 @@ import Category from '../models/Category.js';
 
 const category = express.Router();
 
-category.post('/categories', async (req, res) => {
+category.post('/', async (req, res) => {
 
     console.log(req.body);
     const { name } = req.body;
@@ -17,7 +17,7 @@ category.post('/categories', async (req, res) => {
     });
     
     
-category.get('/categories', async (req, res) => {
+category.get('/', async (req, res) => {
 
     try {
       const categories = await Category.findAll();

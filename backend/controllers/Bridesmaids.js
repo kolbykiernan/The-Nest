@@ -13,7 +13,7 @@ const sortByField = (array, field, order = 'asc') => {
   };
 
 
-bridesmaid.get('/bridesmaids', async (req, res) => {
+bridesmaid.get('/', async (req, res) => {
   try {
     const bridesmaids = await Bridesmaid.findAll();
     const sortedBridesmaids = sortByField(bridesmaids, 'id');
@@ -24,7 +24,7 @@ bridesmaid.get('/bridesmaids', async (req, res) => {
   }
   });
 
-bridesmaid.post('/bridesmaids', async (req, res) => {
+bridesmaid.post('/', async (req, res) => {
   const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
   try {
       await Bridesmaid.create({
@@ -49,7 +49,7 @@ bridesmaid.post('/bridesmaids', async (req, res) => {
   }
   });
     
-bridesmaid.put('/bridesmaids/:id', async (req, res) => {
+bridesmaid.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 

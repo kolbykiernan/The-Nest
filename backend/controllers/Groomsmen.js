@@ -11,7 +11,7 @@ const sortByField = (array, field, order = 'asc') => {
     });
   };
 
-groomsman.get('/groomsmen', async (req, res) => {
+groomsman.get('/', async (req, res) => {
 try {
     const groomsmen = await Groomsman.findAll();
     const sortedGroomsmen = sortByField(groomsmen, 'id');
@@ -23,7 +23,7 @@ try {
 });
 
 
-groomsman.post('/groomsmen', async (req, res) => {
+groomsman.post('/', async (req, res) => {
 const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 try {
     await Groomsman.create({
@@ -48,7 +48,7 @@ try {
 }
 });
 
-groomsman.put('/groomsmen/:id', async (req, res) => {
+groomsman.put('/:id', async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
 

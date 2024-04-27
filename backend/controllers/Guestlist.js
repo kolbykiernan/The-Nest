@@ -11,7 +11,7 @@ const sortByField = (array, field, order = 'asc') => {
     });
   };
 
-guestlist.get('/guestlist', async (req, res) => {
+guestlist.get('/', async (req, res) => {
   try {
     // Fetch all guestlist entries from the Guestlist table
     const guestlistEntries = await Guestlist.findAll();
@@ -23,7 +23,7 @@ guestlist.get('/guestlist', async (req, res) => {
   }
 });
 
-guestlist.post('/guestlist', async (req, res) => {
+guestlist.post('/', async (req, res) => {
   try {
     const guestlistData = req.body.map((item, index) => ({ ...item, order: index }));
 
@@ -83,7 +83,7 @@ guestlist.post('/guestlist', async (req, res) => {
   }
 });
 
-guestlist.put('/guestlist', async (req, res) => {
+guestlist.put('/', async (req, res) => {
   try {
     const guestlistData = req.body.map((item, index) => ({ ...item, order: index }));
 

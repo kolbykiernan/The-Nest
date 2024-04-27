@@ -4,7 +4,7 @@ import WeddingData from '../models/WeddingData.js';
 const weddingData = express.Router();
 
 
-weddingData.post('/weddingdata', async (req, res) => {
+weddingData.post('/', async (req, res) => {
 
     try {
         const { id, brideFirstName, brideLastName, brideSelection, groomFirstName, groomLastName, groomSelection } = req.body;
@@ -18,7 +18,7 @@ weddingData.post('/weddingdata', async (req, res) => {
 });
 
 
-weddingData.get('/weddingdata', async (req, res) => {
+weddingData.get('/', async (req, res) => {
     
     try {
         const weddingData = await WeddingData.findAll();
