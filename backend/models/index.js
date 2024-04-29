@@ -1,6 +1,5 @@
-import fs from 'fs/promises'; // Using fs promises API
+import fs from 'fs'; 
 import path from 'path';
-
 import Sequelize from 'sequelize';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
@@ -8,6 +7,7 @@ import { dirname } from 'node:path';
 const env = process.env.NODE_ENV || 'development';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const basename = path.basename(__filename);
 
 // Importing configuration from the config file
 import config from '../config/config.js';
@@ -40,26 +40,23 @@ try {
 
 // Creating an empty object to store Sequelize models
 const db = {};
-
-// Reading through the models directory to import each model
-try {
-  const files = await fs.readdir(__dirname);
-  for (const file of files) {
-    if (file.endsWith('.js') && file !== path.basename(__filename)) {
-      const model = await import(path.join(__dirname, file));
-      db[model.default.name] = model.default;
+const files = await fs.promises.readdir(__dirname);
+for (const file of files) {
+    if (
+        file.indexOf('.') !== 0 &&
+        file !== basename &&
+        file.slice(-3) === '.js' &&
+        file.indexOf('.test.js') === -1
+    ) {
+        const { default: model } = await import(path.join(__dirname, file));
+        db[model.name] = model(sequelize, Sequelize.DataTypes);
     }
-  }
-} catch (error) {
-  console.error('Error reading models directory:', error);
-  process.exit(1); // Terminate the process on failure
 }
 
-// Associating models if they have an 'associate' method
-Object.values(db).forEach(model => {
-  if (model.associate) {
-    model.associate(db);
-  }
+Object.keys(db).forEach(modelName => {
+    if (db[modelName].associate) {
+        db[modelName].associate(db);
+    }
 });
 
 // Assigning Sequelize instance and Sequelize module to the 'db' object
