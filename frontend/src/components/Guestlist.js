@@ -53,9 +53,9 @@ export default function Guestlist({ categories }) {
 useEffect(() => {
   const fetchDataFromServer = async () => {
     try {
-      const bridesmaidsResponse = await axios.get(`${process.env.REACT_APP_BACKEND || ''}/api/bridesmaids`);
-      const groomsmenResponse = await axios.get(`${process.env.REACT_APP_BACKEND || ''}/api/groomsmen`);
-      const everybodyElseResponse = await axios.get(`${process.env.REACT_APP_BACKEND || ''}/api/guests`);
+      const bridesmaidsResponse = await axios.get(`https://welcome-to-the-nest.onrender.com/api/bridesmaids`);
+      const groomsmenResponse = await axios.get(`https://welcome-to-the-nest.onrender.com/api/groomsmen`);
+      const everybodyElseResponse = await axios.get(`https://welcome-to-the-nest.onrender.com/api/guests`);
 
       const combinedData = [
         ...bridesmaidsResponse.data,
@@ -359,7 +359,7 @@ const runSortedList = async () => {
 
     if (!submittedOnce) {
       // If not submitted once, send a POST request
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND || ''}/api/guestlist`, newData);
+      const response = await axios.post(`https://welcome-to-the-nest.onrender.com/api/guestlist`, newData);
       console.log('Guestlist data submitted:', response.data);
       
       // Set submittedOnce to true and store it in local storage
@@ -367,11 +367,11 @@ const runSortedList = async () => {
       localStorage.setItem('submittedOnce', JSON.stringify(true));
     } else {
       // If already submitted once, send a PUT request
-      const response = await axios.put(`${process.env.REACT_APP_BACKEND || ''}/api/guestlist`, guestlistData);
+      const response = await axios.put(`https://welcome-to-the-nest.onrender.com/api/guestlist`, guestlistData);
       console.log('Guestlist data updated:', response.data);
     }
 
-    const sortedResponse = await axios.get(`${process.env.REACT_APP_BACKEND || ''}/api/guestlist?sortBy=guestValue&order=desc`);
+    const sortedResponse = await axios.get(`https://welcome-to-the-nest.onrender.com/api/guestlist?sortBy=guestValue&order=desc`);
     const sortedGuestlist = sortedResponse.data;
     
     
