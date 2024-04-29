@@ -19,6 +19,9 @@ export default function SignUpForm() {
 
 	async function handleSubmit(e) {
 		e.preventDefault()
+        
+        console.log('Sending request to: ', `https://welcome-to-the-nest.onrender.com/api/users`);
+        console.log('Request body: ', JSON.stringify(user));
 
 		await fetch(`https://welcome-to-the-nest.onrender.com/api/users`, {
 			method: 'POST',
