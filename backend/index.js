@@ -14,10 +14,10 @@ app.use(cors());
 app.use(express.json());
 
 // Define middleware and routes here
-import apiController from './controllers/index.js'
+import routes from './routes/apiRoutes.js';
 import defineCurrentUser from "./middleware/defineCurrentUser.js";
 app.use(defineCurrentUser);
-app.use('/api', apiController)
+app.use('/api', routes)
 
 // Serve static files
 const frontendBuildPath = new URL('file://' + path.resolve('../frontend/build'), import.meta.url).pathname;

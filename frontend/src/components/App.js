@@ -18,7 +18,7 @@ const App = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`https://welcome-to-the-nest.onrender.com/api/categories`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND}/api/getAllCategories`);
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);

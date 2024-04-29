@@ -38,7 +38,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
       setCurrentPage(nextIndex);
       if (nextIndex === 0) {
         try {
-          const response = await axios.get(`https://welcome-to-the-nest.onrender.com/api/weddingdata`);
+          const response = await axios.get(`${process.env.REACT_APP_BACKEND}/api/getAllWeddingData`);
           
           const data = response.data;
           return {
@@ -136,7 +136,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
           groomSelection: answers['groomSelection']
         };
     
-        const response = await axios.post(`https://welcome-to-the-nest.onrender.com/api/weddingdata`, formData);
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND}/api/createWeddingData`, formData);
         console.log('Form submitted successfully:', response.data);
         setSubmitted(true);
 
@@ -151,7 +151,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
 
       const fetchBrideData = async () => {
         try {
-          const response = await axios.get(`https://welcome-to-the-nest.onrender.com/api/weddingdata`);
+          const response = await axios.get(`${process.env.REACT_APP_BACKEND}/api/getAllWeddingData`);
           return response.data.brideFirstName;
         } catch (error) {
           console.error('Error fetching bride first name:', error);
@@ -161,7 +161,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
 
       const fetchGroomData = async () => {
         try {
-          const response = await axios.get(`https://welcome-to-the-nest.onrender.com/api/weddingdata`);
+          const response = await axios.get(`${process.env.REACT_APP_BACKEND}/api/getAllWeddingData`);
           return response.data.groomFirstName;
         } catch (error) {
           console.error('Error fetching groom first name:', error);
@@ -235,7 +235,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
         selectedRole: row.selectedRole,
         plusOneValue: row.plusOneValue
       };
-      return axios.post(`https://welcome-to-the-nest.onrender.com/api/bridesmaids`, formData);
+      return axios.post(`${process.env.REACT_APP_BACKEND}/api/createBridesmaid`, formData);
     });
 
     const responses = await Promise.all(requests);
@@ -268,7 +268,7 @@ const submitGroomsmenData = async (groomsmenData) => {
         selectedRole: row.selectedRole,
         plusOneValue: row.plusOneValue
       };
-      return axios.post(`https://welcome-to-the-nest.onrender.com/api/groomsmen`, formData);
+      return axios.post(`${process.env.REACT_APP_BACKEND}/api/createGroomsman`, formData);
     });
 
     const responses = await Promise.all(requests);
@@ -302,7 +302,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         plusOneLastName: row.plusOneLastName,
         plusOneValue: row.plusOneValue,
       };
-      return axios.post(`https://welcome-to-the-nest.onrender.com/api/guests`, formData);
+      return axios.post(`${process.env.REACT_APP_BACKEND}/api/createGuest`, formData);
     });
 
     const responses = await Promise.all(requests);

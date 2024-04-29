@@ -23,7 +23,7 @@ export default function SignUpForm() {
         console.log('Sending request to: ', `https://welcome-to-the-nest.onrender.com/api/users`);
         console.log('Request body: ', JSON.stringify(user));
 
-		await fetch(`https://welcome-to-the-nest.onrender.com/api/users`, {
+		await fetch(`${process.env.REACT_APP_BACKEND}/api/register`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'

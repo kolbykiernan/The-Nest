@@ -10,7 +10,7 @@ function CurrentUserProvider({ children }) {
             try {
                 const token = localStorage.getItem('token');
                 if (token) {
-                    const response = await fetch(`https://welcome-to-the-nest.onrender.com/api/authentication/profile`, {
+                    const response = await fetch(`${process.env.REACT_APP_BACKEND}/api/getUser/:id`, {
                         headers: {
                             'Authorization': `Bearer ${token}` 
                         }
