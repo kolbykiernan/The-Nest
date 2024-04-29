@@ -20,12 +20,12 @@ export default function LoginForm() {
     })
 
     const [errorMessage, setErrorMessage] = useState(null)
-
+    const API_URL = process.env.REACT_APP_BACKEND || '';
     async function handleSubmit(e) {
       e.preventDefault();
    
         try{
-        const response = await fetch(`${process.env.REACT_APP_BACKEND}/api/authenticate`, {
+        const response = await fetch(`${API_URL}/api/authenticate`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -13,6 +13,7 @@ import '../styles/questionnaire.css';
 
 const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBridesmaidsData, groomsmenData, setGroomsmenData, everybodyElseData, setEverybodyElseData}) => {
 
+  const API_URL = process.env.REACT_APP_BACKEND || '';
 
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = localStorage.getItem('currentPage');
@@ -38,7 +39,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
       setCurrentPage(nextIndex);
       if (nextIndex === 0) {
         try {
-          const response = await axios.get(`${process.env.REACT_APP_BACKEND}/api/getAllWeddingData`);
+          const response = await axios.get(`${API_URL}/api/getAllWeddingData`);
           
           const data = response.data;
           return {
@@ -136,7 +137,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
           groomSelection: answers['groomSelection']
         };
     
-        const response = await axios.post(`${process.env.REACT_APP_BACKEND}/api/createWeddingData`, formData);
+        const response = await axios.post(`${API_URL}/api/createWeddingData`, formData);
         console.log('Form submitted successfully:', response.data);
         setSubmitted(true);
 
@@ -151,7 +152,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
 
       const fetchBrideData = async () => {
         try {
-          const response = await axios.get(`${process.env.REACT_APP_BACKEND}/api/getAllWeddingData`);
+          const response = await axios.get(`${API_URL}/api/getAllWeddingData`);
           return response.data.brideFirstName;
         } catch (error) {
           console.error('Error fetching bride first name:', error);
@@ -161,7 +162,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
 
       const fetchGroomData = async () => {
         try {
-          const response = await axios.get(`${process.env.REACT_APP_BACKEND}/api/getAllWeddingData`);
+          const response = await axios.get(`${API_URL}/api/getAllWeddingData`);
           return response.data.groomFirstName;
         } catch (error) {
           console.error('Error fetching groom first name:', error);
@@ -235,7 +236,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
         selectedRole: row.selectedRole,
         plusOneValue: row.plusOneValue
       };
-      return axios.post(`${process.env.REACT_APP_BACKEND}/api/createBridesmaid`, formData);
+      return axios.post(`${API_URL}/api/createBridesmaid`, formData);
     });
 
     const responses = await Promise.all(requests);
@@ -268,7 +269,7 @@ const submitGroomsmenData = async (groomsmenData) => {
         selectedRole: row.selectedRole,
         plusOneValue: row.plusOneValue
       };
-      return axios.post(`${process.env.REACT_APP_BACKEND}/api/createGroomsman`, formData);
+      return axios.post(`${API_URL}/api/createGroomsman`, formData);
     });
 
     const responses = await Promise.all(requests);
@@ -302,7 +303,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         plusOneLastName: row.plusOneLastName,
         plusOneValue: row.plusOneValue,
       };
-      return axios.post(`${process.env.REACT_APP_BACKEND}/api/createGuest`, formData);
+      return axios.post(`${API_URL}/api/createGuest`, formData);
     });
 
     const responses = await Promise.all(requests);

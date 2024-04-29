@@ -5,12 +5,13 @@ export const CurrentUser = createContext();
 function CurrentUserProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null)
 
+    const API_URL = process.env.REACT_APP_BACKEND || '';
     useEffect(() => {
         const getLoggedInUser = async () => {
             try {
                 const token = localStorage.getItem('token');
                 if (token) {
-                    const response = await fetch(`${process.env.REACT_APP_BACKEND}/api/getUser/:id`, {
+                    const response = await fetch(`${API_URL}/api/getUser/:id`, {
                         headers: {
                             'Authorization': `Bearer ${token}` 
                         }
