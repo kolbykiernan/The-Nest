@@ -1,5 +1,5 @@
-require = require('esm')(module);
-const { Model, DataTypes } = require('sequelize');
+'use strict';
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Groomsmen', {

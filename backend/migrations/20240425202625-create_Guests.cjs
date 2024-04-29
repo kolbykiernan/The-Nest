@@ -1,4 +1,4 @@
-require = require('esm')(module);
+'use strict';
 
 module.exports = {
   async up (queryInterface, Sequelize) {

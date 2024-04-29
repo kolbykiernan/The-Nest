@@ -1,7 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 
 export default (sequelize) => {
-
     class WeddingData extends Model {};
 
     WeddingData.init({

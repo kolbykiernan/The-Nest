@@ -1,56 +1,45 @@
 import express from "express";
 import path from "path";
 import cors from "cors";
-import dotenv from 'dotenv'
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-import Sequelize from "sequelize";
-dotenv.config();
-import apiController from './controllers/index.js'
-import defineCurrentUser from "./middleware/defineCurrentUser.js";
+import dotenv from 'dotenv';
+import bodyParser from 'body-parser';
+import db from './models/index.js'; // Importing db object
 
+dotenv.config();
 const app = express();      
 
 app.set("view engine", "js");
+app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
-app.use(defineCurrentUser);
 
+// Define middleware and routes here
+import apiController from './controllers/index.js'
+import defineCurrentUser from "./middleware/defineCurrentUser.js";
+app.use(defineCurrentUser);
 app.use('/api', apiController)
 
-const sequelize = new Sequelize({
-  host: process.env.DB_HOST,  
-  port: process.env.DB_PORT,
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  dialect: 'postgres',
-});
+// Serve static files
+const frontendBuildPath = new URL('file://' + path.resolve('../frontend/build'), import.meta.url).pathname;
+app.use(express.static(frontendBuildPath));
 
-try {
-    sequelize.authenticate() 
-    console.log(`Connected with Sequelize at ${process.env.DB_URL}`)    
-} catch(error) { 
-    console.log(`Unable to connect to PG: ${error}`) 
-}
-
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Private-Network", "true");
-  next(); 
-});
-
-const __filename = fileURLToPath(import.meta.url); 
-const __dirname = dirname(__filename);
-
-
-app.use(express.static(path.join(__dirname, "..", "frontend", "build")));
-
+// Serve the frontend app
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "build", "index.html"));
+  res.sendFile(path.join(frontendBuildPath, "index.html"));
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Listening on ${process.env.PORT}`)
-})
 
-export default app;
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, async () => {
+  try {
+    await db.sequelize.authenticate();
+    console.log("Database connected");
+    await db.sequelize.sync();
+    console.log("Database synchronized");
+  } catch (error) {
+    console.error("Unable to connect to the database:", error);
+    process.exit(1); // Terminate the process on failure
+  }
+  console.log(`Server is running on port ${PORT}`);
+});
