@@ -14,14 +14,12 @@ export default function SignUpForm() {
 		firstName: '',
 		lastName: '',
 		email: '',
-		password: ''
+		passwordDigest: ''
 	})
     const API_URL = process.env.REACT_APP_BACKEND || '';
 	async function handleSubmit(e) {
 		e.preventDefault()
         
-        console.log('Sending request to: ', `https://welcome-to-the-nest.onrender.com/api/users`);
-        console.log('Request body: ', JSON.stringify(user));
 
 		await fetch(`${API_URL}/api/register`, {
 			method: 'POST',
@@ -30,7 +28,7 @@ export default function SignUpForm() {
 			},
 			body: JSON.stringify(user)
 		})
-
+        
 		navigate(`/login`)
 	}
 
@@ -94,8 +92,8 @@ export default function SignUpForm() {
                                                 className='sign-up-password'
                                                 type="password"
                                                 required
-                                                value={user.password}
-                                                onChange={e => setUser({ ...user, password: e.target.value })}
+                                                value={user.passwordDigest}
+                                                onChange={e => setUser({ ...user, passwordDigest: e.target.value })}
                                                 id="password"
                                                 name="password"
                                             />  

@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
-import HomePage from '../default-views/HomePage';
-import Questionnaire from './Questionnaire';
-import Guestlist from './Guestlist';
-import Seatingchart from './seatingchart';
-import FAQ from '../default-views/faq';
-import AboutUs from '../default-views/about_us';
+import HomePage from './default-views/HomePage';
+import Questionnaire from './components/Questionnaire';
+import Guestlist from './components/Guestlist';
+import Seatingchart from './components/seatingchart';
+import FAQ from './default-views/faq';
+import AboutUs from './default-views/about_us';
 import axios from 'axios';
-import SignUpForm from '../users/SignUpForm';
-import LoginForm from '../users/LoginForm';
-import CurrentUserProvider from '../contexts/CurrentUser';
+import SignUpForm from './users/SignUpForm';
+import LoginForm from './users/LoginForm';
+import CurrentUserProvider from './contexts/CurrentUser';
 
 const App = () => {
   
   const [categories, setCategories] = useState([]);
   const API_URL = process.env.REACT_APP_BACKEND || '';
-
+  
   const fetchCategories = async () => {
     try {
       const response = await axios.get(`${API_URL}/api/getAllCategories`);
