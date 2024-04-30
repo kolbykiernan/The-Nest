@@ -15,11 +15,12 @@ import CurrentUserProvider from './contexts/CurrentUser';
 const App = () => {
   
   const [categories, setCategories] = useState([]);
-  const API_URL = process.env.REACT_APP_BACKEND || '';
+  
   
   const fetchCategories = async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/getAllCategories`);
+
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND}/api/getAllCategories`);
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);

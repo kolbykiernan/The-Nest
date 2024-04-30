@@ -16,12 +16,11 @@ export default function SignUpForm() {
 		email: '',
 		passwordDigest: ''
 	})
-    const API_URL = process.env.REACT_APP_BACKEND || '';
 	async function handleSubmit(e) {
 		e.preventDefault()
         
 
-		await fetch(`${API_URL}/api/register`, {
+		await fetch(`${process.env.REACT_APP_BACKEND}/api/register`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
