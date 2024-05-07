@@ -1,10 +1,10 @@
-export default {
+{
   "development": {
     "username": "postgres",
     "password": "marigold in a field of flowers",
-    "database": "wedding_app",
+    "database": "The_Nest",
     "host": "127.0.0.1",
-    "dialect": "postgres",
+    "dialect": "postgres"
   },
   "test": {
     "username": "root",
@@ -14,10 +14,10 @@ export default {
     "dialect": "mysql"
   },
   "production": {
-    "username": "postgres",
-    "password": "marigold in a field of flowers",
-    "database": "wedding_app",
+    "username": "root",
+    "password": null,
+    "database": "database_production",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "mysql"
   }
-};
+}
