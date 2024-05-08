@@ -7,7 +7,7 @@ const { getAllBridesmaids, createBridesmaid } = require('../controllers/bridesma
 const { getAllCategories, createCategory } = require('../controllers/categoryController');
 const { getAllGroomsmen, createGroomsman } = require('../controllers/groomsmanController');
 const { getAllGuests, createGuest } = require('../controllers/guestController');
-const { getAllGuestlists, createGuestlist } = require('../controllers/guestListController');
+const { getAllGuestlists, createGuestlist, editGuestlist } = require('../controllers/guestListController');
 const { getAllWeddingData, createWeddingData } = require('../controllers/weddingDataController');
 
 // User routes
@@ -28,6 +28,7 @@ router.post('/guest', createGuest);
 
 router.get('/guestlist', getAllGuestlists);
 router.post('/guestlist', createGuestlist);
+router.put('/guestlist', editGuestlist)
 
 router.get('/weddingdata', getAllWeddingData);
 router.post('/weddingdata', createWeddingData);

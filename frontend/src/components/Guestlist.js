@@ -368,7 +368,7 @@ const runSortedList = async () => {
       localStorage.setItem('submittedOnce', JSON.stringify(true));
     } else {
       // If already submitted once, send a PUT request
-      const response = await axios.put(`http://localhost:3000/api/editGuestlist`, guestlistData);
+      const response = await axios.put(`http://localhost:3000/api/guestlist`, guestlistData);
       console.log('Guestlist data updated:', response.data);
     }
 
