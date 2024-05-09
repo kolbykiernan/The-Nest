@@ -20,7 +20,7 @@ const App = () => {
   const fetchCategories = async () => {
     try {
 
-      const response = await axios.get(`http://localhost:3000/api/category`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/category`);
       setCategories(response.data);
     } catch (error) {
       console.error('Error fetching categories:', error);

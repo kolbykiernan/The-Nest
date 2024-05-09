@@ -54,9 +54,9 @@ useEffect(() => {
   const fetchDataFromServer = async () => {
     try {
       
-      const bridesmaidsResponse = await axios.get(`http://localhost:3000/api/bridesmaids`);
-      const groomsmenResponse = await axios.get(`http://localhost:3000/api/groomsmen`);
-      const everybodyElseResponse = await axios.get(`http://localhost:3000/api/guest`);
+      const bridesmaidsResponse = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/bridesmaids`);
+      const groomsmenResponse = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/groomsmen`);
+      const everybodyElseResponse = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/guest`);
 
       const combinedData = [
         ...bridesmaidsResponse.data,
@@ -360,7 +360,7 @@ const runSortedList = async () => {
 
     if (!submittedOnce) {
       // If not submitted once, send a POST request
-      const response = await axios.post(`http://localhost:3000/api/guestlist`, newData);
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/guestlist`, newData);
       console.log('Guestlist data submitted:', response.data);
       
       // Set submittedOnce to true and store it in local storage
@@ -368,11 +368,11 @@ const runSortedList = async () => {
       localStorage.setItem('submittedOnce', JSON.stringify(true));
     } else {
       // If already submitted once, send a PUT request
-      const response = await axios.put(`http://localhost:3000/api/guestlist`, guestlistData);
+      const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/guestlist`, guestlistData);
       console.log('Guestlist data updated:', response.data);
     }
 
-    const sortedResponse = await axios.get(`http://localhost:3000/api/guestlist?sortBy=guestValue&order=desc`);
+    const sortedResponse = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/guestlist?sortBy=guestValue&order=desc`);
     const sortedGuestlist = sortedResponse.data;
     
     

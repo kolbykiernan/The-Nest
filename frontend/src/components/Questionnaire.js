@@ -40,7 +40,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
       if (nextIndex === 0) {
         try {
 
-          const response = await axios.get(`http://localhost:3000/api/weddingdata`);
+          const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/weddingdata`);
           
           const data = response.data;
           return {
@@ -138,7 +138,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
           groomSelection: answers['groomSelection']
         };
         
-        const response = await axios.post(`http://localhost:3000/api/weddingdata`, formData);
+        const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/weddingdata`, formData);
         console.log('Form submitted successfully:', response.data);
         setSubmitted(true);
 
@@ -154,7 +154,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
       const fetchBrideData = async () => {
         try {
 
-          const response = await axios.get(`http://localhost:3000/api/weddingdata`);
+          const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/weddingdata`);
           return response.data.brideFirstName;
         } catch (error) {
           console.error('Error fetching bride first name:', error);
@@ -165,7 +165,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
       const fetchGroomData = async () => {
         try {
 
-          const response = await axios.get(`http://localhost:3000/api/weddingdata`);
+          const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/weddingdata`);
           return response.data.groomFirstName;
         } catch (error) {
           console.error('Error fetching groom first name:', error);
@@ -240,7 +240,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
         plusOneValue: row.plusOneValue
       };
 
-      return axios.post(`http://localhost:3000/api/bridesmaids`, formData);
+      return axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/bridesmaids`, formData);
     });
 
     const responses = await Promise.all(requests);
@@ -274,7 +274,7 @@ const submitGroomsmenData = async (groomsmenData) => {
         plusOneValue: row.plusOneValue
       };
 
-      return axios.post(`http://localhost:3000/api/groomsman`, formData);
+      return axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/groomsman`, formData);
     });
 
     const responses = await Promise.all(requests);
@@ -309,7 +309,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         plusOneValue: row.plusOneValue,
       };
 
-      return axios.post(`http://localhost:3000/api/guest`, formData);
+      return axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/guest`, formData);
     });
 
     const responses = await Promise.all(requests);
