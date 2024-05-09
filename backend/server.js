@@ -25,15 +25,15 @@ app.get('*', (req, res) => {
 
 
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.DB_PORT || 3000;
 sequelize.authenticate()
   .then(() => {
     console.log('Connection to the database has been established successfully!');
     return sequelize.sync(); 
   })
   .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+    app.listen(DB_PORT, () => {
+      console.log(`Server is running on port ${DB_PORT}`);
     });
   })
   .catch((error) => {
