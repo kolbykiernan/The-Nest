@@ -683,7 +683,7 @@ td p {
 }
 
 .analysis-message p{
-    font-size: calc(.85vw + .85vh);
+    font-size: calc(.7vw + .7vh);
     font-style: italic;
 }
 

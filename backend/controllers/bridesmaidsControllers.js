@@ -24,7 +24,7 @@ const sortByField = (array, field, order = 'asc') => {
       createBridesmaid: async (req, res) => {
           const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
           try {
-              const newBridesmaid = await Bridesmaid.create({
+               await Bridesmaid.create({
                   firstName,
                   lastName,
                   selectedCategory,

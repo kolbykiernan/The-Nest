@@ -24,7 +24,7 @@ const sortByField = (array, field, order = 'asc') => {
       createGroomsman: async (req, res) => {
           const { firstName, lastName, selectedCategory, plusOneSelected, plusOneFirstName, plusOneLastName, isAlsoInWeddingParty, plusOneValue } = req.body;
           try {
-              const newGroomsman = await Groomsman.create({
+               await Groomsman.create({
                   firstName,
                   lastName,
                   selectedCategory,
