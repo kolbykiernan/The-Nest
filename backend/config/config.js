@@ -1,4 +1,3 @@
-require ('dotenv').config();
 
 module.exports =
 
@@ -24,6 +23,6 @@ module.exports =
     "database": process.env.DB_DATABASE,
     "port": process.env.DB_PORT || 5432, 
     "host": process.env.DB_HOST,
-    "dialect": "postgres"
+    "dialect": process.env.DB_DIALECT,
   }
 } 
