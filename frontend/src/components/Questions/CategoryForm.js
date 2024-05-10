@@ -16,7 +16,7 @@ const CategoryForm = ({categories, fetchCategories}) => {
 
 
     try {
-      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/category`, { name: categoryName });
+      await axios.post(`https://welcome-to-the-nest.onrender.com/api/category`, { name: categoryName });
       fetchCategories();
       setCategoryName('');
     } catch (error) {
