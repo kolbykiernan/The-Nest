@@ -25,7 +25,7 @@ const authenticateUser = (async (req, res) => {
     }
 });
 
-const checkAuthentication = (async (req, res) => {
+const checkAuthentication = (async (req, res) => {      
     try {
         const authHeader = req.headers.authorization;
 
