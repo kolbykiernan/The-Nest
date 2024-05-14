@@ -127,7 +127,7 @@ export default function SignUpForm() {
                                     </div>
                                         <p> or</p>
                                     <div>
-                                        <a href = "/questionnaire" className="btn btn-primary" type="button"> See a Demo </a> 
+                                        <a href = "/questionnaire" className="btn btn-primary" type="submit"> See a Demo </a> 
                                     </div>
                                 </div>
                             <div className='already-terms'>
