@@ -10,6 +10,12 @@ export default function SignUpForm() {
 
     const navigate = useNavigate()
 
+    const generateUniqueId = () => {
+
+        const uniqueId = Math.random().toString(36).substring(2);
+        return uniqueId;
+    };
+
 	const [user, setUser] = useState({
 		firstName: '',
 		lastName: '',
@@ -17,19 +23,32 @@ export default function SignUpForm() {
 		password: ''
 	})
 	async function handleSubmit(e) {
-		e.preventDefault()
-        
+        e.preventDefault();
+    
+        const uniqueId = generateUniqueId();
+    
+        sessionStorage.setItem('demoUserId', uniqueId);
+    
+        try {
+            const response = await fetch(`https://welcome-to-the-nest.onrender.com/api/users`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            });
+    
+            if (response.ok) {
+                navigate(`/login`);
+            } else {
+                console.error('Sign-up error:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
 
-		await fetch(`https://welcome-to-the-nest.onrender.com/api/users`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(user)
-		})
-        
-		navigate(`/login`)
-	}
+        }
+    }
+    
 
   return (
     <div className="body" style={{ backgroundColor: 'var(--primary-color)', width: '100%', height: '100vh' }}>
