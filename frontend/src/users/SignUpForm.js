@@ -9,13 +9,7 @@ import { useNavigate } from "react-router"
 export default function SignUpForm() {
 
     const navigate = useNavigate()
-
-    const generateUniqueId = () => {
-
-        const uniqueId = Math.random().toString(36).substring(2);
-        return uniqueId;
-    };
-
+    
 	const [user, setUser] = useState({
 		firstName: '',
 		lastName: '',
@@ -23,33 +17,19 @@ export default function SignUpForm() {
 		password: ''
 	})
 	async function handleSubmit(e) {
-        e.preventDefault();
-    
-        if (e.nativeEvent.submitter.getAttribute('name') === 'signup') {
-            try {
-                const response = await fetch(`https://welcome-to-the-nest.onrender.com/api/users`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(user)
-                });
-    
-                if (response.ok) {
-                    navigate(`/login`);
-                } else {
-                    console.error('Sign-up error:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Fetch error:', error);
-            }
-        } else if (e.nativeEvent.submitter.getAttribute('name') === 'demo') {
-            const uniqueId = generateUniqueId();
-            sessionStorage.setItem('demoUserId', uniqueId);
-            navigate(`/questionnaire`);
-        }
-    }
-    
+		e.preventDefault()
+        
+
+		await fetch(`https://welcome-to-the-nest.onrender.com/api/users`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(user)
+		})
+        
+		navigate(`/login`)
+	}
 
   return (
     <div className="body" style={{ backgroundColor: 'var(--primary-color)', width: '100%', height: '100vh' }}>
@@ -128,7 +108,7 @@ export default function SignUpForm() {
                                     </div>
                                         <p> or</p>
                                     <div>
-                                        <button className="btn btn-primary" type="submit"> See a Demo </button> 
+                                        <a href = "/questionnaire" className="btn btn-primary" type="button"> See a Demo </a> 
                                     </div>
                                 </div>
                             <div className='already-terms'>
