@@ -22,7 +22,7 @@ if (config.use_env_variable) {
         rejectUnauthorized: false // Disable certificate verification (if needed)
       }
     }
-  });
+  }); 
 }     
 
 fs  

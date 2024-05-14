@@ -16,7 +16,7 @@ const authenticateUser = (async (req, res) => {
                 message: `Could not find a user with the provided username and password`
             });
         } else {
-            const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+            const token = jwt.sign({ id: user.userId }, process.env.JWT_SECRET);
             res.json({ user: user, token: token });
         }
     } catch (error) {
@@ -43,7 +43,7 @@ const checkAuthentication = (async (req, res) => {
         const { id } = decodedToken;
 
         const user = await User.findOne({
-            where: { id: id }
+            where: { userId: id }
         });
 
         if (!user) {

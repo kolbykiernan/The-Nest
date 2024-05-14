@@ -12,7 +12,7 @@ async function defineCurrentUser(req, res, next){
            const { id } = decodedToken;
            const user = await User.findOne({
                where: {
-                   id: id
+                   userId: id
                }
            });
            req.currentUser = user;
