@@ -14,7 +14,7 @@ export default function SignUpForm() {
 		firstName: '',
 		lastName: '',
 		email: '',
-		passwordDigest: ''
+		password: ''
 	})
 	async function handleSubmit(e) {
 		e.preventDefault()
@@ -91,8 +91,8 @@ export default function SignUpForm() {
                                                 className='sign-up-password'
                                                 type="password"
                                                 required
-                                                value={user.passwordDigest}
-                                                onChange={e => setUser({ ...user, passwordDigest: e.target.value })}
+                                                value={user.password}
+                                                onChange={e => setUser({ ...user, password: e.target.value })}
                                                 id="password"
                                                 name="password"
                                             />  
