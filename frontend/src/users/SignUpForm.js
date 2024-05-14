@@ -25,27 +25,28 @@ export default function SignUpForm() {
 	async function handleSubmit(e) {
         e.preventDefault();
     
-        const uniqueId = generateUniqueId();
+        if (e.nativeEvent.submitter.getAttribute('name') === 'signup') {
+            try {
+                const response = await fetch(`https://welcome-to-the-nest.onrender.com/api/users`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                });
     
-        sessionStorage.setItem('demoUserId', uniqueId);
-    
-        try {
-            const response = await fetch(`https://welcome-to-the-nest.onrender.com/api/users`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(user)
-            });
-    
-            if (response.ok) {
-                navigate(`/login`);
-            } else {
-                console.error('Sign-up error:', response.statusText);
+                if (response.ok) {
+                    navigate(`/login`);
+                } else {
+                    console.error('Sign-up error:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
             }
-        } catch (error) {
-            console.error('Fetch error:', error);
-
+        } else if (e.nativeEvent.submitter.getAttribute('name') === 'demo') {
+            const uniqueId = generateUniqueId();
+            sessionStorage.setItem('demoUserId', uniqueId);
+            navigate(`/questionnaire`);
         }
     }
     
@@ -127,7 +128,7 @@ export default function SignUpForm() {
                                     </div>
                                         <p> or</p>
                                     <div>
-                                        <a href = "/questionnaire" className="btn btn-primary" type="submit"> See a Demo </a> 
+                                        <button className="btn btn-primary" type="submit"> See a Demo </button> 
                                     </div>
                                 </div>
                             <div className='already-terms'>
