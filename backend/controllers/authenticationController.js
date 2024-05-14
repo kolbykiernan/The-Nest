@@ -16,7 +16,7 @@ const authenticateUser = (async (req, res) => {
                 message: `Could not find a user with the provided username and password`
             });
         } else {
-            const token = jwt.sign({ id: user.userId }, fernehrjfmljknverljkgnreglenr);
+            const token = jwt.sign({ id: user.userId }, "fernehrjfmljknverljkgnreglenr");
             res.json({ user: user, token: token });
         }
     } catch (error) {
@@ -34,7 +34,7 @@ const checkAuthentication = (async (req, res) => {
         }
 
         const token = authHeader.split(' ')[1];
-        const decodedToken = jwt.decode(token, fernehrjfmljknverljkgnreglenr);
+        const decodedToken = jwt.decode(token, "fernehrjfmljknverljkgnreglenr");
 
         if (!decodedToken || !decodedToken.id) {
             return res.status(401).json({ message: 'Invalid token' });
