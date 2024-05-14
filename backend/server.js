@@ -7,12 +7,14 @@ require('dotenv').config();
 const path = require("path");
 const userRoutes = require('./routes/userRoutes');
 const { sequelize } = require('./models');
+const defineCurrentUser = require('./middleware/defineCurrentUser');
 
 const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(cors());
+app.use(defineCurrentUser);
 app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 // Use routes

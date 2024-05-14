@@ -1,6 +1,7 @@
 // usersController.js
 
 const { User } = require('../models');
+const bcrypt = require('bcryptjs');
 
 // Get all users
 const getAllUsers = async (req, res) => {
@@ -18,15 +19,14 @@ const getAllUsers = async (req, res) => {
 // Create a new user
 const createUser = async (req, res) => {
   try {
-    const { firstName, lastName, email, passwordDigest } = req.body;
-    const newUser = await User.create({
-      firstName,
-      lastName,
-      email,
-      passwordDigest
-    });
-    res.status(201).json(newUser);
-  } catch (error) {
+    let { password, ...rest } = req.body;
+    const user = await User.create({
+        ...rest,
+        passwordDigest: await bcrypt.hash(password, 10)
+    })
+    res.json(user)
+ }
+  catch (error) {
     console.error('Error creating user:', error);
     res.status(500).json({ error: 'Error creating user' });
   }

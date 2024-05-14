@@ -20,7 +20,7 @@ export default function SignUpForm() {
 		e.preventDefault()
         
 
-		await fetch(`https://welcome-to-the-nest.onrender.com/api/register`, {
+		await fetch(`https://welcome-to-the-nest.onrender.com/api/users`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
