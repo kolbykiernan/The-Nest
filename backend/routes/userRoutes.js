@@ -17,7 +17,7 @@ router.get('/users', getAllUsers);
 router.post('/users', createUser);
 
 router.post('/authentication', authenticateUser);
-router.get('/authentication', checkAuthentication);
+router.get('/authentication/profile', checkAuthentication);
 
 router.get('/bridesmaids', getAllBridesmaids);
 router.post('/bridesmaids', createBridesmaid);
