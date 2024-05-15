@@ -7,29 +7,54 @@ import '../styles/HomePage.css'
 import { useState } from "react"
 import { useNavigate } from "react-router"
 export default function SignUpForm() {
+    const navigate = useNavigate();
 
-    const navigate = useNavigate()
-    
-	const [user, setUser] = useState({
-		firstName: '',
-		lastName: '',
-		email: '',
-		password: ''
-	})
-	async function handleSubmit(e) {
-		e.preventDefault()
-        
+    const generateUniqueId = () => {
+        const uniqueId = Math.random().toString(36).substring(2);
+        return uniqueId;
+    };
 
-		await fetch(`https://welcome-to-the-nest.onrender.com/api/users`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(user)
-		})
-        
-		navigate(`/login`)
-	}
+    const [user, setUser] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: ''
+    });
+
+    const handleSignUp = async (e) => {
+        e.preventDefault();
+
+        // Submit user data to the server
+        try {
+            const response = await fetch('https://welcome-to-the-nest.onrender.com/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            });
+
+            if (response.ok) {
+                // If sign up is successful, navigate to login page
+                navigate('/login');
+            } else {
+                console.error('Sign-up error:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    };
+
+    const handleDemoClick = () => {
+        // Generate a unique session ID
+        const uniqueId = generateUniqueId();
+
+        // Store the unique session ID in session storage
+        sessionStorage.setItem('demoUserId', uniqueId);
+
+        // Navigate to the "/questionnaire" page
+        navigate('/questionnaire');
+    };
 
   return (
     <div className="body" style={{ backgroundColor: 'var(--primary-color)', width: '100%', height: '100vh' }}>
@@ -38,7 +63,7 @@ export default function SignUpForm() {
        </div>       
         <div className='sign-up-border'>        
             <InputGroup className='sign-up-form'>
-                        <form className='sign-in-info' onSubmit={handleSubmit}>
+                        <form className='sign-in-info' onSubmit={handleSignUp}>
                             <h1 >Welcome!</h1>
                                 <h3> Join The Nest</h3>
                                 <div className="sign-up-email-password">
@@ -102,15 +127,16 @@ export default function SignUpForm() {
                                 <div className='terms'>
                                     <p> By Clicking 'Sign Up' you agree to the The Nest's <a href ="/about-us">Terms of Use</a></p>
                                 </div>
-                                <div className='sign-up-button'>
-                                    <div>
-                                        <input className="btn btn-primary" type="submit" value="Sign Up" />
-                                    </div>
-                                        <p> or</p>
-                                    <div>
-                                        <a href = "/questionnaire" className="btn btn-primary" type="button"> See a Demo </a> 
-                                    </div>
-                                </div>
+                                <div className="sign-up-button">
+                            <div>
+                                <input className="btn btn-primary" type="submit" value="Sign Up" />
+                            </div>
+                            <p>or</p>
+                            <div>
+                                {/* Button for demo session */}
+                                <button className="btn btn-primary" type="button" onClick={handleDemoClick}>See a Demo</button>
+                            </div>
+                        </div>
                             <div className='already-terms'>
                                 <p> Already in The Nest?</p>
                                 <Link to="/login"> Log In </Link>
