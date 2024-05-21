@@ -36,14 +36,16 @@ const sortByField = (array, field, order = 'asc') => {
                         lastName: item.plusOneLastName,
                         selectedCategory: item.selectedCategory,
                         brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party +1',
-                        guestValue: item.plusOneValue
+                        guestValue: item.plusOneValue,
+                        userId: item.userId
                     };
                     const guestData = {
                         firstName: item.firstName,
                         lastName: item.lastName,
                         selectedCategory: item.selectedCategory,
                         brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party',
-                        guestValue: item.guestValue || 5
+                        guestValue: item.guestValue || 5,
+                        userId: item.userId
                     };
 
                     // Insert the new entries into the database
@@ -59,7 +61,8 @@ const sortByField = (array, field, order = 'asc') => {
                         lastName: item.lastName,
                         selectedCategory: item.selectedCategory,
                         brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party',
-                        guestValue: item.guestValue || 5
+                        guestValue: item.guestValue || 5,
+                        userId: item.userId
                     };
 
                     // Insert the new entry into the database

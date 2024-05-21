@@ -22,7 +22,7 @@ const sortByField = (array, field, order = 'asc') => {
   
       // Create a new guest
       createGuest: async (req, res) => {
-          const { firstName, lastName, selectedCategory, brideGroomOrMutual, guestValue, plusOneSelected, plusOneFirstName, plusOneLastName, plusOneValue } = req.body;
+          const { firstName, lastName, selectedCategory, brideGroomOrMutual, guestValue, plusOneSelected, plusOneFirstName, plusOneLastName, plusOneValue, userId } = req.body;
           try {
                await Guest.create({
                   firstName,
@@ -33,7 +33,8 @@ const sortByField = (array, field, order = 'asc') => {
                   plusOneSelected,
                   plusOneFirstName,
                   plusOneLastName,
-                  plusOneValue
+                  plusOneValue,
+                  userId
               });
   
               // Fetch the newly created guest and all guests in order
