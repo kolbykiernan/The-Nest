@@ -13,8 +13,6 @@ import '../styles/questionnaire.css';
 
 const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBridesmaidsData, groomsmenData, setGroomsmenData, everybodyElseData, setEverybodyElseData}) => {
 
-  
-
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = localStorage.getItem('currentPage');
     return savedPage ? parseInt(savedPage) : 0;
@@ -129,13 +127,21 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
         handleAnswer('groomLastName', groomLastName);
         handleAnswer('groomSelection', groomSelection);
     
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        const userId = currentUser?.userId;
+    
+        if (!userId) {
+          throw new Error('User ID is not available');
+        }
+
         const formData = {
           brideFirstName: answers['brideFirstName'],
           brideLastName: answers['brideLastName'], 
           brideSelection: answers['brideSelection'], 
           groomFirstName: answers['groomFirstName'], 
           groomLastName: answers['groomLastName'], 
-          groomSelection: answers['groomSelection']
+          groomSelection: answers['groomSelection'],
+          userId
         };
         
         const response = await axios.post(`https://welcome-to-the-nest.onrender.com/api/weddingdata`, formData);
@@ -229,6 +235,14 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
         return null; 
       }
 
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      const userId = currentUser?.userId;
+  
+      if (!userId) {
+        throw new Error('User ID is not available');
+      }
+
+
       const formData = {
         firstName: row.firstName,
         lastName: row.lastName,
@@ -237,7 +251,8 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
         plusOneFirstName: row.plusOneFirstName,
         plusOneLastName: row.plusOneLastName,
         selectedRole: row.selectedRole,
-        plusOneValue: row.plusOneValue
+        plusOneValue: row.plusOneValue,
+        userId
       };
 
       return axios.post(`https://welcome-to-the-nest.onrender.com/api/bridesmaids`, formData);
@@ -263,6 +278,14 @@ const submitGroomsmenData = async (groomsmenData) => {
         return null; 
       }
 
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      const userId = currentUser?.userId;
+  
+      if (!userId) {
+        throw new Error('User ID is not available');
+      }
+
+
       const formData = {
         firstName: row.firstName,
         lastName: row.lastName,
@@ -271,7 +294,8 @@ const submitGroomsmenData = async (groomsmenData) => {
         plusOneFirstName: row.plusOneFirstName,
         plusOneLastName: row.plusOneLastName,
         selectedRole: row.selectedRole,
-        plusOneValue: row.plusOneValue
+        plusOneValue: row.plusOneValue,
+        userId
       };
 
       return axios.post(`https://welcome-to-the-nest.onrender.com/api/groomsman`, formData);
@@ -297,6 +321,13 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         return null; 
       }
 
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      const userId = currentUser?.userId;
+  
+      if (!userId) {
+        throw new Error('User ID is not available');
+      }
+
       const formData = {
         firstName: row.firstName,
         lastName: row.lastName,
@@ -307,6 +338,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         plusOneFirstName: row.plusOneFirstName,
         plusOneLastName: row.plusOneLastName,
         plusOneValue: row.plusOneValue,
+        userId
       };
 
       return axios.post(`https://welcome-to-the-nest.onrender.com/api/guest`, formData);

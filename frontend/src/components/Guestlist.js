@@ -328,20 +328,29 @@ const runSortedList = async () => {
       const adjustedIndex = index + 1;
       const backgroundClass = adjustedIndex <= desiredAttendanceCount ? 'able-to-attend' : 'unable-to-attend';
 
+      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      const userId = currentUser?.userId;
+
+      if (!userId) {
+        throw new Error('User ID is not available');
+      }
+
       if (!item.dynamicallyAdded && item.plusOneSelected === 'true') {
         const plusOneData = {
           firstName: item.plusOneFirstName,
           lastName: item.plusOneLastName,
           selectedCategory: item.selectedCategory,
           brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party +1',
-          guestValue: item.plusOneValue
+          guestValue: item.plusOneValue,
+          userId
         };
         const guestData = {
           firstName: item.firstName,
           lastName: item.lastName,
           selectedCategory: item.selectedCategory,
           brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party',
-          guestValue: item.guestValue || 5
+          guestValue: item.guestValue || 5,
+          userId
         };
         newData.push(plusOneData);
         newData.push(guestData);
@@ -351,7 +360,8 @@ const runSortedList = async () => {
           lastName: item.lastName,
           selectedCategory: item.selectedCategory,
           brideGroomOrMutual: item.brideGroomOrMutual || 'Wedding Party',
-          guestValue: item.guestValue || 5
+          guestValue: item.guestValue || 5,
+          userId
         });
       }
     });

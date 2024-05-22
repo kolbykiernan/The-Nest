@@ -14,9 +14,15 @@ const CategoryForm = ({categories, fetchCategories}) => {
 
   const handleFormSubmit = async () => {
 
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const userId = currentUser?.userId;
+
+    if (!userId) {
+      throw new Error('User ID is not available');
+    }
 
     try {
-      await axios.post(`https://welcome-to-the-nest.onrender.com/api/category`, { name: categoryName });
+      await axios.post(`https://welcome-to-the-nest.onrender.com/api/category`, { name: categoryName, userId });
       fetchCategories();
       setCategoryName('');
     } catch (error) {
