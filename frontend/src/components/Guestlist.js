@@ -8,10 +8,13 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { CurrentUser } from '../contexts/CurrentUser';
 
 
 
 export default function Guestlist({ categories }) {
+
+  const { currentUser } = useContext(CurrentUser);
  
   const [loading, setLoading] = useState(true);
   const [rowIndexOffset, setRowIndexOffset] = useState(0); 

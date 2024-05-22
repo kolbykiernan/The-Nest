@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import { CurrentUser } from '../contexts/CurrentUser';
 import Header from '../default-views/header'
 import Footer from '../default-views/Footer'
 import CategoryForm from './Questions/CategoryForm';
@@ -12,6 +13,7 @@ import '../styles/questionnaire.css';
 
 
 const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBridesmaidsData, groomsmenData, setGroomsmenData, everybodyElseData, setEverybodyElseData}) => {
+  const { currentUser } = useContext(CurrentUser);
 
   const [currentPage, setCurrentPage] = useState(() => {
     const savedPage = localStorage.getItem('currentPage');

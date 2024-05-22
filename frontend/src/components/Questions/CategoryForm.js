@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
+import { CurrentUser } from '../contexts/CurrentUser';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -9,6 +10,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 
 const CategoryForm = ({categories, fetchCategories}) => {
+  const { currentUser } = useContext(CurrentUser);
+
   const [categoryName, setCategoryName] = useState('');
   console.log('fetchCategories prop:', fetchCategories);
 
