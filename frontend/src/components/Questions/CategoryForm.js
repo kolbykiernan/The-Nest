@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
-import { CurrentUser } from '../contexts/CurrentUser';
+import { CurrentUser } from '../../contexts/CurrentUser';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -17,7 +17,6 @@ const CategoryForm = ({categories, fetchCategories}) => {
 
   const handleFormSubmit = async () => {
 
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     const userId = currentUser?.userId;
 
     if (!userId) {

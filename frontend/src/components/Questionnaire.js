@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios';
 import { CurrentUser } from '../contexts/CurrentUser';
 import Header from '../default-views/header'
@@ -129,7 +129,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
         handleAnswer('groomLastName', groomLastName);
         handleAnswer('groomSelection', groomSelection);
     
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
         const userId = currentUser?.userId;
     
         if (!userId) {
@@ -237,7 +237,6 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
         return null; 
       }
 
-      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
       const userId = currentUser?.userId;
   
       if (!userId) {
@@ -280,7 +279,6 @@ const submitGroomsmenData = async (groomsmenData) => {
         return null; 
       }
 
-      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
       const userId = currentUser?.userId;
   
       if (!userId) {
@@ -323,7 +321,6 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         return null; 
       }
 
-      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
       const userId = currentUser?.userId;
   
       if (!userId) {

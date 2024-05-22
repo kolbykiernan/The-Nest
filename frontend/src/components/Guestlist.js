@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Sidebar from './sidebar';
 import Header from '../default-views/header';
 import Footer from '../default-views/Footer';
@@ -9,7 +9,6 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { CurrentUser } from '../contexts/CurrentUser';
-
 
 
 export default function Guestlist({ categories }) {
@@ -331,7 +330,6 @@ const runSortedList = async () => {
       const adjustedIndex = index + 1;
       const backgroundClass = adjustedIndex <= desiredAttendanceCount ? 'able-to-attend' : 'unable-to-attend';
 
-      const currentUser = JSON.parse(localStorage.getItem('currentUser'));
       const userId = currentUser?.userId;
 
       if (!userId) {
