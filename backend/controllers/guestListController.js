@@ -19,9 +19,7 @@ const sortByField = (array, field, order = 'asc') => {
             res.status(500).send(error.message);
         }
     },
-  
-      // Create a new entry in the guest list
-      // Create a new entry in the guest list
+
     createGuestlist: async (req, res) => {
         try {
             const guestlistData = req.body.map((item, index) => ({ ...item, order: index }));
@@ -99,7 +97,7 @@ const sortByField = (array, field, order = 'asc') => {
                       existingEntry.selectedCategory = item.selectedCategory;
                       existingEntry.brideGroomOrMutual = item.brideGroomOrMutual;
                       existingEntry.guestValue = item.guestValue;
-                      existingEntry.userId = item.userId;
+                      
                       await existingEntry.save();
                       updatedEntries.push(existingEntry);
                   } else {
@@ -109,7 +107,7 @@ const sortByField = (array, field, order = 'asc') => {
                           selectedCategory: item.selectedCategory,
                           brideGroomOrMutual: item.brideGroomOrMutual,
                           guestValue: item.guestValue,
-                          userId: item.userId
+                          userId
                       };
                       const newEntry = await Guestlist.create(newEntryData);
                       updatedEntries.push(newEntry);
