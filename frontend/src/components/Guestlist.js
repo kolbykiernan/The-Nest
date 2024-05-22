@@ -370,15 +370,14 @@ const runSortedList = async () => {
     setGuestlistData(newData);
 
     if (!submittedOnce) {
-      // If not submitted once, send a POST request
+  
       const response = await axios.post(`https://welcome-to-the-nest.onrender.com/api/guestlist`, newData);
       console.log('Guestlist data submitted:', response.data);
-      
-      // Set submittedOnce to true and store it in local storage
+    
       setSubmittedOnce(true);
       localStorage.setItem('submittedOnce', JSON.stringify(true));
     } else {
-      // If already submitted once, send a PUT request
+
       const response = await axios.put(`https://welcome-to-the-nest.onrender.com/api/guestlist`, guestlistData);
       console.log('Guestlist data updated:', response.data);
     }

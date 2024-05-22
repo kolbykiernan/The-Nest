@@ -473,10 +473,9 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               type="text" 
               value={answer} 
               onChange={(e) => handleAnswer(question.id, e.target.value)} 
-              handleAnswer={handleAnswer}
-     
+              handleAnswer={handleAnswer}     
               bridesmaidsData={bridesmaidsData}
-                setBridesmaidsData={setBridesmaidsData}
+              setBridesmaidsData={setBridesmaidsData}
               required
             />
           </div>
@@ -503,9 +502,8 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               value={answer} 
               onChange={(e) => handleAnswer(question.id, e.target.value)} 
               handleAnswer={handleAnswer}
-
-               groomsmenData={groomsmenData}
-                      setGroomsmenData={setGroomsmenData}
+              groomsmenData={groomsmenData}
+              setGroomsmenData={setGroomsmenData}
               required
             />
           </div>
@@ -532,9 +530,8 @@ const submitEverybodyElseData = async (everybodyElseData) => {
               value={answer} 
               onChange={(e) => handleAnswer(question.id, e.target.value)} 
               handleAnswer={handleAnswer}
-
-               everybodyElseData={everybodyElseData}
-                      setEverybodyElseData={setEverybodyElseData}
+              everybodyElseData={everybodyElseData}
+              setEverybodyElseData={setEverybodyElseData}
               required
             />
           </div>

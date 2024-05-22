@@ -99,6 +99,7 @@ const sortByField = (array, field, order = 'asc') => {
                       existingEntry.selectedCategory = item.selectedCategory;
                       existingEntry.brideGroomOrMutual = item.brideGroomOrMutual;
                       existingEntry.guestValue = item.guestValue;
+                      existingEntry.userId = item.userId;
                       await existingEntry.save();
                       updatedEntries.push(existingEntry);
                   } else {
@@ -107,7 +108,8 @@ const sortByField = (array, field, order = 'asc') => {
                           lastName: item.lastName,
                           selectedCategory: item.selectedCategory,
                           brideGroomOrMutual: item.brideGroomOrMutual,
-                          guestValue: item.guestValue
+                          guestValue: item.guestValue,
+                          userId: item.userId
                       };
                       const newEntry = await Guestlist.create(newEntryData);
                       updatedEntries.push(newEntry);
