@@ -318,15 +318,14 @@ const runSortedList = async () => {
 
     if (hasEmptyValues) {
       setEmptyRankingErrorMessage("It looks like there are some guests who don't have a 'Ranking'. Please make sure this is filled out before running the list!");
-      return; 
+      return;
     } else {
-      setEmptyRankingErrorMessage(null); 
+      setEmptyRankingErrorMessage(null);
     }
 
     const newData = [];
-    
 
-    guestlistData.forEach((item, index)  => {
+    guestlistData.forEach((item, index) => {
       const adjustedIndex = index + 1;
       const backgroundClass = adjustedIndex <= desiredAttendanceCount ? 'able-to-attend' : 'unable-to-attend';
 
@@ -370,22 +369,25 @@ const runSortedList = async () => {
     setGuestlistData(newData);
 
     if (!submittedOnce) {
-  
       const response = await axios.post(`https://welcome-to-the-nest.onrender.com/api/guestlist`, newData);
       console.log('Guestlist data submitted:', response.data);
-    
+
       setSubmittedOnce(true);
       localStorage.setItem('submittedOnce', JSON.stringify(true));
     } else {
+      const updatedData = guestlistData.map((item, index) => ({
+        ...item,
+        userId: currentUser?.userId, 
+        order: index + 1
+      }));
 
-      const response = await axios.put(`https://welcome-to-the-nest.onrender.com/api/guestlist`, guestlistData);
+      const response = await axios.put(`https://welcome-to-the-nest.onrender.com/api/guestlist`, updatedData);
       console.log('Guestlist data updated:', response.data);
     }
 
     const sortedResponse = await axios.get(`https://welcome-to-the-nest.onrender.com/api/guestlist?sortBy=guestValue&order=desc`);
     const sortedGuestlist = sortedResponse.data;
-    
-    
+
     const updatedGuestlistData = sortedGuestlist.map((guest, index) => {
       const adjustedIndex = index + 1;
       const backgroundClass = adjustedIndex <= desiredAttendanceCount ? 'able-to-attend' : 'unable-to-attend';
@@ -394,13 +396,13 @@ const runSortedList = async () => {
 
     setGuestlistData(updatedGuestlistData);
     localStorage.setItem('guestlistData', JSON.stringify(updatedGuestlistData));
-    
+
     if (venueCapacity > desiredAttendanceCount && venueCapacity > sortedGuestlist.length) {
       setVenueCapacityMessage("However, your venue is able to accommodate all the guests in your current guest list in case you're willing to adjust your desired attendance.");
     } else {
       setVenueCapacityMessage(null);
     }
-    
+
     const analysisMessage = desiredAttendanceCount >= sortedGuestlist.length ?
       `Based on the number of guests you'd like to attend, you can invite everybody on your list. ${venueCapacityMessage ? venueCapacityMessage : ''}. You can continue to make adjustments to help manage your guestlist! ` :
       `Based on the number of guests you'd like to attend, ${sortedGuestlist.length - desiredAttendanceCount} guests will not be able to come. ${venueCapacityMessage ? venueCapacityMessage : ''} You can continue to make adjustments to help manage your guestlist! `;
@@ -410,6 +412,7 @@ const runSortedList = async () => {
     console.error('Error updating guestlist data:', error);
   }
 };
+
 
 useEffect(() => {
   const storedGuestlistData = localStorage.getItem('guestlistData');
