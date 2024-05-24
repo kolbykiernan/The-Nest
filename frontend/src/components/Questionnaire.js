@@ -35,23 +35,25 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
     ]);
 
     const handlePrev = async () => {
-      const nextIndex = currentPage - 1;
-      setCurrentPage(nextIndex);
-      if (nextIndex === 0) {
-        try {
-
-          const response = await axios.get(`https://welcome-to-the-nest.onrender.com/api/weddingdata`);
-          
-          const data = response.data;
-          return {
-            brideSelection: response.data.brideSelection,
-            groomSelection: response.data.groomSelection,
-            brideFirstName: response.data.brideFirstName,
-            brideLastName: response.data.brideLastName,
-            groomFirstName: response.data.groomFirstName,
-            groomLastName: response.data.groomLastName
-          };
+      if (currentPage === 0) {
+        return; // Prevent going below page 0
+      }
     
+      setCurrentPage(currentPage - 1);
+    
+      if (currentPage - 1 === 0) {
+        try {
+          const response = await axios.get('https://welcome-to-the-nest.onrender.com/api/weddingdata');
+          const data = response.data;
+          // Handle the fetched data as needed
+          return {
+            brideSelection: data.brideSelection,
+            groomSelection: data.groomSelection,
+            brideFirstName: data.brideFirstName,
+            brideLastName: data.brideLastName,
+            groomFirstName: data.groomFirstName,
+            groomLastName: data.groomLastName
+          };
         } catch (error) {
           console.error('Error fetching wedding data:', error);
         }
@@ -62,8 +64,6 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
   const [weddingDataErrorMessage, setWeddingDataErrorMessage] = useState(null)
 
   const handleNext = async () => {
-    const nextIndex = currentPage + 1;
-
     if (currentPage === 0 && !submitted) {
       if (
         brideFirstName.trim() === '' ||
@@ -72,15 +72,15 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
         groomLastName.trim() === ''
       ) {
         setWeddingDataErrorMessage('Please fill out all fields');
-        return; 
+        return;
       } else {
-      submitWeddingData();
-      setSubmitted(true);
-      setWeddingDataErrorMessage(null);
+        submitWeddingData();
+        setSubmitted(true);
+        setWeddingDataErrorMessage(null);
+      }
     }
+    setCurrentPage(currentPage + 1);
   };
-  setCurrentPage(nextIndex);
-}
   
       const handleAnswer = (questionId, answer) => {
         setAnswers(prevAnswers => ({
@@ -158,56 +158,48 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
     
 
     useEffect(() => {
-
-      const fetchBrideData = async () => {
+      const fetchWeddingData = async () => {
         try {
-
-          const response = await axios.get(`https://welcome-to-the-nest.onrender.com/api/weddingdata`);
-          return response.data.brideFirstName;
+          const response = await axios.get('https://welcome-to-the-nest.onrender.com/api/weddingdata');
+          const data = response.data;
+          setBrideFirstName(data.brideFirstName || '');
+          setGroomFirstName(data.groomFirstName || '');
         } catch (error) {
-          console.error('Error fetching bride first name:', error);
+          console.error('Error fetching wedding data:', error);
         }
       };
-    
-
-      const fetchGroomData = async () => {
-        try {
-
-          const response = await axios.get(`https://welcome-to-the-nest.onrender.com/api/weddingdata`);
-          return response.data.groomFirstName;
-        } catch (error) {
-          console.error('Error fetching groom first name:', error);
-        }
-      };
-    
-      fetchBrideData();
-      fetchGroomData();
+  
+      fetchWeddingData();
     }, []);
-    
+  
+    // Update questions when brideFirstName changes
     useEffect(() => {
-
       setQuestions(prevQuestions => {
         const updatedQuestions = [...prevQuestions];
         const bridesmaidsQuestion = updatedQuestions.find(q => q.id === 3);
         if (bridesmaidsQuestion) {
-          bridesmaidsQuestion.text = `${brideFirstName}'s Wedding Party`;
+          bridesmaidsQuestion.text = brideFirstName
+            ? `${brideFirstName}'s Wedding Party`
+            : 'Wedding Party #1';
         }
         return updatedQuestions;
       });
     }, [brideFirstName]);
-    
+  
+    // Update questions when groomFirstName changes
     useEffect(() => {
-
       setQuestions(prevQuestions => {
         const updatedQuestions = [...prevQuestions];
         const groomsmenQuestion = updatedQuestions.find(q => q.id === 4);
         if (groomsmenQuestion) {
-          groomsmenQuestion.text = `${groomFirstName}'s Wedding Party`;
+          groomsmenQuestion.text = groomFirstName
+            ? `${groomFirstName}'s Wedding Party`
+            : 'Wedding Party #2';
         }
         return updatedQuestions;
       });
     }, [groomFirstName]);
-
+  
   
       useEffect(() => {
 
