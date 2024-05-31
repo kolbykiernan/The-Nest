@@ -7,7 +7,7 @@
     * [Built With](#built-with)
 2. [Getting Started](#getting-started)
     * [Prerequisites](#prerequisites)
-    * [Installation](#installation)
+    * [Installation Instructions](#installation-instructions)
 3. [Usage](#usage)
 4. [Roadmap](#roadmap)
 5. [Contributing](#contributing)
@@ -59,7 +59,7 @@ To start, run:
      cd wedding-app
      ```
 
-## Installation  
+### Installing Dependencies
 
 Before running the project, you need to install the required dependencies.
 
@@ -75,41 +75,40 @@ Before running the project, you need to install the required dependencies.
      npm install
      ```
 
-### Installing TypeScript and Sass
+### Setting Up PostgreSQL
 
-The project uses TypeScript and Sass. Follow these steps to install them globally:
+The project uses PostgreSQL as the database. Follow these steps to set it up:
 
-1. **Install TypeScript**:
-   - Run the following command to install TypeScript globally:
-     ```sh
-     npm install -g typescript
+1. **Install PostgreSQL**:
+   - Download and install PostgreSQL from [postgresql.org](https://www.postgresql.org/).
+
+2. **Create a new database**:
+   - Open your PostgreSQL command line interface (psql) or use a GUI tool like pgAdmin.
+   - Run the following SQL command to create a new database:
+     ```sql
+     CREATE DATABASE wedding_app;
      ```
 
-2. **Install Sass**:
-   - Run the following command to install Sass globally:
-     ```sh
-     npm install -g sass
-     ```
+3. **Configure the database connection**:
+   - Update the database configuration in your backend code with your PostgreSQL credentials.
 
 ### Running the Project
 
-After installing the dependencies, you can run the project.
+After installing the dependencies and setting up PostgreSQL, you can run the project.
 
-1. **Compile TypeScript files**:
-   - Run the following command to compile TypeScript files:
+1. **Start the backend server**:
+   - Navigate to the backend directory and start the server:
      ```sh
-     tsc
+     cd backend
+     npm install
+     node index.js
      ```
 
-2. **Compile Sass files**:
-   - Run the following command to compile Sass files:
+2. **Start the frontend development server**:
+   - Navigate to the frontend directory and start the React development server:
      ```sh
-     sass src/scss:dist/css
-     ```
-
-3. **Start the development server**:
-   - Depending on your setup, you may have different scripts to start your project. Here is a common example:
-     ```sh
+     cd ../frontend
+     npm install
      npm start
      ```
 
@@ -120,6 +119,7 @@ Here are some common npm scripts you might use during development:
 - **Build the project**:
   ```sh
   npm run build
+
    
 
 ## Usage
