@@ -36,17 +36,91 @@ The Nest requires the following to run:
 ### Prerequisites
 
 To start, run:   
+   ```sh
     npm install npm@latest -g    
+   ```
 
-### Installation:
+## Installation Instructions
 
-1. Clone the repo
-    git clone [https://github.com/kolbykiernan/wedding-app.git](https://github.com/kolbykiernan/wedding-app.git)
+### Forking and Cloning the Repository
 
-2. Install NPM packages        
-    main folder -> npm install         
-    cd frontend -> npm install --> npm start    
-    cd backend -> npm install --> node index.js        
+1. **Fork the repository**:
+   - Navigate to the repository on GitHub.
+   - Click the "Fork" button in the top-right corner of the page.
+
+2. **Clone the forked repository**:
+   - Open your terminal or command prompt.
+   - Run the following command, replacing `<your-username>` with your GitHub username:
+     ```sh
+     git clone https://github.com/<your-username>/wedding-app.git
+     ```
+   - Navigate to the project directory:
+     ```sh
+     cd wedding-app
+     ```
+
+## Installation  
+
+Before running the project, you need to install the required dependencies.
+
+1. **Install Node.js**:
+   - Download and install Node.js from [nodejs.org](https://nodejs.org/).
+
+2. **Install npm (Node Package Manager)**:
+   - npm is installed automatically with Node.js.
+
+3. **Install project dependencies**:
+   - Run the following command to install the dependencies listed in `package.json`:
+     ```sh
+     npm install
+     ```
+
+### Installing TypeScript and Sass
+
+The project uses TypeScript and Sass. Follow these steps to install them globally:
+
+1. **Install TypeScript**:
+   - Run the following command to install TypeScript globally:
+     ```sh
+     npm install -g typescript
+     ```
+
+2. **Install Sass**:
+   - Run the following command to install Sass globally:
+     ```sh
+     npm install -g sass
+     ```
+
+### Running the Project
+
+After installing the dependencies, you can run the project.
+
+1. **Compile TypeScript files**:
+   - Run the following command to compile TypeScript files:
+     ```sh
+     tsc
+     ```
+
+2. **Compile Sass files**:
+   - Run the following command to compile Sass files:
+     ```sh
+     sass src/scss:dist/css
+     ```
+
+3. **Start the development server**:
+   - Depending on your setup, you may have different scripts to start your project. Here is a common example:
+     ```sh
+     npm start
+     ```
+
+### Common Commands
+
+Here are some common npm scripts you might use during development:
+
+- **Build the project**:
+  ```sh
+  npm run build
+   
 
 ## Usage
 Users will sign up, log in, or choose the demo version to get started. Users will create categories and then fill out wedding party and other guests. After this section users will be directed to a guestlist, where they can further make edits to their guest list, then fill out info about their wedding venue, how many people they want to have come, and the cost per person. Based on guest values assigned, this will return a list with guests that should and shouldn't attend the wedding. Down the road, this info will be able to return a seating chart.
