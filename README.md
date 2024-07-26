@@ -23,6 +23,8 @@
 
 The Nest is designed to make it easier to choose guests who will attend your wedding by ranking and categorizing them. Down the road, the same information will be used to return a mock seating chart.
 
+Deployed Site: [https://welcome-to-the-nest-irdb.onrender.com/](https://welcome-to-the-nest-irdb.onrender.com/)
+
 ### Built With
 The Nest requires the following to run:
 * Node.JS 
@@ -148,8 +150,7 @@ This project is licensed under the MIT License
 
 ## Contact
 Kolby Kiernan - kolbykiernan@gmail.com    
-Project Link:[https://github.com/kolbykiernan/wedding-app.git](https://github.com/kolbykiernan/wedding-app.git)
-Deployed Site: [https://welcome-to-the-nest-irdb.onrender.com/](https://welcome-to-the-nest-irdb.onrender.com/)
+Project Link:[https://github.com/kolbykiernan/wedding-app.git](https://github.com/kolbykiernan/wedding-app.git)     
 
 ## Credits
 * The Nest Logo - created by [Adobe Firefly](https://firefly.adobe.com/)
