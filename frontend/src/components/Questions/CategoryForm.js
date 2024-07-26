@@ -24,7 +24,7 @@ const CategoryForm = ({categories, fetchCategories}) => {
     }
 
     try {
-      await axios.post(`https://welcome-to-the-nest.onrender.com/api/category`, { name: categoryName, userId });
+      await axios.post(`https://welcome-to-the-nest-irdb.onrender.com/api/category`, { name: categoryName, userId });
       fetchCategories();
       setCategoryName('');
     } catch (error) {

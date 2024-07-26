@@ -26,7 +26,7 @@ export default function SignUpForm() {
 
         // Submit user data to the server
         try {
-            const response = await fetch('https://welcome-to-the-nest.onrender.com/api/users', {
+            const response = await fetch('https://welcome-to-the-nest-irdb.onrender.com/api/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

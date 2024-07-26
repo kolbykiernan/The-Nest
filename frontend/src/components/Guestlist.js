@@ -56,9 +56,9 @@ useEffect(() => {
   const fetchDataFromServer = async () => {
     try {
       
-      const bridesmaidsResponse = await axios.get(`https://welcome-to-the-nest.onrender.com/api/bridesmaids`);
-      const groomsmenResponse = await axios.get(`https://welcome-to-the-nest.onrender.com/api/groomsmen`);
-      const everybodyElseResponse = await axios.get(`https://welcome-to-the-nest.onrender.com/api/guest`);
+      const bridesmaidsResponse = await axios.get(`https://welcome-to-the-nest-irdb.onrender.com/api/bridesmaids`);
+      const groomsmenResponse = await axios.get(`https://welcome-to-the-nest-irdb.onrender.com/api/groomsmen`);
+      const everybodyElseResponse = await axios.get(`https://welcome-to-the-nest-irdb.onrender.com/api/guest`);
 
       const combinedData = [
         ...bridesmaidsResponse.data,
@@ -369,7 +369,7 @@ const runSortedList = async () => {
     setGuestlistData(newData);
 
     if (!submittedOnce) {
-      const response = await axios.post(`https://welcome-to-the-nest.onrender.com/api/guestlist`, newData);
+      const response = await axios.post(`https://welcome-to-the-nest-irdb.onrender.com/api/guestlist`, newData);
       console.log('Guestlist data submitted:', response.data);
 
       setSubmittedOnce(true);
@@ -381,11 +381,11 @@ const runSortedList = async () => {
         order: index + 1
       }));
 
-      const response = await axios.put(`https://welcome-to-the-nest.onrender.com/api/guestlist`, updatedData);
+      const response = await axios.put(`https://welcome-to-the-nest-irdb.onrender.com/api/guestlist`, updatedData);
       console.log('Guestlist data updated:', response.data);
     }
 
-    const sortedResponse = await axios.get(`https://welcome-to-the-nest.onrender.com/api/guestlist?sortBy=guestValue&order=desc`);
+    const sortedResponse = await axios.get(`https://welcome-to-the-nest-irdb.onrender.com/api/guestlist?sortBy=guestValue&order=desc`);
     const sortedGuestlist = sortedResponse.data;
 
     const updatedGuestlistData = sortedGuestlist.map((guest, index) => {

@@ -24,7 +24,7 @@ export default function LoginForm() {
       e.preventDefault();
    
         try{
-        const response = await fetch(`https://welcome-to-the-nest.onrender.com/api/authentication`, {
+        const response = await fetch(`https://welcome-to-the-nest-irdb.onrender.com/api/authentication`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

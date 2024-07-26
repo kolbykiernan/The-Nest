@@ -43,7 +43,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
     
       if (currentPage - 1 === 0) {
         try {
-          const response = await axios.get('https://welcome-to-the-nest.onrender.com/api/weddingdata');
+          const response = await axios.get('https://welcome-to-the-nest-irdb.onrender.com/api/weddingdata');
           const data = response.data;
           // Handle the fetched data as needed
           return {
@@ -146,7 +146,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
           userId
         };
         
-        const response = await axios.post(`https://welcome-to-the-nest.onrender.com/api/weddingdata`, formData);
+        const response = await axios.post(`https://welcome-to-the-nest-irdb.onrender.com/api/weddingdata`, formData);
         console.log('Form submitted successfully:', response.data);
         setSubmitted(true);
 
@@ -160,7 +160,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
     useEffect(() => {
       const fetchWeddingData = async () => {
         try {
-          const response = await axios.get('https://welcome-to-the-nest.onrender.com/api/weddingdata');
+          const response = await axios.get('https://welcome-to-the-nest-irdb.onrender.com/api/weddingdata');
           const data = response.data;
           setBrideFirstName(data.brideFirstName || '');
           setGroomFirstName(data.groomFirstName || '');
@@ -248,7 +248,7 @@ const Questionnaire = ({ categories, fetchCategories, bridesmaidsData, setBrides
         userId
       };
 
-      return axios.post(`https://welcome-to-the-nest.onrender.com/api/bridesmaids`, formData);
+      return axios.post(`https://welcome-to-the-nest-irdb.onrender.com/api/bridesmaids`, formData);
     });
 
     const responses = await Promise.all(requests);
@@ -290,7 +290,7 @@ const submitGroomsmenData = async (groomsmenData) => {
         userId
       };
 
-      return axios.post(`https://welcome-to-the-nest.onrender.com/api/groomsman`, formData);
+      return axios.post(`https://welcome-to-the-nest-irdb.onrender.com/api/groomsman`, formData);
     });
 
     const responses = await Promise.all(requests);
@@ -332,7 +332,7 @@ const submitEverybodyElseData = async (everybodyElseData) => {
         userId
       };
 
-      return axios.post(`https://welcome-to-the-nest.onrender.com/api/guest`, formData);
+      return axios.post(`https://welcome-to-the-nest-irdb.onrender.com/api/guest`, formData);
     });
 
     const responses = await Promise.all(requests);
